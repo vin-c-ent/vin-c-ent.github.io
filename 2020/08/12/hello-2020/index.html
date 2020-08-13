@@ -14,13 +14,16 @@
     <meta property="og:title" content="Hello 2020 - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="Emacs tend to provide a good support for functional programming languages. Indeed, many FP language community exclusively use Emacs and give only first-party IDE supports to Emacs, such as Coq, Agd...">
+    <meta property="og:description" content="Hello Blog
+">
     
     <meta property="article:published_time" content="2020-08-12T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
     
+    
+    <meta property="article:tag" content="生活">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
@@ -197,7 +200,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-2015.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-2020.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -206,7 +209,7 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-2015.jpg');
+        background-image: url('/img/post-bg-2020.jpg');
         background: ;
     }
 
@@ -222,6 +225,8 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
                     <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
                         
                     </div>
                     <h1>Hello 2020</h1>
@@ -253,59 +258,40 @@
                 <!-- Multi-Lingual -->
                 
 
-				<p>Emacs tend to provide a good support for functional programming languages. Indeed, many FP language community exclusively use Emacs and give only first-party IDE supports to Emacs, such as Coq, Agda, Standard ML, Clojure, etc.</p>
+				<h2 id="hello-blog">Hello Blog</h2>
 
-<p>For the purpose of programming Coq with Proof General, I started to try with Emacs. I quickly found Spacemacs a good alternatives for me…someone had get used to Vim keybindings and want to get some thing useful ASAP w/o configuring a long list as my <code class="language-plaintext highlighter-rouge">.vimrc</code>.</p>
+<blockquote>
+  <p>不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。</p>
+</blockquote>
 
-<p>Though the overall experience is pretty smooth, many quirks about Spacemacs are always being forgotten and had to look up again and again, so I decided to open a note for some specific “workflow” that I often used.</p>
+<p>在毕业后的第5年，之前拖延了许久的blog，终于也开通了。</p>
 
-<p>Yes this is more like a note publishing online for the purpose of “on-demand accessible”. So don’t expect good writing anyways.</p>
+<p>说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。</p>
 
-<h3 id="vim-binding">Vim-binding</h3>
+<p>说开通吧，一来懒得弄，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。</p>
 
-<p>Choose <code class="language-plaintext highlighter-rouge">evil</code>!</p>
+<p>说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。</p>
 
-<h3 id="airline">Airline</h3>
+<p>这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。</p>
 
-<p>It’s there!</p>
+<h2 id="2020">2020</h2>
 
-<h3 id="nerd-tree--file-sidebar">Nerd Tree / File Sidebar</h3>
+<blockquote>
+  <p>无论现在你觉得过得有多好，要是不能持续进步，你都要放弃掉，去往下一个更大的天地。</p>
+</blockquote>
 
-<p><code class="language-plaintext highlighter-rouge">SPC f t</code> for <em>file tree</em>. The keybindings for specific operations are very different w/ Vim NerdTree though.</p>
+<p>2020是一个多事之年，新冠肺炎，中美贸易战，以及他们带来的一系列连锁反应，无不影响着我们老百姓的生活。</p>
 
-<h3 id="shell--terminal">Shell / Terminal</h3>
+<p>我个人也离开了工作3年的<code class="language-plaintext highlighter-rouge">Accenture</code>，从广州去了深圳。无他，就是为了走出自己的舒适区，突破自己的瓶颈。</p>
 
-<p>I occasionally use <a href="https://neovim.io/doc/user/nvim_terminal_emulator.html">Neovim’s terminal emulator</a> but in most of the time I just <code class="language-plaintext highlighter-rouge">cmd + D</code> for iTerms splitted window.</p>
+<p>其实之前也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为<code class="language-plaintext highlighter-rouge">Accenture</code>真的是一家让人很舒服的公司。所以才一拖再拖。</p>
 
-<p>I even mappped <code class="language-plaintext highlighter-rouge">:D</code> into split-then-terminal to make the experience on par ;)</p>
-
-<div class="language-vim highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
-</pre></td><td class="rouge-code"><pre>command<span class="p">!</span> <span class="p">-</span>nargs<span class="p">=</span>* D  <span class="k">belowright</span> <span class="k">split</span> <span class="p">|</span> <span class="k">terminal</span> <span class="p">&lt;</span><span class="k">args</span><span class="p">&gt;</span>
-</pre></td></tr></tbody></table></code></pre></div></div>
-
-<p>Anyways, Spacemacs does provide a <code class="language-plaintext highlighter-rouge">:shell</code> that naturally split a window below for terminal. The experience is not very good though.</p>
-
-<h3 id="tabs--workspaces">Tabs / Workspaces</h3>
-
-<p>I tend to open multiple <em>workspace</em>. Though people might found Vim tabs useful, I am exclusively use iTerm tabs for similar jobs. However Spacemacs is not living in a terminal.</p>
-
-<p><a href="https://www.reddit.com/r/spacemacs/comments/5w5d2s/vimstyle_tabs/">r/spacemacs - Vim-style tabs?</a> gave me a good way to approximate the experience by using <a href="http://spacemacs.org/doc/DOCUMENTATION.html#workspaces">Spacemacs Workspaces</a>: <code class="language-plaintext highlighter-rouge">SPC l w &lt;nth&gt;</code> trigger a so-called “layout transient state” (I have no idea what’s that mean) to open N-th workspaces, and use <code class="language-plaintext highlighter-rouge">gt</code>/<code class="language-plaintext highlighter-rouge">gT</code> to switch between.</p>
-
-<h3 id="fuzz-file-name-search--rg">Fuzz File Name Search / Rg</h3>
-
-<p><code class="language-plaintext highlighter-rouge">SPC f f</code></p>
+<p>新公司是深圳的<code class="language-plaintext highlighter-rouge">OCBC</code>。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。</p>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
-                    
-                    <li class="next">
-                        <a href="/2020/08/13/hello-2020/" data-toggle="tooltip" data-placement="top" title="Hello 2020">
-                        Next<br>
-                        <span>Hello 2020</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -370,6 +356,14 @@
 <ul class="list-inline">
   
   <li><a href="http://www.ruanyifeng.com/blog/">阮一峰</a></li>
+  
+  <li><a href="https://tonghuashuo.github.io/blog">童话说</a></li>
+  
+  <li><a href="https://niels.nu/index.html">Neils</a></li>
+  
+  <li><a href="https://coolshell.cn">酷壳</a></li>
+  
+  <li><a href="https://www.liaoxuefeng.com/">廖雪峰</a></li>
   
 </ul>
 
@@ -556,6 +550,23 @@
 
 
 <!-- Google Analytics -->
+
+<script>
+    // dynamic User by Vincent
+    var _gaId = 'UA-175320198-1';
+    var _gaDomain = 'vincent.zone';
+
+    // Originial
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
 
 
 

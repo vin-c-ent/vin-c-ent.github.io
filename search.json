@@ -2,16 +2,8 @@
   
     {
       "title"    : "Hello 2020",
-      "subtitle" : "Hello World, Hello Blog",
-      "tags"     : "",
-      "url"      : "/2020/08/13/hello-2020/",
-      "date"     : "2020-08-13 00:00:00 +0800"
-    } ,
-  
-    {
-      "title"    : "Hello 2020",
       "subtitle" : "Hello World, Hello Blog 2020",
-      "tags"     : "",
+      "tags"     : "生活",
       "url"      : "/2020/08/12/hello-2020/",
       "date"     : "2020-08-12 00:00:00 +0800"
     } 

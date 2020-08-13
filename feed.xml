@@ -5,68 +5,47 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 13 Aug 2020 10:53:40 +0800</pubDate>
-    <lastBuildDate>Thu, 13 Aug 2020 10:53:40 +0800</lastBuildDate>
+    <pubDate>Thu, 13 Aug 2020 13:58:47 +0800</pubDate>
+    <lastBuildDate>Thu, 13 Aug 2020 13:58:47 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>Hello 2020</title>
-        <description>&lt;p&gt;test push post flow&lt;/p&gt;
-</description>
-        <pubDate>Thu, 13 Aug 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/08/13/hello-2020/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/08/13/hello-2020/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Hello 2020</title>
-        <description>&lt;p&gt;Emacs tend to provide a good support for functional programming languages. Indeed, many FP language community exclusively use Emacs and give only first-party IDE supports to Emacs, such as Coq, Agda, Standard ML, Clojure, etc.&lt;/p&gt;
+        <description>&lt;h2 id=&quot;hello-blog&quot;&gt;Hello Blog&lt;/h2&gt;
 
-&lt;p&gt;For the purpose of programming Coq with Proof General, I started to try with Emacs. I quickly found Spacemacs a good alternatives for me…someone had get used to Vim keybindings and want to get some thing useful ASAP w/o configuring a long list as my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.vimrc&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;Though the overall experience is pretty smooth, many quirks about Spacemacs are always being forgotten and had to look up again and again, so I decided to open a note for some specific “workflow” that I often used.&lt;/p&gt;
+&lt;p&gt;在毕业后的第5年，之前拖延了许久的blog，终于也开通了。&lt;/p&gt;
 
-&lt;p&gt;Yes this is more like a note publishing online for the purpose of “on-demand accessible”. So don’t expect good writing anyways.&lt;/p&gt;
+&lt;p&gt;说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。&lt;/p&gt;
 
-&lt;h3 id=&quot;vim-binding&quot;&gt;Vim-binding&lt;/h3&gt;
+&lt;p&gt;说开通吧，一来懒得弄，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。&lt;/p&gt;
 
-&lt;p&gt;Choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;evil&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。&lt;/p&gt;
 
-&lt;h3 id=&quot;airline&quot;&gt;Airline&lt;/h3&gt;
+&lt;p&gt;这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。&lt;/p&gt;
 
-&lt;p&gt;It’s there!&lt;/p&gt;
+&lt;h2 id=&quot;2020&quot;&gt;2020&lt;/h2&gt;
 
-&lt;h3 id=&quot;nerd-tree--file-sidebar&quot;&gt;Nerd Tree / File Sidebar&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;无论现在你觉得过得有多好，要是不能持续进步，你都要放弃掉，去往下一个更大的天地。&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SPC f t&lt;/code&gt; for &lt;em&gt;file tree&lt;/em&gt;. The keybindings for specific operations are very different w/ Vim NerdTree though.&lt;/p&gt;
+&lt;p&gt;2020是一个多事之年，新冠肺炎，中美贸易战，以及他们带来的一系列连锁反应，无不影响着我们老百姓的生活。&lt;/p&gt;
 
-&lt;h3 id=&quot;shell--terminal&quot;&gt;Shell / Terminal&lt;/h3&gt;
+&lt;p&gt;我个人也离开了工作3年的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;，从广州去了深圳。无他，就是为了走出自己的舒适区，突破自己的瓶颈。&lt;/p&gt;
 
-&lt;p&gt;I occasionally use &lt;a href=&quot;https://neovim.io/doc/user/nvim_terminal_emulator.html&quot;&gt;Neovim’s terminal emulator&lt;/a&gt; but in most of the time I just &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd + D&lt;/code&gt; for iTerms splitted window.&lt;/p&gt;
+&lt;p&gt;其实之前也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;真的是一家让人很舒服的公司。所以才一拖再拖。&lt;/p&gt;
 
-&lt;p&gt;I even mappped &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:D&lt;/code&gt; into split-then-terminal to make the experience on par ;)&lt;/p&gt;
-
-&lt;div class=&quot;language-vim highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;command&lt;span class=&quot;p&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;nargs&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;* D  &lt;span class=&quot;k&quot;&gt;belowright&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;split&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;terminal&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Anyways, Spacemacs does provide a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;:shell&lt;/code&gt; that naturally split a window below for terminal. The experience is not very good though.&lt;/p&gt;
-
-&lt;h3 id=&quot;tabs--workspaces&quot;&gt;Tabs / Workspaces&lt;/h3&gt;
-
-&lt;p&gt;I tend to open multiple &lt;em&gt;workspace&lt;/em&gt;. Though people might found Vim tabs useful, I am exclusively use iTerm tabs for similar jobs. However Spacemacs is not living in a terminal.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.reddit.com/r/spacemacs/comments/5w5d2s/vimstyle_tabs/&quot;&gt;r/spacemacs - Vim-style tabs?&lt;/a&gt; gave me a good way to approximate the experience by using &lt;a href=&quot;http://spacemacs.org/doc/DOCUMENTATION.html#workspaces&quot;&gt;Spacemacs Workspaces&lt;/a&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SPC l w &amp;lt;nth&amp;gt;&lt;/code&gt; trigger a so-called “layout transient state” (I have no idea what’s that mean) to open N-th workspaces, and use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gt&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gT&lt;/code&gt; to switch between.&lt;/p&gt;
-
-&lt;h3 id=&quot;fuzz-file-name-search--rg&quot;&gt;Fuzz File Name Search / Rg&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SPC f f&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;新公司是深圳的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OCBC&lt;/code&gt;。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。&lt;/p&gt;
 </description>
         <pubDate>Wed, 12 Aug 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/08/12/hello-2020/</link>
         <guid isPermaLink="true">http://localhost:4000/2020/08/12/hello-2020/</guid>
+        
+        <category>生活</category>
         
         
       </item>
