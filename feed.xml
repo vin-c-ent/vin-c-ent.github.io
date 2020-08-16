@@ -5,9 +5,52 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 14 Aug 2020 12:32:02 +0800</pubDate>
-    <lastBuildDate>Fri, 14 Aug 2020 12:32:02 +0800</lastBuildDate>
+    <pubDate>Sun, 16 Aug 2020 23:33:01 +0800</pubDate>
+    <lastBuildDate>Sun, 16 Aug 2020 23:33:01 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Hello Kubernetes</title>
+        <description>&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为微服务。&lt;/p&gt;
+
+&lt;p&gt;微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。&lt;/p&gt;
+
+&lt;p&gt;但是随着部署组件的增多，配置、管理并保持系统的正常运行变得越来越困难。手动做所有的事情，显然不太可行。于是我们需要一些自动化的措施，包括自动调度、配置、监管和故障处理。这正是&lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt;的用武之地。&lt;/p&gt;
+
+&lt;h2 id=&quot;evolution-of-application-deployment&quot;&gt;Evolution of application deployment&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;组件之间紧密耦合在一个单体应用中。由于在同一个操作系统中运行。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;what-is-kubernetes&quot;&gt;What is Kubernetes&lt;/h3&gt;
+
+&lt;p&gt;Kubernetes是希腊语中的 “领航员” 或 “舵手” 的意思，我们一般简称它为K8S (因为K和S之间有8个单词)。&lt;/p&gt;
+
+&lt;p&gt;它抽象了数据中心的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;硬件基础设施&lt;/code&gt;，使得对外暴露的只是一个巨大的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;资源池&lt;/code&gt;。它让我们在部署和运行组件时，不用关注底层的服务器。&lt;/p&gt;
+
+&lt;p&gt;使用K8S部署多组件应用时，它会为每个组件都选择一个合适的服务器，部署之后它能够保证每个组件可以轻易地发现其他组件，并彼此之间实现通信。&lt;/p&gt;
+
+&lt;p&gt;All in all, K8S帮助企业标准化了无论是云端部署还是内部部署的应用交付方式。&lt;/p&gt;
+
+&lt;h3 id=&quot;benifit-of-kubernetes&quot;&gt;Benifit of Kubernetes&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;让开发者可以脱离运维团队的帮助，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;自主部署应用&lt;/code&gt;。&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;监控整个系统&lt;/code&gt;。让系统管理员的重心从监管应用转移到了监管Kubernetes。&lt;/li&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/08/14/hello-kubernetes/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/08/14/hello-kubernetes/</guid>
+        
+        <category>K8S</category>
+        
+        
+      </item>
     
       <item>
         <title>Hello 2020</title>
@@ -37,9 +80,13 @@
 
 &lt;p&gt;我个人也离开了工作3年的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;，从广州去了深圳。无他，就是趁年轻，多点历练，多看看其他公司的项目是怎样的。&lt;/p&gt;
 
-&lt;p&gt;其实之前也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;真的是一家让人很舒服的公司。所以才一拖再拖。&lt;/p&gt;
+&lt;p&gt;离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司是怎样的。&lt;/p&gt;
 
-&lt;p&gt;新公司是深圳的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OCBC&lt;/code&gt;。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废了许久的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。总之，先待着吧，锻炼好自己的英语，前端，考几个证先。&lt;/p&gt;
+&lt;p&gt;其实2019也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;真的是一家让人很舒服的公司。所以才一拖再拖。&lt;/p&gt;
+
+&lt;p&gt;新公司是深圳的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OCBC&lt;/code&gt;。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废了许久的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。&lt;/p&gt;
+
+&lt;p&gt;总之，先脚踏实地，埋头苦干，锻炼好自己的英语，前端，有机会也考几个证先吧。&lt;/p&gt;
 </description>
         <pubDate>Wed, 12 Aug 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/08/12/hello-2020/</link>

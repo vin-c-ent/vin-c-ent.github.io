@@ -11,16 +11,26 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="About - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="Hello Kubernetes - 王润森的博客 | Vincent Blog">
     
-    <meta property="og:type" content="website">
-    <meta property="og:description" content="但行好事，莫问前程">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="Background
+">
+    
+    <meta property="article:published_time" content="2020-08-14T00:00:00Z">
+    
+    
+    <meta property="article:author" content="Vincent">
+    
+    
+    <meta property="article:tag" content="K8S">
+    
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/about/">
+    <meta property="og:url" content="http://localhost:4000/2020/08/14/hello-kubernetes/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>About - 王润森的博客 | Vincent Blog</title>
+    <title>Hello Kubernetes - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -29,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/about/">
+    <link rel="canonical" href="http://localhost:4000/2020/08/14/hello-kubernetes/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -60,8 +70,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -188,118 +198,154 @@
   </div>
 </div>
 
-    <!-- Page Header -->
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
 
 
 
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('/img/home-bg.jpg');
+        background: ;
+    }
 
+    
+</style>
 
+<header class="intro-header style-text" >
 
-
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        
-        <div class="site-heading">
-        
-          <h1>About</h1>
-          <span class="subheading">但行好事，莫问前程</span>
+    <div class="header-mask"></div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/archive/?tag=K8S" title="K8S">K8S</a>
+                        
+                    </div>
+                    <h1>Hello Kubernetes</h1>
+                    
+                    <h2 class="subheading">Introduction of Kubernetes</h2>
+                    <span class="meta">Posted by Vincent on August 14, 2020</span>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </header>
 
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
+
+
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- Multi-Lingual -->
+                
+
+				<h2 id="background">Background</h2>
+
+<p>以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为微服务。</p>
+
+<p>微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。</p>
+
+<p>但是随着部署组件的增多，配置、管理并保持系统的正常运行变得越来越困难。手动做所有的事情，显然不太可行。于是我们需要一些自动化的措施，包括自动调度、配置、监管和故障处理。这正是<a href="https://kubernetes.io/">Kubernetes</a>的用武之地。</p>
+
+<h2 id="evolution-of-application-deployment">Evolution of application deployment</h2>
+
+<ul>
+  <li>组件之间紧密耦合在一个单体应用中。由于在同一个操作系统中运行。</li>
+</ul>
+
+<h3 id="what-is-kubernetes">What is Kubernetes</h3>
+
+<p>Kubernetes是希腊语中的 “领航员” 或 “舵手” 的意思，我们一般简称它为K8S (因为K和S之间有8个单词)。</p>
+
+<p>它抽象了数据中心的<code class="language-plaintext highlighter-rouge">硬件基础设施</code>，使得对外暴露的只是一个巨大的<code class="language-plaintext highlighter-rouge">资源池</code>。它让我们在部署和运行组件时，不用关注底层的服务器。</p>
+
+<p>使用K8S部署多组件应用时，它会为每个组件都选择一个合适的服务器，部署之后它能够保证每个组件可以轻易地发现其他组件，并彼此之间实现通信。</p>
+
+<p>All in all, K8S帮助企业标准化了无论是云端部署还是内部部署的应用交付方式。</p>
+
+<h3 id="benifit-of-kubernetes">Benifit of Kubernetes</h3>
+
+<ul>
+  <li>让开发者可以脱离运维团队的帮助，<code class="language-plaintext highlighter-rouge">自主部署应用</code>。</li>
+  <li><code class="language-plaintext highlighter-rouge">监控整个系统</code>。让系统管理员的重心从监管应用转移到了监管Kubernetes。</li>
+  <li></li>
+</ul>
+
+
+                <hr style="visibility: hidden;">
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/08/12/hello-2020/" data-toggle="tooltip" data-placement="top" title="Hello 2020">
+                        Previous<br>
+                        <span>Hello 2020</span>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
+                <hr style="visibility: hidden;">
+
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+
+                
+            </div>  
+
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
 
-<!-- USE SIDEBAR -->
-    <!-- PostList Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                postlist-container
-            ">
-    			                <!-- Language Selector -->
-                <select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-                    <option value="0" selected> 中文 | Chinese </option>
-                    <option value="1"> 英文 | English </option>
-                </select>
-
-
-
-<!-- Chinese Version -->
-<div class="zh post-container">
-    
-    <blockquote>
-  <p>追求极致</p>
-</blockquote>
-
-<p>Hi，我是王润森，是一名全栈工程师，追求看透知识的本质。</p>
-
-<p>目前的物理活动范围主要在深圳，分身日常出没于<a href="https://vincent.zone">博客</a>、<a href="https://github.com/vin-c-ents">Github</a>、<a href="https://www.linkedin.com/in/vincent-wang-289b0885">Linkedin</a>。</p>
-
-</div>
-
-<!-- English Version -->
-<div class="en post-container">
-    
-    <blockquote>
-  <p>Never accept less than the best!</p>
-</blockquote>
-
-<p>Hi, I am <em>@Vincent</em> (Wang, Runsen), a full stack programmer. Seeking to the essence of knowledge.</p>
-
-<p>Currently working in Shenzhen, always appear at <a href="https://vincent.zone">blog</a>、<a href="https://github.com/vin-c-ents">Github</a>、<a href="https://www.linkedin.com/in/vincent-wang-289b0885">Linkedin</a>。</p>
-
-</div>
-
-
-
-<!-- disqus 评论框 start -->
-<div class="comment">
-    <div id="disqus_thread" class="disqus-thread">
-
-    </div>
-</div>
-<!-- disqus 评论框 end -->
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "blog-1psx9avwmh//about/";
-    var disqus_url = "http://localhost:4000/about/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
-
-
-    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
 
 
 <section>
+    
+        <hr class="hidden-sm hidden-xs">
     
     <h5><a href="/archive/">FEATURED TAGS</a></h5>
     <div class="tags">
@@ -311,53 +357,6 @@
     </div>
 </section>
 
-
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-  <hr>
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
-    
-    <img src="/img/avatar-vincent-ny.png" />
-    
-    
-    <p>Little by little and bit by bit<br>坚持就是胜利</p>
-    
-    <!-- SNS Link -->
-    
-
-
-<ul class="list-inline">
-
-
-  
-  
-  
-  
-  
-  
-  <li>
-    <a target="_blank" href="https://github.com/vin-c-ent">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-  
-  <li>
-    <a target="_blank" href="https://www.linkedin.com/in/vincent-wang-289b0885">
-      <span class="fa-stack fa-lg">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-      </span>
-    </a>
-  </li>
-  
-</ul>
-  </div>
-</section>
 
                 <!-- Friends Blog -->
                 
@@ -377,10 +376,69 @@
   
 </ul>
 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- add support for mathjax by voleking-->
+
+
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "blog-1psx9avwmh";
+    var disqus_identifier = "/2020/08/14/hello-kubernetes";
+    var disqus_url = "http://localhost:4000/2020/08/14/hello-kubernetes/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'right',
+          // icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
 
 
@@ -545,7 +603,7 @@
     function generateCatalog(selector) {
 
         // interop with multilangual 
-        if ('true' == 'true') {
+        if ('' == 'true') {
             _containerSelector = 'div.post-container.active'
         } else {
             _containerSelector = 'div.post-container'
@@ -602,58 +660,6 @@
 
 
 <!-- Multi-Lingual -->
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    // get nodes
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    var $select = document.querySelector("select");
-
-    // Changes at v1.8.1: include lang flag as a url query. This interop well with catalog hash anchors.
-    function getLang() { return new URLSearchParams(document.location.search).get("lang") }
-
-    function setLang(newLang) {
-        var params = new URLSearchParams(document.location.search)
-        params.set("lang", newLang)
-        document.location.search = params.toString()  // refresh.
-    }
-
-    // handle render
-    function _render() {
-        var lang = getLang()
-        // en
-        if (lang == "en") {
-            $select.selectedIndex = 1;
-            $en.style.display = "block";
-            $en.classList.add("active");
-            $zh.style.display = "none";
-            $zh.classList.remove("active");
-            // default to zh-cn
-        } else {
-            $select.selectedIndex = 0;
-            $zh.style.display = "block";
-            $zh.classList.add("active");
-            $en.style.display = "none";
-            $en.classList.remove("active");
-        }
-        // interop with catalog 
-        generateCatalog(".catalog-body");
-    }
-
-    // handle select change
-    function onLanChange(index) {
-        if (index == 0) {
-            lang = "zh"
-        } else {
-            lang = "en"
-        }
-        setLang(lang)
-    }
-
-    // init
-    _render();
-</script>
 
 
 <!-- Simple Jekyll Search -->
