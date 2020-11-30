@@ -260,7 +260,7 @@
 
 				<h2 id="background">Background</h2>
 
-<p>以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为微服务。</p>
+<p>以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为<code class="language-plaintext highlighter-rouge">微服务</code>。</p>
 
 <p>微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。</p>
 
@@ -268,9 +268,22 @@
 
 <h2 id="evolution-of-application-deployment">Evolution of application deployment</h2>
 
-<ul>
-  <li>组件之间紧密耦合在一个单体应用中。由于在同一个操作系统中运行。</li>
-</ul>
+<ol>
+  <li>组件之间紧密耦合在一个单体应用中。但是这种方式不利于开发、部署、扩展。
+    <ul>
+      <li>开发 : 容易发生依赖冲突。</li>
+      <li>部署 : 哪怕一个小功能都要整个系统停机更新。</li>
+      <li>扩展 : 只能针对整个系统。</li>
+    </ul>
+  </li>
+  <li>将复杂的单体应用拆分为小的可独立部署的微服务组件。并通过网络通信。
+    <ul>
+      <li>开发 : 可以自己选择合适的依赖。</li>
+      <li>部署 : 粒度更细，只需要部署需要改变的服务。</li>
+      <li>扩展 : 粒度更细，可以针对单个服务进行扩展。</li>
+    </ul>
+  </li>
+</ol>
 
 <h3 id="what-is-kubernetes">What is Kubernetes</h3>
 
@@ -282,7 +295,7 @@
 
 <p>All in all, K8S帮助企业标准化了无论是云端部署还是内部部署的应用交付方式。</p>
 
-<h3 id="benifit-of-kubernetes">Benifit of Kubernetes</h3>
+<h3 id="benefit-of-kubernetes">Benefit of Kubernetes</h3>
 
 <ul>
   <li>让开发者可以脱离运维团队的帮助，<code class="language-plaintext highlighter-rouge">自主部署应用</code>。</li>
@@ -301,6 +314,13 @@
                         </a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2020/08/21/hello-netty/" data-toggle="tooltip" data-placement="top" title="Hello Netty">
+                        Next<br>
+                        <span>Hello Netty</span>
+                        </a>
+                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">

@@ -11,26 +11,26 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Hello 2020 - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="Redis introduction - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="Hello Blog
+    <meta property="og:description" content="什么是Redis
 ">
     
-    <meta property="article:published_time" content="2020-08-12T00:00:00Z">
+    <meta property="article:published_time" content="2020-08-27T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
     
     
-    <meta property="article:tag" content="生活">
+    <meta property="article:tag" content="Redis">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2020/08/12/hello-2020/">
+    <meta property="og:url" content="http://localhost:4000/2020/08/27/redis-introduction/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>Hello 2020 - 王润森的博客 | Vincent Blog</title>
+    <title>Redis introduction - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2020/08/12/hello-2020/">
+    <link rel="canonical" href="http://localhost:4000/2020/08/27/redis-introduction/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -200,7 +200,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-2020.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-2015.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -209,7 +209,7 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-2020.jpg');
+        background-image: url('/img/post-bg-2015.jpg');
         background: ;
     }
 
@@ -226,13 +226,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
+                        <a class="tag" href="/archive/?tag=Redis" title="Redis">Redis</a>
                         
                     </div>
-                    <h1>Hello 2020</h1>
+                    <h1>Redis introduction</h1>
                     
-                    <h2 class="subheading">Hello World, Hello Blog 2020</h2>
-                    <span class="meta">Posted by Vincent on August 12, 2020</span>
+                    <h2 class="subheading">Hello Redis</h2>
+                    <span class="meta">Posted by Vincent on August 27, 2020</span>
                 </div>
             </div>
         </div>
@@ -258,49 +258,267 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h2 id="hello-blog">Hello Blog</h2>
+				<h2 id="什么是redis">什么是Redis</h2>
 
-<blockquote>
-  <p>不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。</p>
-</blockquote>
+<ol>
+  <li>内存数据库</li>
+  <li>非关系型数据库 <!--数据库不需要被预定义--></li>
+  <li>有5种独特的数据类型</li>
+  <li>特性
+    <ul>
+      <li>可持久化</li>
+      <li>可复制 <!--扩展读性能 & 提供故障转移--></li>
+      <li>可客户端分片 <!--扩展写性能--></li>
+    </ul>
+  </li>
+</ol>
 
-<p>在毕业后的第5年，之前拖延了许久的blog，终于也开通了。</p>
+<h2 id="redis的好处">Redis的好处</h2>
 
-<p>说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。</p>
+<h4 id="为什么-redis-单线程模型也能效率这么高">为什么 redis 单线程模型也能效率这么高？</h4>
 
-<p>说开通吧，一来懒得折腾，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。</p>
+<ol>
+  <li>纯<strong>内存操作</strong></li>
+  <li>核心是基于<strong>非阻塞的 IO 多路复用</strong>机制</li>
+  <li>采用<strong>单线程</strong>，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗 CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗；
+    <ul>
+      <li>Redis是基于内存的操作，CPU不是Redis的瓶颈 ，Redis的瓶颈最有可能是机器<strong>内存的大小</strong>或者<strong>网络带宽</strong> (<strong>也就是就算采用多线程去榨干CPU资源，还是得等网络带宽</strong>)。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了（毕竟采用多线程会有很多麻烦！）。</li>
+      <li>不过无法发挥多核CPU性能，但是可以通过在单机开多个Redis实例来完善；</li>
+    </ul>
+  </li>
+  <li>数据结构简单，对数据操作也简单，Redis中的<strong>数据结构是专门进行设计</strong>的；</li>
+  <li>使用底层模型不同，它们之间底层实现方式以及与客户端之间<strong>通信的应用协议</strong>不一样，Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求；</li>
+</ol>
 
-<p>说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。</p>
+<h4 id="对比memcached">对比memcached</h4>
 
-<p>这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧，太计较得失，聪明反被聪明误。就像热血动漫里面的主角，不顾后果，不想以后，只专注于眼前，反而可以成功。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。</p>
+<ul>
+  <li>相同点 :
+    <ul>
+      <li>都可用于存储key-value mapping</li>
+      <li>性能也相差无几</li>
+    </ul>
+  </li>
+  <li>Redis的优势 :
+    <ul>
+      <li>能够自动以两种不同的方式将数据写入到硬盘 (snapshot &amp; AOF)</li>
+      <li>除了能存储普通的String key之外，还可以存储其他4种data structure</li>
+    </ul>
+  </li>
+  <li>memcached的不足 :
+    <ul>
+      <li>只能存储普通的String key。
+        <ul>
+          <li>因为所有的value都是String，当要实现列表的时候，只能把String当作列表来使用。当要删除list里面某个元素时，memcached采用的方法时通过黑名单来隐藏列表里面的元素，从而避免对元素执行读取+更新+写入等操作。</li>
+        </ul>
+      </li>
+      <li>无法持久化</li>
+    </ul>
+  </li>
+  <li>memcached的优势
+    <ul>
+      <li>由于 redis 只使用单核，而 memcached 可以使用多核，所以平均每一个核上 redis 在存储小数据时比 memcached 性能更高。而在 100k 以上的数据中，memcached 性能要高于 redis，虽然 redis 最近也在存储大数据的性能上进行优化，但是比起 memcached，还是稍有逊色。</li>
+    </ul>
+  </li>
+</ul>
 
-<h2 id="2020">2020</h2>
+<h2 id="数据结构">数据结构</h2>
 
-<blockquote>
-  <p>无论现在你觉得过得有多好，要是不能持续进步，你都要放弃掉，去往下一个更大的天地。</p>
-</blockquote>
+<ol>
+  <li>String
+<img src="D:\java_projects\github_page_source\img\redis\redis-string.png" alt="image-20200901095423867" /></li>
+  <li>List
+<img src="D:\java_projects\github_page_source\img\redis\redis-list.png" alt="image-20200901094745076" /></li>
+  <li>Set
+<img src="D:\java_projects\github_page_source\img\redis\redis-set.png" alt="image-20200901094732166" /></li>
+  <li>Hash
+<img src="D:\java_projects\github_page_source\img\redis\redis-hash.png" alt="image-20200901094719409" /></li>
+  <li>ZSet
+<img src="D:\java_projects\github_page_source\img\redis\redis-zset.png" alt="image-20200901094636092" /></li>
+</ol>
 
-<p>2020是一个多事之年，新冠肺炎，中美贸易战，以及他们带来的一系列连锁反应，无不影响着我们老百姓的生活。</p>
+<h2 id="持久化">持久化</h2>
 
-<p>我个人也离开了工作3年的<code class="language-plaintext highlighter-rouge">Accenture</code>，从广州去了深圳。无他，就是趁年轻，多点历练，多看看其他公司的项目是怎样的。</p>
+<ol>
+  <li>快照 (snapshotting) : 将存在于某一时刻的所有数据都写入到硬盘里面。
+    <ol>
+      <li>触发条件 :
+        <ol>
+          <li>在”指定时间段内有指定数量的写操作执行”这一条件被满足时执行;</li>
+          <li>通过调用两条转储到硬盘 (dump-to-disk) 命令种的任何一条来执行;</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>只追加写入 : 将所有修改了redis的命令都写入到一个只追加文件 (append-only file, AOF) 里面，并设置同步频率
+    <ol>
+      <li>从不同步</li>
+      <li>每秒同步一次</li>
+      <li>每写入一个命令就同步一次</li>
+    </ol>
+  </li>
+</ol>
 
-<p>离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司文化氛围是怎样的。</p>
+<h2 id="过期策略">过期策略</h2>
 
-<p>其实2019也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为<code class="language-plaintext highlighter-rouge">Accenture</code>真的是一家让人很舒服的公司。所以才一拖再拖。</p>
+<p>业界如今有以下3种过期策略。redis采用的是<strong>定期删除</strong> + <strong>惰性删除</strong>策略。</p>
 
-<p>新公司是深圳的<code class="language-plaintext highlighter-rouge">OCBC</code>。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废了许久的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。</p>
+<ul>
+  <li>定期删除 : redis默认每个100ms检查，是否有过期的key,有过期key则删除。需要说明的是，redis不是每个100ms将所有的key检查一次，而是随机抽取进行检查 (如果每隔100ms,全部key进行检查，redis岂不是卡死)。因此，如果只采用定期删除策略，会导致很多key到时间没有删除。
+    <ul>
+      <li>优点 :
+        <ul>
+          <li>频率可控。可以自定义检查的频率，”丰俭由人”。</li>
+          <li>成本可控。有限制地抽取特定数目的元素淘汰，不会干扰到Redis的服务。</li>
+        </ul>
+      </li>
+      <li>缺点 : 因为是随机抽取，所以还是会有很多key到时间没有删除。</li>
+    </ul>
+  </li>
+  <li>惰性删除 : 查询某个key的时候，redis会检查一下，这个key如果设置了过期时间那么是否过期了？如果过期了此时就会删除。
+    <ul>
+      <li>优点 : 一个兜底的策略，不会让过期的key继续提供value。</li>
+      <li>缺点 : 一直没被查询的话，过期了的key就不会被删除。</li>
+    </ul>
+  </li>
+  <li>定时删除 : 用一个定时器来负责监视key,过期则自动删除。
+    <ul>
+      <li>优点 : 内存及时释放，</li>
+      <li>缺点 : 十分消耗CPU资源。</li>
+    </ul>
+  </li>
+</ul>
 
-<p>总之，先脚踏实地，埋头苦干，锻炼好自己的英语，前端，有机会也考几个证先吧。</p>
+<p>为什么不用定时删除策略？因为在大并发请求下，CPU要将时间应用在处理请求，而不是删除key,因此没有采用这一策略.</p>
+
+<h2 id="内存淘汰机制">内存淘汰机制</h2>
+
+<p>过期策略其实还不是足够完善。如果<strong>定期删除</strong>没删除key。然后你也没即时去请求key，也就是说<strong>惰性删除</strong>也没生效。这样，redis的内存会越来越高。那么就应该采用<strong>内存淘汰机制</strong>。</p>
+
+<p>在redis.conf中有一行配置</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre># maxmemory-policy volatile-lru
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>该配置就是配内存淘汰策略的</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>淘汰策略</th>
+      <th>详情</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>noeviction</td>
+      <td>当内存不足以容纳新写入数据时，新写入操作会报错。<br /><!--应该没人用吧。--></td>
+    </tr>
+    <tr>
+      <td>allkeys-lru</td>
+      <td>当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key。<br /><!-- 推荐使用，目前项目在用这种。--></td>
+    </tr>
+    <tr>
+      <td>allkeys-random</td>
+      <td>当内存不足以容纳新写入数据时，在键空间中，随机移除某个key。<br /><!--应该也没人用吧，你不删最少使用Key,去随机删。--></td>
+    </tr>
+    <tr>
+      <td>volatile-lru</td>
+      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的key。<br /><!--这种情况一般是把redis既当缓存，又做持久化存储的时候才用。不推荐--></td>
+    </tr>
+    <tr>
+      <td>volatile-random</td>
+      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。<br /><!--不推荐--></td>
+    </tr>
+    <tr>
+      <td>volatile-ttl</td>
+      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。<br /><!--不推荐--></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>ps：如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那么 volatile-lru, volatile-random 和 volatile-ttl 策略的行为, 和 noeviction(不删除) 基本上一致。</p>
+
+<h2 id="redis常见问题">Redis常见问题</h2>
+
+<h4 id="缓存和数据库双写一致性问题">缓存和数据库双写一致性问题</h4>
+
+<p>一致性问题是分布式常见问题，可以再分为<strong>最终一致性</strong>和<strong>强一致性</strong>。</p>
+
+<p>数据库和缓存双写，就必然会存在不一致的问题。</p>
+
+<ul>
+  <li>需要强一致性
+    <ul>
+      <li>不能放缓存</li>
+    </ul>
+  </li>
+  <li>需要最终一致性
+    <ul>
+      <li>采取正确更新策略，先更新数据库，再删缓存。</li>
+      <li>可能存在删除缓存失败的问题，提供一个补偿措施即可，例如利用消息队列。</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="缓存穿透--击穿">缓存穿透 / 击穿</h4>
+
+<p><strong>穿透</strong> 即网站遭受到恶意攻击，不断请求数据库中<strong>不存在的数据</strong>，由于无法击中缓存，因此所有请求都会到达数据库，最终数据库不堪压力而连接异常。
+解决方案如下：</p>
+
+<ul>
+  <li>利用<u>互斥锁</u>，缓存失效的时候，先去获得锁，得到锁了，再去请求数据库。没得到锁，则休眠一段时间重试。</li>
+  <li>采用异步更新策略，无论 Key 是否取到值，都直接返回。Value 值中维护一个缓存失效时间，缓存如果过期，异步起一个线程去读数据库，更新缓存。需要做缓存预热(项目启动前，先加载缓存)操作。</li>
+  <li>提供一个能迅速判断请求是否有效的拦截机制，比如，利用布隆过滤器，内部维护一系列合法有效的 Key。迅速判断出，请求所携带的 Key 是否合法有效。如果不合法，则直接返回。</li>
+</ul>
+
+<h6 id="布隆过滤器">布隆过滤器</h6>
+
+<p>原理 :</p>
+
+<ul>
+  <li>每新增一个元素，用若干个hash算法计算出其hashcode，然后将对应的bit array设为1。</li>
+  <li>查询是否存在时，用若干个hash算法计算出存在的元素的hashcode，然后看对应的bit array是否全为1
+    <ul>
+      <li>是 : 有可能存在</li>
+      <li>否 : 一定不存在</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="缓存雪崩">缓存雪崩</h4>
+
+<p><strong>雪崩</strong> 即缓存<strong>同一时间</strong>大面积的失效，这个时候会有大量请求同时到达数据库，导致数据库连接异常。</p>
+
+<ul>
+  <li>给缓存的失效时间，加上一个随机值，避免集体失效。</li>
+  <li>互斥锁，但该方案吞吐量明显下降。</li>
+</ul>
+
+<h2 id="集群模式">集群模式</h2>
+
+<h2 id="redis的使用场景">Redis的使用场景</h2>
+
+<h3 id="如何使用redis做分布式锁">如何使用Redis做分布式锁</h3>
+
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2020/08/21/hello-netty/" data-toggle="tooltip" data-placement="top" title="Hello Netty">
+                        Previous<br>
+                        <span>Hello Netty</span>
+                        </a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2020/08/14/hello-kubernetes/" data-toggle="tooltip" data-placement="top" title="Hello Kubernetes">
+                        <a href="/2020/09/28/context-switch/" data-toggle="tooltip" data-placement="top" title="context switch">
                         Next<br>
-                        <span>Hello Kubernetes</span>
+                        <span>context switch</span>
                         </a>
                     </li>
                     
@@ -394,8 +612,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2020/08/12/hello-2020";
-    var disqus_url = "http://localhost:4000/2020/08/12/hello-2020/";
+    var disqus_identifier = "/2020/08/27/redis-introduction";
+    var disqus_url = "http://localhost:4000/2020/08/27/redis-introduction/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

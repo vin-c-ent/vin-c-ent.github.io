@@ -11,26 +11,26 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Hello 2020 - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="Spring Boot 启动过程源码剖析 - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="Hello Blog
+    <meta property="og:description" content="Spring Boot 启动过程
 ">
     
-    <meta property="article:published_time" content="2020-08-12T00:00:00Z">
+    <meta property="article:published_time" content="2020-11-30T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
     
     
-    <meta property="article:tag" content="生活">
+    <meta property="article:tag" content="Spring Boot">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2020/08/12/hello-2020/">
+    <meta property="og:url" content="http://localhost:4000/2020/11/30/spring-boot/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>Hello 2020 - 王润森的博客 | Vincent Blog</title>
+    <title>Spring Boot 启动过程源码剖析 - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2020/08/12/hello-2020/">
+    <link rel="canonical" href="http://localhost:4000/2020/11/30/spring-boot/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -70,8 +70,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -200,7 +200,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-2020.jpg" width="0" height="0"> -->
+<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -209,14 +209,14 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-2020.jpg');
+        background-image: url('/img/home-bg.jpg');
         background: ;
     }
 
     
 </style>
 
-<header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
     
@@ -226,13 +226,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
+                        <a class="tag" href="/archive/?tag=Spring+Boot" title="Spring Boot">Spring Boot</a>
                         
                     </div>
-                    <h1>Hello 2020</h1>
+                    <h1>Spring Boot 启动过程源码剖析</h1>
                     
-                    <h2 class="subheading">Hello World, Hello Blog 2020</h2>
-                    <span class="meta">Posted by Vincent on August 12, 2020</span>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">Posted by Vincent on November 30, 2020</span>
                 </div>
             </div>
         </div>
@@ -258,51 +258,47 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h2 id="hello-blog">Hello Blog</h2>
+				<h2 id="spring-boot-启动过程">Spring Boot 启动过程</h2>
 
-<blockquote>
-  <p>不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。</p>
-</blockquote>
+<p>其实整个 spring boot的启动过程,目标都是为了实例化 application context</p>
 
-<p>在毕业后的第5年，之前拖延了许久的blog，终于也开通了。</p>
-
-<p>说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。</p>
-
-<p>说开通吧，一来懒得折腾，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。</p>
-
-<p>说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。</p>
-
-<p>这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧，太计较得失，聪明反被聪明误。就像热血动漫里面的主角，不顾后果，不想以后，只专注于眼前，反而可以成功。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。</p>
-
-<h2 id="2020">2020</h2>
-
-<blockquote>
-  <p>无论现在你觉得过得有多好，要是不能持续进步，你都要放弃掉，去往下一个更大的天地。</p>
-</blockquote>
-
-<p>2020是一个多事之年，新冠肺炎，中美贸易战，以及他们带来的一系列连锁反应，无不影响着我们老百姓的生活。</p>
-
-<p>我个人也离开了工作3年的<code class="language-plaintext highlighter-rouge">Accenture</code>，从广州去了深圳。无他，就是趁年轻，多点历练，多看看其他公司的项目是怎样的。</p>
-
-<p>离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司文化氛围是怎样的。</p>
-
-<p>其实2019也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为<code class="language-plaintext highlighter-rouge">Accenture</code>真的是一家让人很舒服的公司。所以才一拖再拖。</p>
-
-<p>新公司是深圳的<code class="language-plaintext highlighter-rouge">OCBC</code>。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废了许久的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。</p>
-
-<p>总之，先脚踏实地，埋头苦干，锻炼好自己的英语，前端，有机会也考几个证先吧。</p>
+<ul>
+  <li>new SpringApplication
+    <ul>
+      <li>确定实例化的 application context的类型
+        <ul>
+          <li>用classloaderclass去看是否能load到对应的 load到就代表配置了,load不到就代表没配置</li>
+          <li>有3种类型
+            <ul>
+              <li>None</li>
+              <li>Servlet</li>
+              <li>REACTIVE</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>get application context initializer
+        <ul>
+          <li>load META–inf/spring. factories:从jar包里面找到所有的 spring.factories</li>
+        </ul>
+      </li>
+      <li>get application listener</li>
+      <li>找到main class</li>
+    </ul>
+  </li>
+</ul>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
-                    
-                    <li class="next">
-                        <a href="/2020/08/14/hello-kubernetes/" data-toggle="tooltip" data-placement="top" title="Hello Kubernetes">
-                        Next<br>
-                        <span>Hello Kubernetes</span>
+                    <li class="previous">
+                        <a href="/2020/09/28/context-switch/" data-toggle="tooltip" data-placement="top" title="context switch">
+                        Previous<br>
+                        <span>context switch</span>
                         </a>
                     </li>
+                    
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -394,8 +390,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2020/08/12/hello-2020";
-    var disqus_url = "http://localhost:4000/2020/08/12/hello-2020/";
+    var disqus_identifier = "/2020/11/30/spring-boot-";
+    var disqus_url = "http://localhost:4000/2020/11/30/spring-boot/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

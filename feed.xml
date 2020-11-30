@@ -5,15 +5,383 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 16 Aug 2020 23:33:01 +0800</pubDate>
-    <lastBuildDate>Sun, 16 Aug 2020 23:33:01 +0800</lastBuildDate>
+    <pubDate>Mon, 30 Nov 2020 21:38:20 +0800</pubDate>
+    <lastBuildDate>Mon, 30 Nov 2020 21:38:20 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
-        <title>Hello Kubernetes</title>
-        <description>&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+        <title>Spring Boot 启动过程源码剖析</title>
+        <description>&lt;h2 id=&quot;spring-boot-启动过程&quot;&gt;Spring Boot 启动过程&lt;/h2&gt;
 
-&lt;p&gt;以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为微服务。&lt;/p&gt;
+&lt;p&gt;其实整个 spring boot的启动过程,目标都是为了实例化 application context&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;new SpringApplication
+    &lt;ul&gt;
+      &lt;li&gt;确定实例化的 application context的类型
+        &lt;ul&gt;
+          &lt;li&gt;用classloaderclass去看是否能load到对应的 load到就代表配置了,load不到就代表没配置&lt;/li&gt;
+          &lt;li&gt;有3种类型
+            &lt;ul&gt;
+              &lt;li&gt;None&lt;/li&gt;
+              &lt;li&gt;Servlet&lt;/li&gt;
+              &lt;li&gt;REACTIVE&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;get application context initializer
+        &lt;ul&gt;
+          &lt;li&gt;load META–inf/spring. factories:从jar包里面找到所有的 spring.factories&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;get application listener&lt;/li&gt;
+      &lt;li&gt;找到main class&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 30 Nov 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/11/30/spring-boot/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/11/30/spring-boot/</guid>
+        
+        <category>Spring Boot</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>context switch</title>
+        <description>&lt;h1 id=&quot;what-is-context-switch&quot;&gt;What is context switch&lt;/h1&gt;
+
+&lt;p&gt;Nowadays, we often use computer for multiple tasks at the same time even it just contains 1 CPU. You might think that each CPU is actually able to execute multiple tasks at the same time? That is totally wrong. Actually each CPU in the computer can only execute one task at the same time. The reason why we got the previous illusion is that CPU switch too fast for us to notice. And we call each of this short moment (ms level) &lt;strong&gt;Time Slice&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;If we compare &lt;u&gt;task&lt;/u&gt; to a &lt;u&gt;car&lt;/u&gt;, then &lt;u&gt;time slice&lt;/u&gt; is the &lt;u&gt;fuel oil&lt;/u&gt;. Without fuel oil, car is not runnable. So is the relationship between time slice and thread.&lt;/p&gt;
+
+&lt;p&gt;And time slice will be allocated by CPU for executing a specific thread. No matter how short it is, once a thread owns a time slice lucky, this thread is runnable. And once time slice come to an end, CPU will store the progress of this thread, which we call &lt;strong&gt;context&lt;/strong&gt;, and look for the next lucky thread, and load its context.&lt;/p&gt;
+
+&lt;p&gt;This is what we called context switch.&lt;/p&gt;
+
+&lt;p&gt;As the time slice is short enough, so our human being is not aware of the switching, which make us feel like that our computer is running multiple task at the same time. But actually our CPU is working so hard to switch among multiple threads.&lt;/p&gt;
+
+&lt;h2 id=&quot;pros--cons&quot;&gt;pros &amp;amp; cons&lt;/h2&gt;
+
+&lt;p&gt;So now, it is obvious that the pros of context switch is that even 1 CPU can execute multiple task “at the same time”. Just like you hire a staff in a bank, while he is able to serve for multiple counter, how exciting it is.&lt;/p&gt;
+
+&lt;p&gt;But every coin has two sides.&lt;/p&gt;
+
+&lt;p&gt;The cons is also obvious, that is, you need to spend more effort on switching, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for context.&lt;/p&gt;
+
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;So how could we reducer the context switching? Below are 4 useful ways :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Lockless : a lock is scrapped by multiple thread is one of the reason why we need context switch frequently. So we should try our best to avoid using lock during the multiple thread scenario. e.g.
+    &lt;ul&gt;
+      &lt;li&gt;Use ConcurrentHashMap, whose segment lock will separate the id according to the hash algorithm, so that different thread will handle the data in different segment.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CAS : Optimistic lock, no lock is required.&lt;/li&gt;
+  &lt;li&gt;With minimal thread : the more thread it is, the more thread is waiting.&lt;/li&gt;
+  &lt;li&gt;Coroutine : existed in framework, not supported by JDK.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 28 Sep 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/09/28/context-switch/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/09/28/context-switch/</guid>
+        
+        <category>Concurrence</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Redis introduction</title>
+        <description>&lt;h2 id=&quot;什么是redis&quot;&gt;什么是Redis&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;内存数据库&lt;/li&gt;
+  &lt;li&gt;非关系型数据库 &lt;!--数据库不需要被预定义--&gt;&lt;/li&gt;
+  &lt;li&gt;有5种独特的数据类型&lt;/li&gt;
+  &lt;li&gt;特性
+    &lt;ul&gt;
+      &lt;li&gt;可持久化&lt;/li&gt;
+      &lt;li&gt;可复制 &lt;!--扩展读性能 &amp; 提供故障转移--&gt;&lt;/li&gt;
+      &lt;li&gt;可客户端分片 &lt;!--扩展写性能--&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;redis的好处&quot;&gt;Redis的好处&lt;/h2&gt;
+
+&lt;h4 id=&quot;为什么-redis-单线程模型也能效率这么高&quot;&gt;为什么 redis 单线程模型也能效率这么高？&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;纯&lt;strong&gt;内存操作&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;核心是基于&lt;strong&gt;非阻塞的 IO 多路复用&lt;/strong&gt;机制&lt;/li&gt;
+  &lt;li&gt;采用&lt;strong&gt;单线程&lt;/strong&gt;，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗 CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗；
+    &lt;ul&gt;
+      &lt;li&gt;Redis是基于内存的操作，CPU不是Redis的瓶颈 ，Redis的瓶颈最有可能是机器&lt;strong&gt;内存的大小&lt;/strong&gt;或者&lt;strong&gt;网络带宽&lt;/strong&gt; (&lt;strong&gt;也就是就算采用多线程去榨干CPU资源，还是得等网络带宽&lt;/strong&gt;)。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了（毕竟采用多线程会有很多麻烦！）。&lt;/li&gt;
+      &lt;li&gt;不过无法发挥多核CPU性能，但是可以通过在单机开多个Redis实例来完善；&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;数据结构简单，对数据操作也简单，Redis中的&lt;strong&gt;数据结构是专门进行设计&lt;/strong&gt;的；&lt;/li&gt;
+  &lt;li&gt;使用底层模型不同，它们之间底层实现方式以及与客户端之间&lt;strong&gt;通信的应用协议&lt;/strong&gt;不一样，Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;对比memcached&quot;&gt;对比memcached&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;相同点 :
+    &lt;ul&gt;
+      &lt;li&gt;都可用于存储key-value mapping&lt;/li&gt;
+      &lt;li&gt;性能也相差无几&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Redis的优势 :
+    &lt;ul&gt;
+      &lt;li&gt;能够自动以两种不同的方式将数据写入到硬盘 (snapshot &amp;amp; AOF)&lt;/li&gt;
+      &lt;li&gt;除了能存储普通的String key之外，还可以存储其他4种data structure&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;memcached的不足 :
+    &lt;ul&gt;
+      &lt;li&gt;只能存储普通的String key。
+        &lt;ul&gt;
+          &lt;li&gt;因为所有的value都是String，当要实现列表的时候，只能把String当作列表来使用。当要删除list里面某个元素时，memcached采用的方法时通过黑名单来隐藏列表里面的元素，从而避免对元素执行读取+更新+写入等操作。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;无法持久化&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;memcached的优势
+    &lt;ul&gt;
+      &lt;li&gt;由于 redis 只使用单核，而 memcached 可以使用多核，所以平均每一个核上 redis 在存储小数据时比 memcached 性能更高。而在 100k 以上的数据中，memcached 性能要高于 redis，虽然 redis 最近也在存储大数据的性能上进行优化，但是比起 memcached，还是稍有逊色。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;数据结构&quot;&gt;数据结构&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;String
+&lt;img src=&quot;D:\java_projects\github_page_source\img\redis\redis-string.png&quot; alt=&quot;image-20200901095423867&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;List
+&lt;img src=&quot;D:\java_projects\github_page_source\img\redis\redis-list.png&quot; alt=&quot;image-20200901094745076&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Set
+&lt;img src=&quot;D:\java_projects\github_page_source\img\redis\redis-set.png&quot; alt=&quot;image-20200901094732166&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Hash
+&lt;img src=&quot;D:\java_projects\github_page_source\img\redis\redis-hash.png&quot; alt=&quot;image-20200901094719409&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;ZSet
+&lt;img src=&quot;D:\java_projects\github_page_source\img\redis\redis-zset.png&quot; alt=&quot;image-20200901094636092&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;持久化&quot;&gt;持久化&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;快照 (snapshotting) : 将存在于某一时刻的所有数据都写入到硬盘里面。
+    &lt;ol&gt;
+      &lt;li&gt;触发条件 :
+        &lt;ol&gt;
+          &lt;li&gt;在”指定时间段内有指定数量的写操作执行”这一条件被满足时执行;&lt;/li&gt;
+          &lt;li&gt;通过调用两条转储到硬盘 (dump-to-disk) 命令种的任何一条来执行;&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;只追加写入 : 将所有修改了redis的命令都写入到一个只追加文件 (append-only file, AOF) 里面，并设置同步频率
+    &lt;ol&gt;
+      &lt;li&gt;从不同步&lt;/li&gt;
+      &lt;li&gt;每秒同步一次&lt;/li&gt;
+      &lt;li&gt;每写入一个命令就同步一次&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;过期策略&quot;&gt;过期策略&lt;/h2&gt;
+
+&lt;p&gt;业界如今有以下3种过期策略。redis采用的是&lt;strong&gt;定期删除&lt;/strong&gt; + &lt;strong&gt;惰性删除&lt;/strong&gt;策略。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;定期删除 : redis默认每个100ms检查，是否有过期的key,有过期key则删除。需要说明的是，redis不是每个100ms将所有的key检查一次，而是随机抽取进行检查 (如果每隔100ms,全部key进行检查，redis岂不是卡死)。因此，如果只采用定期删除策略，会导致很多key到时间没有删除。
+    &lt;ul&gt;
+      &lt;li&gt;优点 :
+        &lt;ul&gt;
+          &lt;li&gt;频率可控。可以自定义检查的频率，”丰俭由人”。&lt;/li&gt;
+          &lt;li&gt;成本可控。有限制地抽取特定数目的元素淘汰，不会干扰到Redis的服务。&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;缺点 : 因为是随机抽取，所以还是会有很多key到时间没有删除。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;惰性删除 : 查询某个key的时候，redis会检查一下，这个key如果设置了过期时间那么是否过期了？如果过期了此时就会删除。
+    &lt;ul&gt;
+      &lt;li&gt;优点 : 一个兜底的策略，不会让过期的key继续提供value。&lt;/li&gt;
+      &lt;li&gt;缺点 : 一直没被查询的话，过期了的key就不会被删除。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;定时删除 : 用一个定时器来负责监视key,过期则自动删除。
+    &lt;ul&gt;
+      &lt;li&gt;优点 : 内存及时释放，&lt;/li&gt;
+      &lt;li&gt;缺点 : 十分消耗CPU资源。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;为什么不用定时删除策略？因为在大并发请求下，CPU要将时间应用在处理请求，而不是删除key,因此没有采用这一策略.&lt;/p&gt;
+
+&lt;h2 id=&quot;内存淘汰机制&quot;&gt;内存淘汰机制&lt;/h2&gt;
+
+&lt;p&gt;过期策略其实还不是足够完善。如果&lt;strong&gt;定期删除&lt;/strong&gt;没删除key。然后你也没即时去请求key，也就是说&lt;strong&gt;惰性删除&lt;/strong&gt;也没生效。这样，redis的内存会越来越高。那么就应该采用&lt;strong&gt;内存淘汰机制&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;在redis.conf中有一行配置&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;# maxmemory-policy volatile-lru
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;该配置就是配内存淘汰策略的&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;淘汰策略&lt;/th&gt;
+      &lt;th&gt;详情&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;noeviction&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，新写入操作会报错。&lt;br /&gt;&lt;!--应该没人用吧。--&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;allkeys-lru&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key。&lt;br /&gt;&lt;!-- 推荐使用，目前项目在用这种。--&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;allkeys-random&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在键空间中，随机移除某个key。&lt;br /&gt;&lt;!--应该也没人用吧，你不删最少使用Key,去随机删。--&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;volatile-lru&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的key。&lt;br /&gt;&lt;!--这种情况一般是把redis既当缓存，又做持久化存储的时候才用。不推荐--&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;volatile-random&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。&lt;br /&gt;&lt;!--不推荐--&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;volatile-ttl&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。&lt;br /&gt;&lt;!--不推荐--&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;ps：如果没有设置 expire 的key, 不满足先决条件(prerequisites); 那么 volatile-lru, volatile-random 和 volatile-ttl 策略的行为, 和 noeviction(不删除) 基本上一致。&lt;/p&gt;
+
+&lt;h2 id=&quot;redis常见问题&quot;&gt;Redis常见问题&lt;/h2&gt;
+
+&lt;h4 id=&quot;缓存和数据库双写一致性问题&quot;&gt;缓存和数据库双写一致性问题&lt;/h4&gt;
+
+&lt;p&gt;一致性问题是分布式常见问题，可以再分为&lt;strong&gt;最终一致性&lt;/strong&gt;和&lt;strong&gt;强一致性&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;数据库和缓存双写，就必然会存在不一致的问题。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;需要强一致性
+    &lt;ul&gt;
+      &lt;li&gt;不能放缓存&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;需要最终一致性
+    &lt;ul&gt;
+      &lt;li&gt;采取正确更新策略，先更新数据库，再删缓存。&lt;/li&gt;
+      &lt;li&gt;可能存在删除缓存失败的问题，提供一个补偿措施即可，例如利用消息队列。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;缓存穿透--击穿&quot;&gt;缓存穿透 / 击穿&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;穿透&lt;/strong&gt; 即网站遭受到恶意攻击，不断请求数据库中&lt;strong&gt;不存在的数据&lt;/strong&gt;，由于无法击中缓存，因此所有请求都会到达数据库，最终数据库不堪压力而连接异常。
+解决方案如下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;利用&lt;u&gt;互斥锁&lt;/u&gt;，缓存失效的时候，先去获得锁，得到锁了，再去请求数据库。没得到锁，则休眠一段时间重试。&lt;/li&gt;
+  &lt;li&gt;采用异步更新策略，无论 Key 是否取到值，都直接返回。Value 值中维护一个缓存失效时间，缓存如果过期，异步起一个线程去读数据库，更新缓存。需要做缓存预热(项目启动前，先加载缓存)操作。&lt;/li&gt;
+  &lt;li&gt;提供一个能迅速判断请求是否有效的拦截机制，比如，利用布隆过滤器，内部维护一系列合法有效的 Key。迅速判断出，请求所携带的 Key 是否合法有效。如果不合法，则直接返回。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h6 id=&quot;布隆过滤器&quot;&gt;布隆过滤器&lt;/h6&gt;
+
+&lt;p&gt;原理 :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;每新增一个元素，用若干个hash算法计算出其hashcode，然后将对应的bit array设为1。&lt;/li&gt;
+  &lt;li&gt;查询是否存在时，用若干个hash算法计算出存在的元素的hashcode，然后看对应的bit array是否全为1
+    &lt;ul&gt;
+      &lt;li&gt;是 : 有可能存在&lt;/li&gt;
+      &lt;li&gt;否 : 一定不存在&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;缓存雪崩&quot;&gt;缓存雪崩&lt;/h4&gt;
+
+&lt;p&gt;&lt;strong&gt;雪崩&lt;/strong&gt; 即缓存&lt;strong&gt;同一时间&lt;/strong&gt;大面积的失效，这个时候会有大量请求同时到达数据库，导致数据库连接异常。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;给缓存的失效时间，加上一个随机值，避免集体失效。&lt;/li&gt;
+  &lt;li&gt;互斥锁，但该方案吞吐量明显下降。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;集群模式&quot;&gt;集群模式&lt;/h2&gt;
+
+&lt;h2 id=&quot;redis的使用场景&quot;&gt;Redis的使用场景&lt;/h2&gt;
+
+&lt;h3 id=&quot;如何使用redis做分布式锁&quot;&gt;如何使用Redis做分布式锁&lt;/h3&gt;
+
+</description>
+        <pubDate>Thu, 27 Aug 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/08/27/redis-introduction/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/08/27/redis-introduction/</guid>
+        
+        <category>Redis</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Hello Netty</title>
+        <description>&lt;h2 id=&quot;when-netty-is-still-not-existed&quot;&gt;When Netty is still not existed&lt;/h2&gt;
+
+&lt;h2 id=&quot;what-is-netty&quot;&gt;What is Netty&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Netty is &lt;em&gt;an &lt;strong&gt;asynchronous&lt;/strong&gt; &lt;strong&gt;event-driven&lt;/strong&gt; &lt;strong&gt;network&lt;/strong&gt; application framework&lt;/em&gt;
+for &lt;strong&gt;rapid&lt;/strong&gt; development of maintainable &lt;strong&gt;high performance&lt;/strong&gt; protocol servers &amp;amp; clients.&lt;/p&gt;
+
+  &lt;p&gt;Netty是一款&lt;strong&gt;异步&lt;/strong&gt;的&lt;strong&gt;事件驱动&lt;/strong&gt;的&lt;strong&gt;网络&lt;/strong&gt;应用程序框架，支持&lt;strong&gt;快速&lt;/strong&gt;地开发可维护的&lt;strong&gt;高性能&lt;/strong&gt;的面向协议的服务器和客户端&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;the-benefit-of-netty&quot;&gt;The benefit of Netty&lt;/h2&gt;
+
+&lt;h2 id=&quot;netty目前真实使用场景&quot;&gt;Netty目前真实使用场景&lt;/h2&gt;
+
+&lt;h2 id=&quot;历史&quot;&gt;历史&lt;/h2&gt;
+
+&lt;h2 id=&quot;组件&quot;&gt;组件&lt;/h2&gt;
+
+&lt;h2 id=&quot;组件关系图&quot;&gt;组件关系图&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;微服务&lt;/code&gt;。&lt;/p&gt;
 
 &lt;p&gt;微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。&lt;/p&gt;
 
@@ -21,9 +389,68 @@
 
 &lt;h2 id=&quot;evolution-of-application-deployment&quot;&gt;Evolution of application deployment&lt;/h2&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;组件之间紧密耦合在一个单体应用中。由于在同一个操作系统中运行。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;ol&gt;
+  &lt;li&gt;C语言的套接字库&lt;/li&gt;
+  &lt;li&gt;Java的 java.net包&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nc&quot;&gt;ServerSocket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverSocket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ServerSocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nc&quot;&gt;Socket&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clientSocket&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverSoocket&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;扩展 : 只能针对整个系统。&lt;/li&gt;
+  &lt;li&gt;将复杂的单体应用拆分为小的可独立部署的微服务组&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;benefit&quot;&gt;Benefit&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;封装了网络编程的复杂性。&lt;/li&gt;
+  &lt;li&gt;定义了一种架构模型，使得业务逻辑与网络层解耦。&lt;/li&gt;
+  &lt;li&gt;模块化 &amp;amp; 可复用性&lt;/li&gt;
+  &lt;li&gt;可测试性&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Fri, 21 Aug 2020 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2020/08/21/hello-netty/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/08/21/hello-netty/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Hello Kubernetes</title>
+        <description>&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;微服务&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。&lt;/p&gt;
+
+&lt;p&gt;但是随着部署组件的增多，配置、管理并保持系统的正常运行变得越来越困难。手动做所有的事情，显然不太可行。于是我们需要一些自动化的措施，包括自动调度、配置、监管和故障处理。这正是&lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt;的用武之地。&lt;/p&gt;
+
+&lt;h2 id=&quot;evolution-of-application-deployment&quot;&gt;Evolution of application deployment&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;组件之间紧密耦合在一个单体应用中。但是这种方式不利于开发、部署、扩展。
+    &lt;ul&gt;
+      &lt;li&gt;开发 : 容易发生依赖冲突。&lt;/li&gt;
+      &lt;li&gt;部署 : 哪怕一个小功能都要整个系统停机更新。&lt;/li&gt;
+      &lt;li&gt;扩展 : 只能针对整个系统。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;将复杂的单体应用拆分为小的可独立部署的微服务组件。并通过网络通信。
+    &lt;ul&gt;
+      &lt;li&gt;开发 : 可以自己选择合适的依赖。&lt;/li&gt;
+      &lt;li&gt;部署 : 粒度更细，只需要部署需要改变的服务。&lt;/li&gt;
+      &lt;li&gt;扩展 : 粒度更细，可以针对单个服务进行扩展。&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h3 id=&quot;what-is-kubernetes&quot;&gt;What is Kubernetes&lt;/h3&gt;
 
@@ -35,7 +462,7 @@
 
 &lt;p&gt;All in all, K8S帮助企业标准化了无论是云端部署还是内部部署的应用交付方式。&lt;/p&gt;
 
-&lt;h3 id=&quot;benifit-of-kubernetes&quot;&gt;Benifit of Kubernetes&lt;/h3&gt;
+&lt;h3 id=&quot;benefit-of-kubernetes&quot;&gt;Benefit of Kubernetes&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;让开发者可以脱离运维团队的帮助，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;自主部署应用&lt;/code&gt;。&lt;/li&gt;
@@ -68,7 +495,7 @@
 
 &lt;p&gt;说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。&lt;/p&gt;
 
-&lt;p&gt;这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧，太计较得失，聪明反被聪明误。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。&lt;/p&gt;
+&lt;p&gt;这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧，太计较得失，聪明反被聪明误。就像热血动漫里面的主角，不顾后果，不想以后，只专注于眼前，反而可以成功。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。&lt;/p&gt;
 
 &lt;h2 id=&quot;2020&quot;&gt;2020&lt;/h2&gt;
 
@@ -80,7 +507,7 @@
 
 &lt;p&gt;我个人也离开了工作3年的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;，从广州去了深圳。无他，就是趁年轻，多点历练，多看看其他公司的项目是怎样的。&lt;/p&gt;
 
-&lt;p&gt;离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司是怎样的。&lt;/p&gt;
+&lt;p&gt;离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司文化氛围是怎样的。&lt;/p&gt;
 
 &lt;p&gt;其实2019也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;真的是一家让人很舒服的公司。所以才一拖再拖。&lt;/p&gt;
 

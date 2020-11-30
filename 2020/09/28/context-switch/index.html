@@ -11,26 +11,26 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Hello 2020 - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="context switch - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="Hello Blog
+    <meta property="og:description" content="What is context switch
 ">
     
-    <meta property="article:published_time" content="2020-08-12T00:00:00Z">
+    <meta property="article:published_time" content="2020-09-28T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
     
     
-    <meta property="article:tag" content="生活">
+    <meta property="article:tag" content="Concurrence">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2020/08/12/hello-2020/">
+    <meta property="og:url" content="http://localhost:4000/2020/09/28/context-switch/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>Hello 2020 - 王润森的博客 | Vincent Blog</title>
+    <title>context switch - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2020/08/12/hello-2020/">
+    <link rel="canonical" href="http://localhost:4000/2020/09/28/context-switch/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -70,8 +70,8 @@
 
     <!-- Navigation -->
 
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
+    
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -200,7 +200,7 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-2020.jpg" width="0" height="0"> -->
+<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 
@@ -209,14 +209,14 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        background-image: url('/img/post-bg-2020.jpg');
+        background-image: url('/img/home-bg.jpg');
         background: ;
     }
 
     
 </style>
 
-<header class="intro-header" >
+<header class="intro-header style-text" >
 
     <div class="header-mask"></div>
     
@@ -226,13 +226,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=%E7%94%9F%E6%B4%BB" title="生活">生活</a>
+                        <a class="tag" href="/archive/?tag=Concurrence" title="Concurrence">Concurrence</a>
                         
                     </div>
-                    <h1>Hello 2020</h1>
+                    <h1>context switch</h1>
                     
-                    <h2 class="subheading">Hello World, Hello Blog 2020</h2>
-                    <span class="meta">Posted by Vincent on August 12, 2020</span>
+                    <h2 class="subheading">context switch</h2>
+                    <span class="meta">Posted by Vincent on September 28, 2020</span>
                 </div>
             </div>
         </div>
@@ -258,49 +258,57 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h2 id="hello-blog">Hello Blog</h2>
+				<h1 id="what-is-context-switch">What is context switch</h1>
 
-<blockquote>
-  <p>不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。</p>
-</blockquote>
+<p>Nowadays, we often use computer for multiple tasks at the same time even it just contains 1 CPU. You might think that each CPU is actually able to execute multiple tasks at the same time? That is totally wrong. Actually each CPU in the computer can only execute one task at the same time. The reason why we got the previous illusion is that CPU switch too fast for us to notice. And we call each of this short moment (ms level) <strong>Time Slice</strong>.</p>
 
-<p>在毕业后的第5年，之前拖延了许久的blog，终于也开通了。</p>
+<p>If we compare <u>task</u> to a <u>car</u>, then <u>time slice</u> is the <u>fuel oil</u>. Without fuel oil, car is not runnable. So is the relationship between time slice and thread.</p>
 
-<p>说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。</p>
+<p>And time slice will be allocated by CPU for executing a specific thread. No matter how short it is, once a thread owns a time slice lucky, this thread is runnable. And once time slice come to an end, CPU will store the progress of this thread, which we call <strong>context</strong>, and look for the next lucky thread, and load its context.</p>
 
-<p>说开通吧，一来懒得折腾，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。</p>
+<p>This is what we called context switch.</p>
 
-<p>说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。</p>
+<p>As the time slice is short enough, so our human being is not aware of the switching, which make us feel like that our computer is running multiple task at the same time. But actually our CPU is working so hard to switch among multiple threads.</p>
 
-<p>这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧，太计较得失，聪明反被聪明误。就像热血动漫里面的主角，不顾后果，不想以后，只专注于眼前，反而可以成功。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。</p>
+<h2 id="pros--cons">pros &amp; cons</h2>
 
-<h2 id="2020">2020</h2>
+<p>So now, it is obvious that the pros of context switch is that even 1 CPU can execute multiple task “at the same time”. Just like you hire a staff in a bank, while he is able to serve for multiple counter, how exciting it is.</p>
 
-<blockquote>
-  <p>无论现在你觉得过得有多好，要是不能持续进步，你都要放弃掉，去往下一个更大的天地。</p>
-</blockquote>
+<p>But every coin has two sides.</p>
 
-<p>2020是一个多事之年，新冠肺炎，中美贸易战，以及他们带来的一系列连锁反应，无不影响着我们老百姓的生活。</p>
+<p>The cons is also obvious, that is, you need to spend more effort on switching, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for context.</p>
 
-<p>我个人也离开了工作3年的<code class="language-plaintext highlighter-rouge">Accenture</code>，从广州去了深圳。无他，就是趁年轻，多点历练，多看看其他公司的项目是怎样的。</p>
+<h2 id="solution">Solution</h2>
 
-<p>离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司文化氛围是怎样的。</p>
+<p>So how could we reducer the context switching? Below are 4 useful ways :</p>
 
-<p>其实2019也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为<code class="language-plaintext highlighter-rouge">Accenture</code>真的是一家让人很舒服的公司。所以才一拖再拖。</p>
-
-<p>新公司是深圳的<code class="language-plaintext highlighter-rouge">OCBC</code>。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废了许久的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。</p>
-
-<p>总之，先脚踏实地，埋头苦干，锻炼好自己的英语，前端，有机会也考几个证先吧。</p>
+<ul>
+  <li>Lockless : a lock is scrapped by multiple thread is one of the reason why we need context switch frequently. So we should try our best to avoid using lock during the multiple thread scenario. e.g.
+    <ul>
+      <li>Use ConcurrentHashMap, whose segment lock will separate the id according to the hash algorithm, so that different thread will handle the data in different segment.</li>
+    </ul>
+  </li>
+  <li>CAS : Optimistic lock, no lock is required.</li>
+  <li>With minimal thread : the more thread it is, the more thread is waiting.</li>
+  <li>Coroutine : existed in framework, not supported by JDK.</li>
+</ul>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2020/08/27/redis-introduction/" data-toggle="tooltip" data-placement="top" title="Redis introduction">
+                        Previous<br>
+                        <span>Redis introduction</span>
+                        </a>
+                    </li>
+                    
                     
                     <li class="next">
-                        <a href="/2020/08/14/hello-kubernetes/" data-toggle="tooltip" data-placement="top" title="Hello Kubernetes">
+                        <a href="/2020/11/30/spring-boot/" data-toggle="tooltip" data-placement="top" title="Spring Boot 启动过程源码剖析">
                         Next<br>
-                        <span>Hello Kubernetes</span>
+                        <span>Spring Boot 启动过程源码剖析</span>
                         </a>
                     </li>
                     
@@ -394,8 +402,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2020/08/12/hello-2020";
-    var disqus_url = "http://localhost:4000/2020/08/12/hello-2020/";
+    var disqus_identifier = "/2020/09/28/context-switch";
+    var disqus_url = "http://localhost:4000/2020/09/28/context-switch/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
