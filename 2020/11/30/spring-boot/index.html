@@ -280,10 +280,41 @@
       <li>get application context initializer
         <ul>
           <li>load META–inf/spring. factories:从jar包里面找到所有的 spring.factories</li>
+          <li>从里面取出key (interface) 为org.springframework.context.ApplicationContextInitializer的class</li>
+          <li>实例化，并加入到ApplicationContext里面</li>
         </ul>
       </li>
-      <li>get application listener</li>
-      <li>找到main class</li>
+      <li>get application listener
+        <ul>
+          <li>从上一步的cache里面取出key (interface) 为org. springframework.context.ApplicationListener的class</li>
+          <li>实例化，并加入到ApplicationContext里面</li>
+        </ul>
+      </li>
+      <li>找到main class
+        <ul>
+          <li>这里用到了一个比较tricky的方法。为了找到main class，它先是new了一个RuntimeException，然后 getStackTrace，然后forloop找到 method name是”main”的StackTraceElement，最后拿到它的 class name</li>
+          <li>不过这里有个不懂的地方,因为我们已经传入了 primarySources,而这个正是 main method存在的class，不懂为什么不直接用这个。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>run(args)
+    <ul>
+      <li>new SpringApplicationRunListeners()
+        <ul>
+          <li>从cache里面取出key (interface) 为org. springframework.boot.SpringApplicationRunListener的class</li>
+          <li>实例化,并作为listeners参数来new SpringApplicationRunListeners</li>
+        </ul>
+      </li>
+      <li>广播starting event
+        <ul>
+          <li>forloop SpringApplicationRunListener里面的listener，调用他们的starting()
+            <ul>
+              <li>里面其实就是在广播 ApplicationStartingEvent</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>
