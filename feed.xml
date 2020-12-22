@@ -5,8 +5,8 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 01 Dec 2020 21:18:17 +0800</pubDate>
-    <lastBuildDate>Tue, 01 Dec 2020 21:18:17 +0800</lastBuildDate>
+    <pubDate>Tue, 22 Dec 2020 23:24:09 +0800</pubDate>
+    <lastBuildDate>Tue, 22 Dec 2020 23:24:09 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -91,9 +91,9 @@
 
 &lt;p&gt;And time slice will be allocated by CPU for executing a specific thread. No matter how short it is, once a thread owns a time slice lucky, this thread is runnable. And once time slice come to an end, CPU will store the progress of this thread, which we call &lt;strong&gt;context&lt;/strong&gt;, and look for the next lucky thread, and load its context.&lt;/p&gt;
 
-&lt;p&gt;This is what we called context switch.&lt;/p&gt;
+&lt;p&gt;This is what we called &lt;strong&gt;context switch&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;As the time slice is short enough, so our human being is not aware of the switching, which make us feel like that our computer is running multiple task at the same time. But actually our CPU is working so hard to switch among multiple threads.&lt;/p&gt;
+&lt;p&gt;As the time slice is short enough, so our human being is not able to be aware of the switching, which make us feel like that our computer is running multiple tasks at the same time. But actually our CPU is working so hard to switch among multiple threads.&lt;/p&gt;
 
 &lt;h2 id=&quot;pros--cons&quot;&gt;pros &amp;amp; cons&lt;/h2&gt;
 
@@ -101,7 +101,7 @@
 
 &lt;p&gt;But every coin has two sides.&lt;/p&gt;
 
-&lt;p&gt;The cons is also obvious, that is, you need to spend more effort on switching, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for context.&lt;/p&gt;
+&lt;p&gt;The cons is also obvious, that is, you need to spend more effort on &lt;strong&gt;switching&lt;/strong&gt;, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for the context.&lt;/p&gt;
 
 &lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
 
@@ -117,6 +117,7 @@
   &lt;li&gt;With minimal thread : the more thread it is, the more thread is waiting.&lt;/li&gt;
   &lt;li&gt;Coroutine : existed in framework, not supported by JDK.&lt;/li&gt;
 &lt;/ul&gt;
+
 </description>
         <pubDate>Mon, 28 Sep 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/09/28/context-switch/</link>

@@ -266,9 +266,9 @@
 
 <p>And time slice will be allocated by CPU for executing a specific thread. No matter how short it is, once a thread owns a time slice lucky, this thread is runnable. And once time slice come to an end, CPU will store the progress of this thread, which we call <strong>context</strong>, and look for the next lucky thread, and load its context.</p>
 
-<p>This is what we called context switch.</p>
+<p>This is what we called <strong>context switch</strong>.</p>
 
-<p>As the time slice is short enough, so our human being is not aware of the switching, which make us feel like that our computer is running multiple task at the same time. But actually our CPU is working so hard to switch among multiple threads.</p>
+<p>As the time slice is short enough, so our human being is not able to be aware of the switching, which make us feel like that our computer is running multiple tasks at the same time. But actually our CPU is working so hard to switch among multiple threads.</p>
 
 <h2 id="pros--cons">pros &amp; cons</h2>
 
@@ -276,7 +276,7 @@
 
 <p>But every coin has two sides.</p>
 
-<p>The cons is also obvious, that is, you need to spend more effort on switching, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for context.</p>
+<p>The cons is also obvious, that is, you need to spend more effort on <strong>switching</strong>, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for the context.</p>
 
 <h2 id="solution">Solution</h2>
 
@@ -292,6 +292,7 @@
   <li>With minimal thread : the more thread it is, the more thread is waiting.</li>
   <li>Coroutine : existed in framework, not supported by JDK.</li>
 </ul>
+
 
 
                 <hr style="visibility: hidden;">
