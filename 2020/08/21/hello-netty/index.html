@@ -267,6 +267,22 @@ for <strong>rapid</strong> development of maintainable <strong>high performance<
 
 <h2 id="the-benefit-of-netty">The benefit of Netty</h2>
 
+<ol>
+  <li>解耦了业务和网络逻辑</li>
+  <li>可测试性</li>
+  <li>面向接口编程。为OIO和NIO抽象出通用的API，实现了改一行代码就能转换。</li>
+  <li>封装了Java NIO的复杂性
+    <ol>
+      <li>Java NIO解决了每个请求都要new一个thread的痛点</li>
+      <li>Netty封装了Java NIO，让它更易用。</li>
+    </ol>
+  </li>
+  <li>NIO数据结构，比Java的ByteBuffer更好用。</li>
+  <li>线程模型</li>
+  <li>性能比Java NIO好</li>
+  <li>handler编排，流水线，能够处理以任意顺序到达的request。</li>
+</ol>
+
 <h2 id="netty目前真实使用场景">Netty目前真实使用场景</h2>
 
 <h2 id="历史">历史</h2>
@@ -280,12 +296,6 @@ for <strong>rapid</strong> development of maintainable <strong>high performance<
 </ul>
 
 <h2 id="background">Background</h2>
-
-<p>以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为<code class="language-plaintext highlighter-rouge">微服务</code>。</p>
-
-<p>微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。</p>
-
-<p>但是随着部署组件的增多，配置、管理并保持系统的正常运行变得越来越困难。手动做所有的事情，显然不太可行。于是我们需要一些自动化的措施，包括自动调度、配置、监管和故障处理。这正是<a href="https://kubernetes.io/">Kubernetes</a>的用武之地。</p>
 
 <h2 id="evolution-of-application-deployment">Evolution of application deployment</h2>
 

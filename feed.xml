@@ -5,8 +5,8 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 22 Dec 2020 23:24:09 +0800</pubDate>
-    <lastBuildDate>Tue, 22 Dec 2020 23:24:09 +0800</lastBuildDate>
+    <pubDate>Wed, 23 Dec 2020 23:51:24 +0800</pubDate>
+    <lastBuildDate>Wed, 23 Dec 2020 23:51:24 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -399,6 +399,22 @@ for &lt;strong&gt;rapid&lt;/strong&gt; development of maintainable &lt;strong&gt
 
 &lt;h2 id=&quot;the-benefit-of-netty&quot;&gt;The benefit of Netty&lt;/h2&gt;
 
+&lt;ol&gt;
+  &lt;li&gt;解耦了业务和网络逻辑&lt;/li&gt;
+  &lt;li&gt;可测试性&lt;/li&gt;
+  &lt;li&gt;面向接口编程。为OIO和NIO抽象出通用的API，实现了改一行代码就能转换。&lt;/li&gt;
+  &lt;li&gt;封装了Java NIO的复杂性
+    &lt;ol&gt;
+      &lt;li&gt;Java NIO解决了每个请求都要new一个thread的痛点&lt;/li&gt;
+      &lt;li&gt;Netty封装了Java NIO，让它更易用。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;NIO数据结构，比Java的ByteBuffer更好用。&lt;/li&gt;
+  &lt;li&gt;线程模型&lt;/li&gt;
+  &lt;li&gt;性能比Java NIO好&lt;/li&gt;
+  &lt;li&gt;handler编排，流水线，能够处理以任意顺序到达的request。&lt;/li&gt;
+&lt;/ol&gt;
+
 &lt;h2 id=&quot;netty目前真实使用场景&quot;&gt;Netty目前真实使用场景&lt;/h2&gt;
 
 &lt;h2 id=&quot;历史&quot;&gt;历史&lt;/h2&gt;
@@ -412,12 +428,6 @@ for &lt;strong&gt;rapid&lt;/strong&gt; development of maintainable &lt;strong&gt
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
-
-&lt;p&gt;以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;微服务&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。&lt;/p&gt;
-
-&lt;p&gt;但是随着部署组件的增多，配置、管理并保持系统的正常运行变得越来越困难。手动做所有的事情，显然不太可行。于是我们需要一些自动化的措施，包括自动调度、配置、监管和故障处理。这正是&lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt;的用武之地。&lt;/p&gt;
 
 &lt;h2 id=&quot;evolution-of-application-deployment&quot;&gt;Evolution of application deployment&lt;/h2&gt;
 
