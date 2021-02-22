@@ -294,13 +294,13 @@ Nowadays, we often use computer for multiple tasks at the same time even it just
 
 
   内存数据库
-  非关系型数据库 
+  非关系型数据库  (数据库不需要被预定义)
   有5种独特的数据类型
   特性
     
       可持久化
-      可复制 
-      可客户端分片 
+      可复制 (扩展读性能 &amp; 提供故障转移)
+      可客户端分片 (扩展写性能)
     
   
 
@@ -311,8 +311,7 @@ Redis的好处
 
 
   纯内存操作
-  核心是基于非阻塞的 IO 多路复用机制
-  采用单线程，避免了不必要的上下文切换和竞争条件，也不存在多进...
+  核心是基于非阻塞的 IO...
             
         </div>
     </a>
@@ -554,7 +553,7 @@ for rapid development of maintainable high performance protocol servers &amp; ..
 </ul>
 
                 <p class="copyright text-muted">
-                    Copyright &copy; Vincent Blog 2020
+                    Copyright &copy; Vincent Blog 2021
                     <!-- <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px"
                         height="20px"
                         src="https://ghbtns.com/github-btn.html?user=vin-c-ent&repo=vin-c-ent.github.io&type=star&count=true">

@@ -262,13 +262,13 @@
 
 <ol>
   <li>内存数据库</li>
-  <li>非关系型数据库 <!--数据库不需要被预定义--></li>
+  <li>非关系型数据库  (<code class="language-plaintext highlighter-rouge">数据库不需要被预定义</code>)</li>
   <li>有5种独特的数据类型</li>
   <li>特性
     <ul>
       <li>可持久化</li>
-      <li>可复制 <!--扩展读性能 & 提供故障转移--></li>
-      <li>可客户端分片 <!--扩展写性能--></li>
+      <li>可复制 (<code class="language-plaintext highlighter-rouge">扩展读性能 &amp; 提供故障转移</code>)</li>
+      <li>可客户端分片 (<code class="language-plaintext highlighter-rouge">扩展写性能</code>)</li>
     </ul>
   </li>
 </ol>
@@ -279,7 +279,7 @@
 
 <ol>
   <li>纯<strong>内存操作</strong></li>
-  <li>核心是基于<strong>非阻塞的 IO 多路复用</strong>机制</li>
+  <li>核心是基于<strong>非阻塞的 IO 多路复用</strong>机制 (<code class="language-plaintext highlighter-rouge">像Windows一样的事件处理机制</code>)</li>
   <li>采用<strong>单线程</strong>，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗 CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗；
     <ul>
       <li>Redis是基于内存的操作，CPU不是Redis的瓶颈 ，Redis的瓶颈最有可能是机器<strong>内存的大小</strong>或者<strong>网络带宽</strong> (<strong>也就是就算采用多线程去榨干CPU资源，还是得等网络带宽</strong>)。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了（毕竟采用多线程会有很多麻烦！）。</li>
@@ -413,27 +413,27 @@
   <tbody>
     <tr>
       <td>noeviction</td>
-      <td>当内存不足以容纳新写入数据时，新写入操作会报错。<br /><!--应该没人用吧。--></td>
+      <td>当内存不足以容纳新写入数据时，新写入操作会报错。<br />(<code class="language-plaintext highlighter-rouge">应该没人用吧</code>)</td>
     </tr>
     <tr>
       <td>allkeys-lru</td>
-      <td>当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key。<br /><!-- 推荐使用，目前项目在用这种。--></td>
+      <td>当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key。<br />(<code class="language-plaintext highlighter-rouge">推荐使用，目前项目在用这种</code>)</td>
     </tr>
     <tr>
       <td>allkeys-random</td>
-      <td>当内存不足以容纳新写入数据时，在键空间中，随机移除某个key。<br /><!--应该也没人用吧，你不删最少使用Key,去随机删。--></td>
+      <td>当内存不足以容纳新写入数据时，在键空间中，随机移除某个key。<br />(<code class="language-plaintext highlighter-rouge">应该也没人用吧，你不删最少使用Key,去随机删</code>)</td>
     </tr>
     <tr>
       <td>volatile-lru</td>
-      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的key。<br /><!--这种情况一般是把redis既当缓存，又做持久化存储的时候才用。不推荐--></td>
+      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的key。<br />(<code class="language-plaintext highlighter-rouge">这种情况一般是把redis既当缓存，又做持久化存储的时候才用。不推荐</code>)</td>
     </tr>
     <tr>
       <td>volatile-random</td>
-      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。<br /><!--不推荐--></td>
+      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。<br />(<code class="language-plaintext highlighter-rouge">不推荐</code>)</td>
     </tr>
     <tr>
       <td>volatile-ttl</td>
-      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。<br /><!--不推荐--></td>
+      <td>当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。<br />(<code class="language-plaintext highlighter-rouge">不推荐</code>)</td>
     </tr>
   </tbody>
 </table>
@@ -501,6 +501,48 @@
 <h2 id="redis的使用场景">Redis的使用场景</h2>
 
 <h3 id="如何使用redis做分布式锁">如何使用Redis做分布式锁</h3>
+
+<p>实现分布式锁主要利用 redis 中set nx ex的API。</p>
+
+<p><code class="language-plaintext highlighter-rouge">nx</code>是<code class="language-plaintext highlighter-rouge">if not exists</code>的缩写，当key已经存在了，则存储不成功，返回0。当key不存在时，操作成功，返回1。</p>
+
+<p><code class="language-plaintext highlighter-rouge">ex</code>是<code class="language-plaintext highlighter-rouge">expire time</code>的缩写，在设这个key value的时候，同时设定过期时间。</p>
+
+<p>下面是一个分布式锁的 Java 实现:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="nd">@Autowired</span>
+<span class="kd">private</span> <span class="nc">StringRedisTemplate</span> <span class="n">stringRedisTemplate</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">acquirePaymentLock</span><span class="o">(</span><span class="nc">String</span> <span class="n">memberId</span><span class="o">,</span> <span class="nc">String</span> <span class="n">value</span><span class="o">,</span> <span class="nc">Instant</span> <span class="n">expireDate</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">stringRedisTemplate</span><span class="o">.</span><span class="na">execute</span><span class="o">((</span><span class="nc">RedisCallback</span><span class="o">&lt;</span><span class="nc">Boolean</span><span class="o">&gt;)</span> <span class="n">connection</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="nc">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">"set"</span><span class="o">,</span> <span class="n">memberId</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> <span class="n">value</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> 
+                <span class="s">"nx"</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> 
+                <span class="s">"ex"</span><span class="o">.</span><span class="na">getBytes</span><span class="o">(),</span> <span class="n">expireSecondStr</span><span class="o">.</span><span class="na">getBytes</span><span class="o">()</span>
+        <span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"failed to acquire lock"</span><span class="o">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">PaymentLockException</span><span class="o">(</span><span class="no">GENERIC_ERROR</span><span class="o">,</span> <span class="n">memberId</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="s">"OK"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="nc">String</span><span class="o">((</span><span class="kt">byte</span><span class="o">[])</span> <span class="n">result</span><span class="o">));</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 
 
@@ -702,7 +744,7 @@
 </ul>
 
                 <p class="copyright text-muted">
-                    Copyright &copy; Vincent Blog 2020
+                    Copyright &copy; Vincent Blog 2021
                     <!-- <iframe style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0" width="100px"
                         height="20px"
                         src="https://ghbtns.com/github-btn.html?user=vin-c-ent&repo=vin-c-ent.github.io&type=star&count=true">

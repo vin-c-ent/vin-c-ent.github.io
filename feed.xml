@@ -5,8 +5,8 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 23 Dec 2020 23:51:24 +0800</pubDate>
-    <lastBuildDate>Wed, 23 Dec 2020 23:51:24 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Feb 2021 23:47:06 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Feb 2021 23:47:06 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -134,13 +134,13 @@
 
 &lt;ol&gt;
   &lt;li&gt;内存数据库&lt;/li&gt;
-  &lt;li&gt;非关系型数据库 &lt;!--数据库不需要被预定义--&gt;&lt;/li&gt;
+  &lt;li&gt;非关系型数据库  (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;数据库不需要被预定义&lt;/code&gt;)&lt;/li&gt;
   &lt;li&gt;有5种独特的数据类型&lt;/li&gt;
   &lt;li&gt;特性
     &lt;ul&gt;
       &lt;li&gt;可持久化&lt;/li&gt;
-      &lt;li&gt;可复制 &lt;!--扩展读性能 &amp; 提供故障转移--&gt;&lt;/li&gt;
-      &lt;li&gt;可客户端分片 &lt;!--扩展写性能--&gt;&lt;/li&gt;
+      &lt;li&gt;可复制 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;扩展读性能 &amp;amp; 提供故障转移&lt;/code&gt;)&lt;/li&gt;
+      &lt;li&gt;可客户端分片 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;扩展写性能&lt;/code&gt;)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
@@ -151,7 +151,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;纯&lt;strong&gt;内存操作&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;核心是基于&lt;strong&gt;非阻塞的 IO 多路复用&lt;/strong&gt;机制&lt;/li&gt;
+  &lt;li&gt;核心是基于&lt;strong&gt;非阻塞的 IO 多路复用&lt;/strong&gt;机制 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;像Windows一样的事件处理机制&lt;/code&gt;)&lt;/li&gt;
   &lt;li&gt;采用&lt;strong&gt;单线程&lt;/strong&gt;，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗 CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗；
     &lt;ul&gt;
       &lt;li&gt;Redis是基于内存的操作，CPU不是Redis的瓶颈 ，Redis的瓶颈最有可能是机器&lt;strong&gt;内存的大小&lt;/strong&gt;或者&lt;strong&gt;网络带宽&lt;/strong&gt; (&lt;strong&gt;也就是就算采用多线程去榨干CPU资源，还是得等网络带宽&lt;/strong&gt;)。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了（毕竟采用多线程会有很多麻烦！）。&lt;/li&gt;
@@ -285,27 +285,27 @@
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;noeviction&lt;/td&gt;
-      &lt;td&gt;当内存不足以容纳新写入数据时，新写入操作会报错。&lt;br /&gt;&lt;!--应该没人用吧。--&gt;&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，新写入操作会报错。&lt;br /&gt;(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;应该没人用吧&lt;/code&gt;)&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;allkeys-lru&lt;/td&gt;
-      &lt;td&gt;当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key。&lt;br /&gt;&lt;!-- 推荐使用，目前项目在用这种。--&gt;&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的key。&lt;br /&gt;(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;推荐使用，目前项目在用这种&lt;/code&gt;)&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;allkeys-random&lt;/td&gt;
-      &lt;td&gt;当内存不足以容纳新写入数据时，在键空间中，随机移除某个key。&lt;br /&gt;&lt;!--应该也没人用吧，你不删最少使用Key,去随机删。--&gt;&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在键空间中，随机移除某个key。&lt;br /&gt;(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;应该也没人用吧，你不删最少使用Key,去随机删&lt;/code&gt;)&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;volatile-lru&lt;/td&gt;
-      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的key。&lt;br /&gt;&lt;!--这种情况一般是把redis既当缓存，又做持久化存储的时候才用。不推荐--&gt;&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，移除最近最少使用的key。&lt;br /&gt;(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;这种情况一般是把redis既当缓存，又做持久化存储的时候才用。不推荐&lt;/code&gt;)&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;volatile-random&lt;/td&gt;
-      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。&lt;br /&gt;&lt;!--不推荐--&gt;&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，随机移除某个key。&lt;br /&gt;(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;不推荐&lt;/code&gt;)&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td&gt;volatile-ttl&lt;/td&gt;
-      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。&lt;br /&gt;&lt;!--不推荐--&gt;&lt;/td&gt;
+      &lt;td&gt;当内存不足以容纳新写入数据时，在设置了过期时间的键空间中，有更早过期时间的key优先移除。&lt;br /&gt;(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;不推荐&lt;/code&gt;)&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -373,6 +373,48 @@
 &lt;h2 id=&quot;redis的使用场景&quot;&gt;Redis的使用场景&lt;/h2&gt;
 
 &lt;h3 id=&quot;如何使用redis做分布式锁&quot;&gt;如何使用Redis做分布式锁&lt;/h3&gt;
+
+&lt;p&gt;实现分布式锁主要利用 redis 中set nx ex的API。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nx&lt;/code&gt;是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;if not exists&lt;/code&gt;的缩写，当key已经存在了，则存储不成功，返回0。当key不存在时，操作成功，返回1。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ex&lt;/code&gt;是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;expire time&lt;/code&gt;的缩写，在设这个key value的时候，同时设定过期时间。&lt;/p&gt;
+
+&lt;p&gt;下面是一个分布式锁的 Java 实现:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nd&quot;&gt;@Autowired&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;StringRedisTemplate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stringRedisTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;acquirePaymentLock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Instant&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expireDate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stringRedisTemplate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;RedisCallback&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Boolean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;set&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; 
+                &lt;span class=&quot;s&quot;&gt;&quot;nx&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; 
+                &lt;span class=&quot;s&quot;&gt;&quot;ex&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;expireSecondStr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getBytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;failed to acquire lock&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;PaymentLockException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;GENERIC_ERROR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memberId&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;OK&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;equals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[])&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
         <pubDate>Thu, 27 Aug 2020 00:00:00 +0800</pubDate>
