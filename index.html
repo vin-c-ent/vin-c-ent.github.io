@@ -228,6 +228,43 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2021/02/23/innodb/">
+        <h2 class="post-title">
+            InnoDB存储引擎
+        </h2>
+        
+        <h3 class="post-subtitle">
+            
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                架构
+
+
+
+InnoDB的多线程模型
+
+
+  Master Thread : 非常核心的后台线程，主要负责
+    
+      将缓冲池中的数据异步刷新到磁盘
+        
+          每一秒将redo log buffer刷新到redo log文件
+        
+      
+      脏页的刷新、合并插入缓冲（INSERT BUFFER）、UNDO页的回收等
+    ...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Vincent on February 23, 2021
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2020/11/30/spring-boot/">
         <h2 class="post-title">
             Spring Boot 启动过程源码剖析

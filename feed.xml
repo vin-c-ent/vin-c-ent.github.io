@@ -5,9 +5,330 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Feb 2021 00:13:12 +0800</pubDate>
-    <lastBuildDate>Tue, 23 Feb 2021 00:13:12 +0800</lastBuildDate>
+    <pubDate>Tue, 23 Feb 2021 21:11:54 +0800</pubDate>
+    <lastBuildDate>Tue, 23 Feb 2021 21:11:54 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>InnoDB存储引擎</title>
+        <description>&lt;h2 id=&quot;架构&quot;&gt;架构&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\mysql\InnoDb_enginee-architecture.png&quot; alt=&quot;Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;innodb的多线程模型&quot;&gt;InnoDB的多线程模型&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Master Thread : 非常核心的后台线程，主要负责
+    &lt;ol&gt;
+      &lt;li&gt;将缓冲池中的数据异步刷新到磁盘
+        &lt;ol&gt;
+          &lt;li&gt;每一秒将redo log buffer刷新到redo log文件&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;脏页的刷新、合并插入缓冲（INSERT BUFFER）、UNDO页的回收等&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;IO Thread在InnoDB存储引擎中大量使用了&lt;strong&gt;AIO&lt;/strong&gt;（Async IO）来处理写IO请求，这样可以极大提高数据库的性能。
+    &lt;ol&gt;
+      &lt;li&gt;IO Thread的工作主要是负责这些IO请求的回调（call back）处理。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Purge Thread : 事务被提交后，其所使用的&lt;strong&gt;undo log&lt;/strong&gt;可能不再需要，因此需要PurgeThread来回收已经使用并分配的undo页。&lt;/li&gt;
+  &lt;li&gt;Page Cleaner Thread
+    &lt;ol&gt;
+      &lt;li&gt;作用 : 将之前版本中&lt;strong&gt;脏页的刷新&lt;/strong&gt;操作都放入到单独的线程中来完成&lt;/li&gt;
+      &lt;li&gt;目的 : 为了减轻原Master Thread的工作及对于用户查询线程的阻塞，进一步提高InnoDB存储引擎的性能。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;流程&quot;&gt;流程&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;读取
+    &lt;ol&gt;
+      &lt;li&gt;首先将从磁盘读到的页存放在缓冲池中，这个过程称为将页“FIX”在缓冲池中。
+        &lt;ol&gt;
+          &lt;li&gt;每个&lt;strong&gt;页&lt;/strong&gt;根据&lt;strong&gt;哈希值&lt;/strong&gt;平均分配到不同&lt;strong&gt;缓冲池实例&lt;/strong&gt;中&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;下一次再读相同的页时，首先判断该页是否在缓冲池中。
+        &lt;ol&gt;
+          &lt;li&gt;若在缓冲池中，称该页在缓冲池中被命中，直接读取该页。&lt;/li&gt;
+          &lt;li&gt;否则，读取磁盘上的页。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;修改
+    &lt;ol&gt;
+      &lt;li&gt;写入redo log buffer&lt;/li&gt;
+      &lt;li&gt;当事务提交时 (会触发将redo log buffer写入redo log的动作)，写redo log, 写binlog&lt;/li&gt;
+      &lt;li&gt;修改在缓冲池中的页&lt;/li&gt;
+      &lt;li&gt;将脏页复制到double write buffer&lt;/li&gt;
+      &lt;li&gt;顺序写写入double write file&lt;/li&gt;
+      &lt;li&gt;然后再以一定的频率刷新到磁盘上。
+        &lt;ol&gt;
+          &lt;li&gt;页从缓冲池刷新回磁盘的操作并不是在每次页发生更新时触发，而是通过一种称为&lt;strong&gt;Checkpoint&lt;/strong&gt;的机制刷新回磁盘。同样，这也是为了提高数据库的整体性能。&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;内存&quot;&gt;内存&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;缓冲池 (innodb_buffer_pool)&lt;/li&gt;
+  &lt;li&gt;LRU List &amp;amp; Free List &amp;amp; Flush List&lt;/li&gt;
+  &lt;li&gt;重做日志缓冲池 (redo log buffer)&lt;/li&gt;
+  &lt;li&gt;额外内存池 (innodb_additional_mem_pool_size)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;缓冲池--一块内存区域通过内存的速度来弥补磁盘速度较慢对数据库性能的影响&quot;&gt;缓冲池 : 一块内存区域，通过内存的速度来弥补磁盘速度较慢对数据库性能的影响&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;作用 : 由于CPU速度与磁盘速度之间的鸿沟，基于磁盘的数据库系统通常使用缓冲池技术来提高数据库的整体性能。&lt;/li&gt;
+  &lt;li&gt;内容 :
+&lt;img src=&quot;\img\mysql\InnoDb_enginee-buffer.png&quot; alt=&quot;Image&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;缓冲池数量 : innodb_buffer_pool_instances&lt;/li&gt;
+  &lt;li&gt;算法
+    &lt;ol&gt;
+      &lt;li&gt;缓冲池是通过&lt;strong&gt;LRU（Latest Recent Used，最近最少使用）算法&lt;/strong&gt;来进行管理的。即最频繁使用的页在LRU列表的前端，而最少使用的页在LRU列表的尾端。当缓冲池不能存放新读取到的页时，将首先释放LRU列表中尾端的页。&lt;/li&gt;
+      &lt;li&gt;midpoint insertion strategy : 新读取到的页, 不是放到首部, 而是放在中间&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;redo-log-buffer&quot;&gt;redo log buffer&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;InnoDB存储引擎首先将redo log信息先放入到redo log buffer，然后按一定频率将其刷新到重做日志文件。&lt;/li&gt;
+  &lt;li&gt;重做日志缓冲一般不需要设置得很大，因为一般情况下每一秒钟会将重做日志缓冲刷新到日志文件，因此用户只需要保证每秒产生的事务量在这个缓冲大小之内即可。
+    &lt;ol&gt;
+      &lt;li&gt;innodb_log_buffer_size, 默认为8MB&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;redo log buffer刷新到外部磁盘的redo log的情况
+    &lt;ol&gt;
+      &lt;li&gt;&lt;strong&gt;Master Thread每一秒&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;每个&lt;strong&gt;事务commit&lt;/strong&gt;时&lt;/li&gt;
+      &lt;li&gt;当redo log buffer&lt;strong&gt;剩余空间&lt;/strong&gt;小于1/2时&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;额外内存池&quot;&gt;额外内存池&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;在InnoDB存储引擎中，对内存的管理是通过一种称为内存堆 (heap) 的方式进行的&lt;/li&gt;
+  &lt;li&gt;在对一些数据结构本身的内存进行分配时，需要从额外的内存池中进行申请，当该区域的内存不够时，会从缓冲池中进行申请
+    &lt;ol&gt;
+      &lt;li&gt;e.g. 分配了缓冲池 (innodb_buffer_pool)，但是每个缓冲池中的帧缓冲 (frame buffer) 还有对应的缓冲控制对象 (buffer control block) ，这些对象记录了一些诸如LRU、锁、等待等信息，而这个对象的内存需要从额外内存池中申请&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;脏页--当-内存数据页缓冲池的页-比-磁盘上的页-新的时候我们称这个内存页为脏页&quot;&gt;脏页 : 当 &lt;u&gt;内存数据页(缓冲池的页)&lt;/u&gt; 比 &lt;u&gt;磁盘上的页&lt;/u&gt; 新的时候，我们称这个内存页为脏页&lt;/h2&gt;
+
+&lt;h2 id=&quot;刷脏页的时机&quot;&gt;刷脏页的时机&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;redo log写满时，没有空间了，此时需要将checkpoint向前推进，推进的这部分日志对应的脏页刷入到磁盘，此时所有的更新全部阻塞，此时写的性能变为0，必须待刷一部分脏页后才能更新。&lt;/li&gt;
+  &lt;li&gt;系统内存不足时，需要将一部分数据页淘汰掉，如果淘汰的是脏页，需要先将脏页同步到磁盘。&lt;/li&gt;
+  &lt;li&gt;MySQL认为空闲的时间，这种没有性能问题。&lt;/li&gt;
+  &lt;li&gt;mysql正常关闭之前，会把所有脏页刷入磁盘，不存在性能问题。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;write-ahead-log-wal&quot;&gt;Write Ahead Log (WAL)&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;现存问题 : 如果在从缓冲池将页的新版本刷新到&lt;u&gt;磁盘&lt;/u&gt;时发生了宕机，那么数据就不能恢复了。&lt;/li&gt;
+  &lt;li&gt;作用 : 避免发生数据丢失&lt;/li&gt;
+  &lt;li&gt;内容 : 当事务提交时 (会触发将redo log buffer写入redo log的动作)，先写redo log，再修改页。
+    &lt;ol&gt;
+      &lt;li&gt;当由于发生宕机而导致数据丢失时，通过redo log来完成数据的恢复&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;checkpoint--在某些关键的时间点将-缓冲池中的-脏页-刷回到-磁盘&quot;&gt;checkpoint : 在某些关键的时间点将 &lt;u&gt;缓冲池中的 脏页&lt;/u&gt; 刷回到 &lt;u&gt;磁盘&lt;/u&gt;&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;前提
+    &lt;ol&gt;
+      &lt;li&gt;不可能每次有脏页就刷新回磁盘, 开销很大&lt;/li&gt;
+      &lt;li&gt;redo log 和 缓冲池 不可能无限大
+        &lt;ol&gt;
+          &lt;li&gt;当&lt;u&gt;redo log&lt;/u&gt; 和 &lt;u&gt;缓冲池&lt;/u&gt; 无限大的时候, 不需要将 &lt;u&gt;缓冲池&lt;/u&gt; 的内容刷新到 &lt;u&gt;磁盘&lt;/u&gt; . 因为当发生宕机的时候, 完全可以通过redo log来恢复
+            &lt;ol&gt;
+              &lt;li&gt;但是 &lt;u&gt;缓冲池&lt;/u&gt; 不可能无限大, 而且内存比磁盘贵很多&lt;/li&gt;
+              &lt;li&gt;但是 &lt;u&gt;redo log&lt;/u&gt; 无限大的话, 恢复需要太久时间&lt;/li&gt;
+            &lt;/ol&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;作用 :
+    &lt;ol&gt;
+      &lt;li&gt;缩短数据库的恢复时间&lt;/li&gt;
+      &lt;li&gt;缓冲池 不够用时，将脏页刷新到磁盘&lt;/li&gt;
+      &lt;li&gt;redo log 不可用时，刷新脏页&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;好处 :
+    &lt;ol&gt;
+      &lt;li&gt;缩短恢复时间 : 当数据库发生宕机时，数据库不需要重做所有的日志，因为Checkpoint之前的页都已经刷新回磁盘, 只需对Checkpoint后的重做日志进行恢复&lt;/li&gt;
+      &lt;li&gt;缓冲池 不够用的时候, 根据LRU算法会溢出最近最少使用的页, 如果是脏页 (也有可能是select, 就不是脏页了), 会强制执行check point, 刷新回磁盘.&lt;/li&gt;
+      &lt;li&gt;redo log : 如果redo log还被需要时, 就必须强制产生check point, 将缓冲池中的page至少刷新到当前redo log的位置
+        &lt;ol&gt;
+          &lt;li&gt;前提 : 当前事务数据库系统对重做日志的设计都是循环使用的，并不是让其无限增大的&lt;/li&gt;
+          &lt;li&gt;redo log 不再需要 : 即便是宕机, 数据库恢复也不需要恢复这部分redo log&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;种类
+    &lt;ol&gt;
+      &lt;li&gt;Sharp Checkpoint (default) : 数据库关闭时 将 所有的脏页 都刷新回 磁盘&lt;/li&gt;
+      &lt;li&gt;Fuzzy Checkpoint : 只刷新一部分脏页
+        &lt;ol&gt;
+          &lt;li&gt;情况
+            &lt;ol&gt;
+              &lt;li&gt;Master Thread Checkpoint : [异步] [非阻塞] 以每秒或每十秒的速度从缓冲池的脏页列表中刷新一定比例的页回磁盘&lt;/li&gt;
+              &lt;li&gt;FLUSH_LRU_LIST Checkpoint : [PageCleaner线程] [非阻塞] InnoDB存储引擎需要保证 LRU列表 中需要有差不多100个空闲页可供使用&lt;/li&gt;
+              &lt;li&gt;Async/Sync Flush Checkpoint : redo log不可用的情况，这时需要强制将一些页刷新回磁盘，而此时脏页是从脏页列表中选取的。&lt;/li&gt;
+              &lt;li&gt;Dirty Page too much Checkpoint : 脏页的数量超过某个百分比 (innodb_max_dirty_pages_pct)&lt;/li&gt;
+            &lt;/ol&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;插入缓冲-insert-buffer--提高对于非聚集索引插入的性能&quot;&gt;插入缓冲 (Insert Buffer) : 提高对于&lt;strong&gt;非聚集索引&lt;/strong&gt;插入&lt;strong&gt;的&lt;/strong&gt;性能&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Insert Buffer&lt;/strong&gt;和数据页一样，&lt;strong&gt;不是buffer&lt;/strong&gt;, 也是&lt;strong&gt;物理页&lt;/strong&gt;的一个组成部分&lt;/li&gt;
+  &lt;li&gt;当表只有聚集索引时, 会构造一颗聚集索引的B+树
+    &lt;ol&gt;
+      &lt;li&gt;当插入聚集索引 (主键) 是&lt;strong&gt;顺序自增&lt;/strong&gt;的时候，不需要磁盘的随机读取, 速度非常快。
+        &lt;ol&gt;
+          &lt;li&gt;非顺序的情况 : 主键是UUID 或 指定了主键&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;当表中有非聚集索引 (普通索引) 时,
+    &lt;ol&gt;
+      &lt;li&gt;依旧会按照主键构造一颗聚集索引的B+树,&lt;/li&gt;
+      &lt;li&gt;同时会构造一颗&lt;strong&gt;非聚集索引&lt;/strong&gt;的B+树
+        &lt;ol&gt;
+          &lt;li&gt;对于非聚集索引&lt;strong&gt;叶子节点&lt;/strong&gt;的插入不再是顺序的了，这时就需要&lt;strong&gt;离散&lt;/strong&gt;地访问非聚集索引页 (&lt;strong&gt;也是为什么表中有索引, 插入会变慢的原因&lt;/strong&gt;)&lt;/li&gt;
+          &lt;li&gt;由于随机读取的存在而导致了插入操作性能下降&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;插入缓冲 :
+    &lt;ol&gt;
+      &lt;li&gt;对于非聚集索引的插入或更新操作，不是每一次直接插入到索引页中，而是先判断插入的非聚集索引页是否在缓冲池中
+        &lt;ol&gt;
+          &lt;li&gt;若在，则直接插入&lt;/li&gt;
+          &lt;li&gt;若不在，
+            &lt;ol&gt;
+              &lt;li&gt;则先放入到一个Insert Buffer对象中，好似欺骗数据库这个非聚集的索引已经插到叶子节点，而实际并没有，只是存放在另一个磁盘位置。&lt;/li&gt;
+              &lt;li&gt;然后再以一定的频率和情况进行Insert Buffer和辅助索引页子节点的merge (合并) 操作，&lt;/li&gt;
+              &lt;li&gt;这时通常能将多个插入合并到一个操作中（因为在一个索引页中），这就大大提高了对于非聚集索引插入的性能。&lt;/li&gt;
+            &lt;/ol&gt;
+          &lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;启动插入缓冲的条件
+    &lt;ol&gt;
+      &lt;li&gt;索引是辅助索引 (secondary index) : 因为聚集索引是主键, 也要确保唯一性&lt;/li&gt;
+      &lt;li&gt;索引不是唯一（unique）的 : 因为如果是唯一的话, 要确保现存的没有重复, 需要随机读, 这样插入缓冲就没意义了&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;change buffer :
+    &lt;ol&gt;
+      &lt;li&gt;insert buffer的升级, 不仅对insert, 还对update, delete都有对应的update buffer, delete buffer, purge buffer&lt;/li&gt;
+      &lt;li&gt;对象 : 非唯一的辅助索引&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;两次写-double-write--解决部分写失效问题-确保可靠性&quot;&gt;两次写 (Double Write) : &lt;strong&gt;解决部分写失效问题&lt;/strong&gt;, 确保可靠性&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;部分写失效 : 当更新内存页到磁盘中时, 发生宕机, 导致页只写了一部分.&lt;/li&gt;
+  &lt;li&gt;redo log也不能解决部分写失效的问题 : 因为redo log记录的是对页的物理操作&lt;/li&gt;
+  &lt;li&gt;解决办法 :&lt;/li&gt;
+  &lt;li&gt;对缓冲池的脏页进行刷新的流程
+    &lt;ol&gt;
+      &lt;li&gt;不直接写磁盘，而是会通过memcpy函数将脏页先复制到内存中的doublewrite buffer&lt;/li&gt;
+      &lt;li&gt;通过doublewrite buffer再分两次，每次1MB顺序地写入共享表空间的物理磁盘上 (因为doublewrite页是连续的，因此这个过程是顺序写的，开销并不是很大)&lt;/li&gt;
+      &lt;li&gt;马上调用fsync函数，同步磁盘中的double write文件，避免缓冲写带来的问题&lt;/li&gt;
+      &lt;li&gt;将doublewrite buffer中的页写入各个表空间文件中&lt;/li&gt;
+      &lt;li&gt;恢复流程
+        &lt;ol&gt;
+          &lt;li&gt;从共享表空间中的doublewrite中找到该页的一个副本，将其复制到表空间文件&lt;/li&gt;
+          &lt;li&gt;再应用重做日志&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+      &lt;li&gt;架构
+&lt;img src=&quot;\img\mysql\InnoDb_enginee-double_wrtite.png&quot; alt=&quot;Image&quot; /&gt;&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;自适应哈希索引-adaptive-hash-index--对频繁访问的页-建立索引&quot;&gt;自适应哈希索引 (Adaptive Hash Index) : 对频繁访问的页, 建立索引&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Innodb会监控对表上各索引页的查询, 如果观察到建立哈希索引可以带来速度提升, 则建立哈希索引&lt;/li&gt;
+  &lt;li&gt;要求
+    &lt;ol&gt;
+      &lt;li&gt;查询&lt;strong&gt;语句是一样的&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;以该模式&lt;strong&gt;访问了100次&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;页通过该模式&lt;strong&gt;访问了N次&lt;/strong&gt;, 其中N = 页中记录 / 16&lt;/li&gt;
+      &lt;li&gt;只能是&lt;strong&gt;等于某个值&lt;/strong&gt;的查询, 其他查询 (e.g. 范围查询) 是不能使用自适应哈希索引的&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;性能提升
+    &lt;ol&gt;
+      &lt;li&gt;读取 &amp;amp; 写入 : 提升2倍&lt;/li&gt;
+      &lt;li&gt;辅助索引 : 连接性能提升5倍&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;设计思想 : 数据库的自优化 (self-tuning)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;异步io-async-io&quot;&gt;异步IO (Async IO)&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;同时发出多个IO请求&lt;/li&gt;
+  &lt;li&gt;IO merge : 当判断到多个页是连续的, 可以将多个IO操作合并为1个IO, 提高IO per second 性能&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;刷新邻接页-flush-neighbor-page&quot;&gt;刷新邻接页 (Flush Neighbor Page)&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;当刷新一个脏页时，InnoDB存储引擎会检测该页所在区（extent）的所有页，如果是脏页，那么一起进行刷新。&lt;/li&gt;
+  &lt;li&gt;通过AIO可以将多个IO写入操作合并为一个IO操作，故该工作机制在传统机械磁盘下有着显著的优势&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Tue, 23 Feb 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/02/23/innodb/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/02/23/innodb/</guid>
+        
+        <category>mysql</category>
+        
+        
+      </item>
     
       <item>
         <title>Spring Boot 启动过程源码剖析</title>
