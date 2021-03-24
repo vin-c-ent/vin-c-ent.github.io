@@ -5,9 +5,117 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Feb 2021 21:11:54 +0800</pubDate>
-    <lastBuildDate>Tue, 23 Feb 2021 21:11:54 +0800</lastBuildDate>
+    <pubDate>Wed, 24 Mar 2021 21:42:14 +0800</pubDate>
+    <lastBuildDate>Wed, 24 Mar 2021 21:42:14 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Cookies</title>
+        <description>&lt;h2 id=&quot;cookie介绍&quot;&gt;Cookie介绍&lt;/h2&gt;
+
+&lt;p&gt;Cookie 保存在客户端中，按在客户端中的存储位置，可分为&lt;u&gt;内存 Cookie&lt;/u&gt; 和&lt;u&gt;硬盘 Cookie&lt;/u&gt;。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;u&gt;内存 Cookie&lt;/u&gt; : 由浏览器维护，保存在内存中，浏览器关闭即消失，存在时间短暂。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;u&gt;硬盘 Cookie&lt;/u&gt;  : 保存在硬盘里，有过期时间，除非用户手动清理或到了过期时间，硬盘 Cookie 不会清除，存在时间较长。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所以，按存在时间，可分为&lt;u&gt;非持久 Cookie&lt;/u&gt; 和&lt;u&gt;持久 Cookie&lt;/u&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;cookie存在的意义&quot;&gt;Cookie存在的意义&lt;/h2&gt;
+
+&lt;p&gt;因为 HTTP 协议是无状态的，即服务器不知道用户上一次做了什么，这严重阻碍了交互式 Web 应用程序的实现。&lt;/p&gt;
+
+&lt;p&gt;在典型的网上购物场景中，用户浏览了几个页面，买了一盒饼干和两瓶饮料。最后结帐时，由于 HTTP 的无状态性，不通过额外的手段，服务器并不知道用户到底买了什么，所以 Cookie 就是用来绕开 HTTP 的无状态性的“额外手段”之一。服务器可以设置或读取 Cookies 中包含的信息，借此维护用户跟服务器会话中的状态。&lt;/p&gt;
+
+&lt;p&gt;在刚才的购物场景中，当用户选购了第一项商品，服务器在向用户发送网页的同时，还发送了一段 Cookie，记录着那项商品的信息。当用户访问另一个页面，浏览器会把 Cookie 发送给服务器，于是服务器知道他之前选购了什么。用户继续选购饮料，服务器就在原来那段 Cookie 里追加新的商品信息。结帐时，服务器读取发送来的 Cookie 即可。&lt;/p&gt;
+
+&lt;p&gt;Cookie 另一个典型的应用是当登录一个网站时，网站往往会请求用户输入用户名和密码，并且用户可以勾选“下次自动登录”。如果勾选了，那么下次访问同一网站时，用户会发现没输入用户名和密码就已经登录了。这正是因为前一次登录时，服务器发送了包含登录凭据（用户名加密码的某种加密形式）的 Cookie 到用户的硬盘上。第二次登录时，如果该 Cookie 尚未到期，浏览器会发送该 Cookie，服务器验证凭据，于是不必输入用户名和密码就让用户登录了。&lt;/p&gt;
+
+&lt;h2 id=&quot;domain--path属性&quot;&gt;Domain &amp;amp; Path属性&lt;/h2&gt;
+
+&lt;p&gt;Domain和Path定义了cookie的scope，他们告诉了浏览器，cookie属于哪个网站。因为显而易见的安全原因，cookies只能被设置到当前resource的top domain和它的sub domains，而非其他top domain和sub domain。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;例如，&lt;a href=&quot;http://example.org/&quot;&gt;example.org&lt;/a&gt;不能设置&lt;a href=&quot;http://foo.com/&quot;&gt;foo.com&lt;/a&gt;的cookies。因为这会允许&lt;a href=&quot;http://example.org/&quot;&gt;example.org&lt;/a&gt;去控制&lt;a href=&quot;http://foo.com/&quot;&gt;foo.com&lt;/a&gt;的cookies.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;如果server没有指定一个cookie的domain和path，他们默认会设为请求resource的domain和path。&lt;/p&gt;
+
+&lt;p&gt;然而，大多数的浏览器中，&lt;a href=&quot;http://foo.com/&quot;&gt;foo.com&lt;/a&gt; 没有主动设置domain的cookie和被设为&lt;a href=&quot;http://foo.com/&quot;&gt;foo.com&lt;/a&gt;的cookies是有区别的。&lt;/p&gt;
+
+&lt;p&gt;在前一种情况，只有在到&lt;a href=&quot;http://foo.com/&quot;&gt;foo.com&lt;/a&gt;的request才会发送cookie，也称作host-only cookie。在后面一种case，所有的sub domain都会被发送 (e.g. &lt;a href=&quot;http://docs.foo.com/&quot;&gt;docs.foo.com&lt;/a&gt;)。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;这个规则中有一个值得注意的是，Windows 10 RS3之前的Edge &amp;amp; IE11之前的和Windows 10 RS4 (April 2018) 的IE，无论cookie有没有设置domain属性，都会发送cookies到sub domains。&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;例子&quot;&gt;例子&lt;/h2&gt;
+
+&lt;p&gt;下面是一个用户登录后，网站发送的一些Set-Cookie HTTP response headers的sample。http request被发送到&lt;a href=&quot;http://docs.foo.com/&quot;&gt;docs.foo.com&lt;/a&gt; subdomain的网页&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;rouge-gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;rouge-code&quot;&gt;&lt;pre&gt;HTTP/1.0 200 OK
+Set-Cookie: LSID=DQAAAK…Eaem_vYg; Path=/accounts; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly
+Set-Cookie: HSID=AYQEVn…DKrdst; Domain=.foo.com; Path=/; Expires=Wed, 13 Jan 2021 22:23:01 GMT; HttpOnly
+Set-Cookie: SSID=Ap4P…GTEq; Domain=foo.com; Path=/; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly
+…
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;第一个cookie, LSID, 没有Domain属性，但是Path属性被设置到/accounts。这告诉浏览器，cookie只会在请求页面在&lt;a href=&quot;http://docs.foo.com/accounts&quot;&gt;docs.foo.com/accounts&lt;/a&gt;下的时候被发送。(domain由request domain推断得出)&lt;/p&gt;
+
+&lt;p&gt;另外2个cookies，HSID和SSID，当浏览器请求任何sub domain在.&lt;a href=&quot;http://foo.com/&quot;&gt;foo.com&lt;/a&gt;下，path任意的情况下会被发送 (e.g. www.foo.com/bra))。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;在最近的standar中，前置的”.”是可选的，但仍然可以为了兼容基于RFC 2019的实现而增加。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;cookie-的缺陷&quot;&gt;Cookie 的缺陷&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Cookie 会被附加在每个 HTTP 请求中，所以无形中增加了&lt;strong&gt;流量&lt;/strong&gt;。&lt;/li&gt;
+  &lt;li&gt;由于 HTTP 请求中的 Cookie 是明文传递的，所以&lt;strong&gt;安全性&lt;/strong&gt;成问题，除非使用&lt;strong&gt;https&lt;/strong&gt;。&lt;/li&gt;
+  &lt;li&gt;Cookie 的&lt;strong&gt;大小&lt;/strong&gt;限制在 4 KB 左右，对于复杂的存储需求来说是不够用的。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;偷窃cookies和脚本攻击&quot;&gt;偷窃Cookies和脚本攻击&lt;/h2&gt;
+
+&lt;p&gt;虽然Cookies没有中电脑病毒那么危险，但它仍包含了一些敏感消息：用户名、电脑名、使用的浏览器和曾经访问的网站。用户不希望这些内容泄漏出去，尤其是当其中还包含有私人信息的时候。&lt;/p&gt;
+
+&lt;p&gt;这并非危言耸听，&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Glossary/Cross-site_scripting&quot;&gt;跨站点脚本（XSS, Cross site scripting）&lt;/a&gt;可以达到此目的。在受到跨站点脚本攻击时，Cookie盗贼和Cookie投毒将窃取内容。一旦Cookie落入攻击者手中，它将会重现其价值。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Cookie盗贼：搜集用户Cookie并发给攻击者的黑客，攻击者将利用Cookie消息通过合法手段进入用户帐户。&lt;/li&gt;
+  &lt;li&gt;Cookie投毒：一般认为，Cookie在储存和传回服务器期间没有被修改过，而攻击者会在Cookie送回服务器之前对其进行修改，达到自己的目的。例如，在一个购物网站的Cookie中包含了顾客应付的款项，攻击者将该值改小，达到少付款的目的。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cookies的替代品&quot;&gt;Cookies的替代品&lt;/h2&gt;
+
+&lt;p&gt;鉴于Cookie的局限和反对者的声音，有如下一些替代方法：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sourceforge.net/projects/brownie/&quot;&gt;Brownie方案&lt;/a&gt;（页面存档备份，存于互联网档案馆），是一项开放源代码工程，由SourceForge发起。Brownie曾被用以共享在不同域中的接入，而Cookies则被构想成单一域中的接入。这项方案已经停止开发。&lt;/li&gt;
+  &lt;li&gt;P3P，用以让用户获得更多控制个人隐私权利的协议。在浏览网站时，它类似于Cookie。这项方案也已经停止开发。&lt;/li&gt;
+  &lt;li&gt;在与服务器传输数据时，通过在地址后面添加唯一&lt;u&gt;查询串&lt;/u&gt;，让服务器识别是否合法用户，也可以避免使用Cookie。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 24 Mar 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/03/24/cookies/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/03/24/cookies/</guid>
+        
+        <category>HTTP</category>
+        
+        
+      </item>
     
       <item>
         <title>InnoDB存储引擎</title>

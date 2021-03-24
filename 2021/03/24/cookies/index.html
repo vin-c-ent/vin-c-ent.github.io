@@ -11,26 +11,26 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="InnoDB存储引擎 - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="Cookies - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="架构
+    <meta property="og:description" content="Cookie介绍
 ">
     
-    <meta property="article:published_time" content="2021-02-23T00:00:00Z">
+    <meta property="article:published_time" content="2021-03-24T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
     
     
-    <meta property="article:tag" content="mysql">
+    <meta property="article:tag" content="HTTP">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2021/02/23/innodb/">
+    <meta property="og:url" content="http://localhost:4000/2021/03/24/cookies/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>InnoDB存储引擎 - 王润森的博客 | Vincent Blog</title>
+    <title>Cookies - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2021/02/23/innodb/">
+    <link rel="canonical" href="http://localhost:4000/2021/03/24/cookies/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -226,13 +226,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=mysql" title="mysql">mysql</a>
+                        <a class="tag" href="/archive/?tag=HTTP" title="HTTP">HTTP</a>
                         
                     </div>
-                    <h1>InnoDB存储引擎</h1>
+                    <h1>Cookies</h1>
                     
                     <h2 class="subheading"></h2>
-                    <span class="meta">Posted by Vincent on February 23, 2021</span>
+                    <span class="meta">Posted by Vincent on March 24, 2021</span>
                 </div>
             </div>
         </div>
@@ -258,334 +258,114 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h2 id="架构">架构</h2>
+				<h2 id="cookie介绍">Cookie介绍</h2>
 
-<p><img src="\img\mysql\InnoDb_enginee-architecture.png" alt="Image" /></p>
+<p>Cookie 保存在客户端中，按在客户端中的存储位置，可分为<u>内存 Cookie</u> 和<u>硬盘 Cookie</u>。</p>
 
-<h2 id="innodb的多线程模型">InnoDB的多线程模型</h2>
+<ul>
+  <li>
+    <p><u>内存 Cookie</u> : 由浏览器维护，保存在内存中，浏览器关闭即消失，存在时间短暂。</p>
+  </li>
+  <li>
+    <p><u>硬盘 Cookie</u>  : 保存在硬盘里，有过期时间，除非用户手动清理或到了过期时间，硬盘 Cookie 不会清除，存在时间较长。</p>
+  </li>
+</ul>
+
+<p>所以，按存在时间，可分为<u>非持久 Cookie</u> 和<u>持久 Cookie</u>。</p>
+
+<h2 id="cookie存在的意义">Cookie存在的意义</h2>
+
+<p>因为 HTTP 协议是无状态的，即服务器不知道用户上一次做了什么，这严重阻碍了交互式 Web 应用程序的实现。</p>
+
+<p>在典型的网上购物场景中，用户浏览了几个页面，买了一盒饼干和两瓶饮料。最后结帐时，由于 HTTP 的无状态性，不通过额外的手段，服务器并不知道用户到底买了什么，所以 Cookie 就是用来绕开 HTTP 的无状态性的“额外手段”之一。服务器可以设置或读取 Cookies 中包含的信息，借此维护用户跟服务器会话中的状态。</p>
+
+<p>在刚才的购物场景中，当用户选购了第一项商品，服务器在向用户发送网页的同时，还发送了一段 Cookie，记录着那项商品的信息。当用户访问另一个页面，浏览器会把 Cookie 发送给服务器，于是服务器知道他之前选购了什么。用户继续选购饮料，服务器就在原来那段 Cookie 里追加新的商品信息。结帐时，服务器读取发送来的 Cookie 即可。</p>
+
+<p>Cookie 另一个典型的应用是当登录一个网站时，网站往往会请求用户输入用户名和密码，并且用户可以勾选“下次自动登录”。如果勾选了，那么下次访问同一网站时，用户会发现没输入用户名和密码就已经登录了。这正是因为前一次登录时，服务器发送了包含登录凭据（用户名加密码的某种加密形式）的 Cookie 到用户的硬盘上。第二次登录时，如果该 Cookie 尚未到期，浏览器会发送该 Cookie，服务器验证凭据，于是不必输入用户名和密码就让用户登录了。</p>
+
+<h2 id="domain--path属性">Domain &amp; Path属性</h2>
+
+<p>Domain和Path定义了cookie的scope，他们告诉了浏览器，cookie属于哪个网站。因为显而易见的安全原因，cookies只能被设置到当前resource的top domain和它的sub domains，而非其他top domain和sub domain。</p>
+
+<blockquote>
+  <p>例如，<a href="http://example.org/">example.org</a>不能设置<a href="http://foo.com/">foo.com</a>的cookies。因为这会允许<a href="http://example.org/">example.org</a>去控制<a href="http://foo.com/">foo.com</a>的cookies.</p>
+</blockquote>
+
+<p>如果server没有指定一个cookie的domain和path，他们默认会设为请求resource的domain和path。</p>
+
+<p>然而，大多数的浏览器中，<a href="http://foo.com/">foo.com</a> 没有主动设置domain的cookie和被设为<a href="http://foo.com/">foo.com</a>的cookies是有区别的。</p>
+
+<p>在前一种情况，只有在到<a href="http://foo.com/">foo.com</a>的request才会发送cookie，也称作host-only cookie。在后面一种case，所有的sub domain都会被发送 (e.g. <a href="http://docs.foo.com/">docs.foo.com</a>)。</p>
+
+<blockquote>
+  <p>这个规则中有一个值得注意的是，Windows 10 RS3之前的Edge &amp; IE11之前的和Windows 10 RS4 (April 2018) 的IE，无论cookie有没有设置domain属性，都会发送cookies到sub domains。</p>
+
+</blockquote>
+
+<h2 id="例子">例子</h2>
+
+<p>下面是一个用户登录后，网站发送的一些Set-Cookie HTTP response headers的sample。http request被发送到<a href="http://docs.foo.com/">docs.foo.com</a> subdomain的网页</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>HTTP/1.0 200 OK
+Set-Cookie: LSID=DQAAAK…Eaem_vYg; Path=/accounts; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly
+Set-Cookie: HSID=AYQEVn…DKrdst; Domain=.foo.com; Path=/; Expires=Wed, 13 Jan 2021 22:23:01 GMT; HttpOnly
+Set-Cookie: SSID=Ap4P…GTEq; Domain=foo.com; Path=/; Expires=Wed, 13 Jan 2021 22:23:01 GMT; Secure; HttpOnly
+…
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>第一个cookie, LSID, 没有Domain属性，但是Path属性被设置到/accounts。这告诉浏览器，cookie只会在请求页面在<a href="http://docs.foo.com/accounts">docs.foo.com/accounts</a>下的时候被发送。(domain由request domain推断得出)</p>
+
+<p>另外2个cookies，HSID和SSID，当浏览器请求任何sub domain在.<a href="http://foo.com/">foo.com</a>下，path任意的情况下会被发送 (e.g. www.foo.com/bra))。</p>
+
+<blockquote>
+  <p>在最近的standar中，前置的”.”是可选的，但仍然可以为了兼容基于RFC 2019的实现而增加。</p>
+</blockquote>
+
+<h2 id="cookie-的缺陷">Cookie 的缺陷</h2>
 
 <ol>
-  <li>Master Thread : 非常核心的后台线程，主要负责
-    <ol>
-      <li>将缓冲池中的数据异步刷新到磁盘
-        <ol>
-          <li>每一秒将redo log buffer刷新到redo log文件</li>
-        </ol>
-      </li>
-      <li>脏页的刷新、合并插入缓冲（INSERT BUFFER）、UNDO页的回收等</li>
-    </ol>
-  </li>
-  <li>IO Thread在InnoDB存储引擎中大量使用了<strong>AIO</strong>（Async IO）来处理写IO请求，这样可以极大提高数据库的性能。
-    <ol>
-      <li>IO Thread的工作主要是负责这些IO请求的回调（call back）处理。</li>
-    </ol>
-  </li>
-  <li>Purge Thread : 事务被提交后，其所使用的<strong>undo log</strong>可能不再需要，因此需要PurgeThread来回收已经使用并分配的undo页。</li>
-  <li>Page Cleaner Thread
-    <ol>
-      <li>作用 : 将之前版本中<strong>脏页的刷新</strong>操作都放入到单独的线程中来完成</li>
-      <li>目的 : 为了减轻原Master Thread的工作及对于用户查询线程的阻塞，进一步提高InnoDB存储引擎的性能。</li>
-    </ol>
-  </li>
+  <li>Cookie 会被附加在每个 HTTP 请求中，所以无形中增加了<strong>流量</strong>。</li>
+  <li>由于 HTTP 请求中的 Cookie 是明文传递的，所以<strong>安全性</strong>成问题，除非使用<strong>https</strong>。</li>
+  <li>Cookie 的<strong>大小</strong>限制在 4 KB 左右，对于复杂的存储需求来说是不够用的。</li>
 </ol>
 
-<h2 id="流程">流程</h2>
+<h2 id="偷窃cookies和脚本攻击">偷窃Cookies和脚本攻击</h2>
 
-<ol>
-  <li>读取
-    <ol>
-      <li>首先将从磁盘读到的页存放在缓冲池中，这个过程称为将页“FIX”在缓冲池中。
-        <ol>
-          <li>每个<strong>页</strong>根据<strong>哈希值</strong>平均分配到不同<strong>缓冲池实例</strong>中</li>
-        </ol>
-      </li>
-      <li>下一次再读相同的页时，首先判断该页是否在缓冲池中。
-        <ol>
-          <li>若在缓冲池中，称该页在缓冲池中被命中，直接读取该页。</li>
-          <li>否则，读取磁盘上的页。</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>修改
-    <ol>
-      <li>写入redo log buffer</li>
-      <li>当事务提交时 (会触发将redo log buffer写入redo log的动作)，写redo log, 写binlog</li>
-      <li>修改在缓冲池中的页</li>
-      <li>将脏页复制到double write buffer</li>
-      <li>顺序写写入double write file</li>
-      <li>然后再以一定的频率刷新到磁盘上。
-        <ol>
-          <li>页从缓冲池刷新回磁盘的操作并不是在每次页发生更新时触发，而是通过一种称为<strong>Checkpoint</strong>的机制刷新回磁盘。同样，这也是为了提高数据库的整体性能。</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-</ol>
+<p>虽然Cookies没有中电脑病毒那么危险，但它仍包含了一些敏感消息：用户名、电脑名、使用的浏览器和曾经访问的网站。用户不希望这些内容泄漏出去，尤其是当其中还包含有私人信息的时候。</p>
 
-<h2 id="内存">内存</h2>
+<p>这并非危言耸听，<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Cross-site_scripting">跨站点脚本（XSS, Cross site scripting）</a>可以达到此目的。在受到跨站点脚本攻击时，Cookie盗贼和Cookie投毒将窃取内容。一旦Cookie落入攻击者手中，它将会重现其价值。</p>
 
-<ol>
-  <li>缓冲池 (innodb_buffer_pool)</li>
-  <li>LRU List &amp; Free List &amp; Flush List</li>
-  <li>重做日志缓冲池 (redo log buffer)</li>
-  <li>额外内存池 (innodb_additional_mem_pool_size)</li>
-</ol>
+<ul>
+  <li>Cookie盗贼：搜集用户Cookie并发给攻击者的黑客，攻击者将利用Cookie消息通过合法手段进入用户帐户。</li>
+  <li>Cookie投毒：一般认为，Cookie在储存和传回服务器期间没有被修改过，而攻击者会在Cookie送回服务器之前对其进行修改，达到自己的目的。例如，在一个购物网站的Cookie中包含了顾客应付的款项，攻击者将该值改小，达到少付款的目的。</li>
+</ul>
 
-<h2 id="缓冲池--一块内存区域通过内存的速度来弥补磁盘速度较慢对数据库性能的影响">缓冲池 : 一块内存区域，通过内存的速度来弥补磁盘速度较慢对数据库性能的影响</h2>
+<h2 id="cookies的替代品">Cookies的替代品</h2>
 
-<ol>
-  <li>作用 : 由于CPU速度与磁盘速度之间的鸿沟，基于磁盘的数据库系统通常使用缓冲池技术来提高数据库的整体性能。</li>
-  <li>内容 :
-<img src="\img\mysql\InnoDb_enginee-buffer.png" alt="Image" /></li>
-  <li>缓冲池数量 : innodb_buffer_pool_instances</li>
-  <li>算法
-    <ol>
-      <li>缓冲池是通过<strong>LRU（Latest Recent Used，最近最少使用）算法</strong>来进行管理的。即最频繁使用的页在LRU列表的前端，而最少使用的页在LRU列表的尾端。当缓冲池不能存放新读取到的页时，将首先释放LRU列表中尾端的页。</li>
-      <li>midpoint insertion strategy : 新读取到的页, 不是放到首部, 而是放在中间</li>
-    </ol>
-  </li>
-</ol>
+<p>鉴于Cookie的局限和反对者的声音，有如下一些替代方法：</p>
 
-<h2 id="redo-log-buffer">redo log buffer</h2>
-
-<ol>
-  <li>InnoDB存储引擎首先将redo log信息先放入到redo log buffer，然后按一定频率将其刷新到重做日志文件。</li>
-  <li>重做日志缓冲一般不需要设置得很大，因为一般情况下每一秒钟会将重做日志缓冲刷新到日志文件，因此用户只需要保证每秒产生的事务量在这个缓冲大小之内即可。
-    <ol>
-      <li>innodb_log_buffer_size, 默认为8MB</li>
-    </ol>
-  </li>
-  <li>redo log buffer刷新到外部磁盘的redo log的情况
-    <ol>
-      <li><strong>Master Thread每一秒</strong></li>
-      <li>每个<strong>事务commit</strong>时</li>
-      <li>当redo log buffer<strong>剩余空间</strong>小于1/2时</li>
-    </ol>
-  </li>
-</ol>
-
-<h2 id="额外内存池">额外内存池</h2>
-
-<ol>
-  <li>在InnoDB存储引擎中，对内存的管理是通过一种称为内存堆 (heap) 的方式进行的</li>
-  <li>在对一些数据结构本身的内存进行分配时，需要从额外的内存池中进行申请，当该区域的内存不够时，会从缓冲池中进行申请
-    <ol>
-      <li>e.g. 分配了缓冲池 (innodb_buffer_pool)，但是每个缓冲池中的帧缓冲 (frame buffer) 还有对应的缓冲控制对象 (buffer control block) ，这些对象记录了一些诸如LRU、锁、等待等信息，而这个对象的内存需要从额外内存池中申请</li>
-    </ol>
-  </li>
-</ol>
-
-<h2 id="脏页--当-内存数据页缓冲池的页-比-磁盘上的页-新的时候我们称这个内存页为脏页">脏页 : 当 <u>内存数据页(缓冲池的页)</u> 比 <u>磁盘上的页</u> 新的时候，我们称这个内存页为脏页</h2>
-
-<h2 id="刷脏页的时机">刷脏页的时机</h2>
-
-<ol>
-  <li>redo log写满时，没有空间了，此时需要将checkpoint向前推进，推进的这部分日志对应的脏页刷入到磁盘，此时所有的更新全部阻塞，此时写的性能变为0，必须待刷一部分脏页后才能更新。</li>
-  <li>系统内存不足时，需要将一部分数据页淘汰掉，如果淘汰的是脏页，需要先将脏页同步到磁盘。</li>
-  <li>MySQL认为空闲的时间，这种没有性能问题。</li>
-  <li>mysql正常关闭之前，会把所有脏页刷入磁盘，不存在性能问题。</li>
-</ol>
-
-<h2 id="write-ahead-log-wal">Write Ahead Log (WAL)</h2>
-
-<ol>
-  <li>现存问题 : 如果在从缓冲池将页的新版本刷新到<u>磁盘</u>时发生了宕机，那么数据就不能恢复了。</li>
-  <li>作用 : 避免发生数据丢失</li>
-  <li>内容 : 当事务提交时 (会触发将redo log buffer写入redo log的动作)，先写redo log，再修改页。
-    <ol>
-      <li>当由于发生宕机而导致数据丢失时，通过redo log来完成数据的恢复</li>
-    </ol>
-  </li>
-</ol>
-
-<h2 id="checkpoint--在某些关键的时间点将-缓冲池中的-脏页-刷回到-磁盘">checkpoint : 在某些关键的时间点将 <u>缓冲池中的 脏页</u> 刷回到 <u>磁盘</u></h2>
-
-<ol>
-  <li>前提
-    <ol>
-      <li>不可能每次有脏页就刷新回磁盘, 开销很大</li>
-      <li>redo log 和 缓冲池 不可能无限大
-        <ol>
-          <li>当<u>redo log</u> 和 <u>缓冲池</u> 无限大的时候, 不需要将 <u>缓冲池</u> 的内容刷新到 <u>磁盘</u> . 因为当发生宕机的时候, 完全可以通过redo log来恢复
-            <ol>
-              <li>但是 <u>缓冲池</u> 不可能无限大, 而且内存比磁盘贵很多</li>
-              <li>但是 <u>redo log</u> 无限大的话, 恢复需要太久时间</li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>作用 :
-    <ol>
-      <li>缩短数据库的恢复时间</li>
-      <li>缓冲池 不够用时，将脏页刷新到磁盘</li>
-      <li>redo log 不可用时，刷新脏页</li>
-    </ol>
-  </li>
-  <li>好处 :
-    <ol>
-      <li>缩短恢复时间 : 当数据库发生宕机时，数据库不需要重做所有的日志，因为Checkpoint之前的页都已经刷新回磁盘, 只需对Checkpoint后的重做日志进行恢复</li>
-      <li>缓冲池 不够用的时候, 根据LRU算法会溢出最近最少使用的页, 如果是脏页 (也有可能是select, 就不是脏页了), 会强制执行check point, 刷新回磁盘.</li>
-      <li>redo log : 如果redo log还被需要时, 就必须强制产生check point, 将缓冲池中的page至少刷新到当前redo log的位置
-        <ol>
-          <li>前提 : 当前事务数据库系统对重做日志的设计都是循环使用的，并不是让其无限增大的</li>
-          <li>redo log 不再需要 : 即便是宕机, 数据库恢复也不需要恢复这部分redo log</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>种类
-    <ol>
-      <li>Sharp Checkpoint (default) : 数据库关闭时 将 所有的脏页 都刷新回 磁盘</li>
-      <li>Fuzzy Checkpoint : 只刷新一部分脏页
-        <ol>
-          <li>情况
-            <ol>
-              <li>Master Thread Checkpoint : [异步] [非阻塞] 以每秒或每十秒的速度从缓冲池的脏页列表中刷新一定比例的页回磁盘</li>
-              <li>FLUSH_LRU_LIST Checkpoint : [PageCleaner线程] [非阻塞] InnoDB存储引擎需要保证 LRU列表 中需要有差不多100个空闲页可供使用</li>
-              <li>Async/Sync Flush Checkpoint : redo log不可用的情况，这时需要强制将一些页刷新回磁盘，而此时脏页是从脏页列表中选取的。</li>
-              <li>Dirty Page too much Checkpoint : 脏页的数量超过某个百分比 (innodb_max_dirty_pages_pct)</li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-</ol>
-
-<h2 id="插入缓冲-insert-buffer--提高对于非聚集索引插入的性能">插入缓冲 (Insert Buffer) : 提高对于<strong>非聚集索引</strong>插入<strong>的</strong>性能</h2>
-
-<ol>
-  <li><strong>Insert Buffer</strong>和数据页一样，<strong>不是buffer</strong>, 也是<strong>物理页</strong>的一个组成部分</li>
-  <li>当表只有聚集索引时, 会构造一颗聚集索引的B+树
-    <ol>
-      <li>当插入聚集索引 (主键) 是<strong>顺序自增</strong>的时候，不需要磁盘的随机读取, 速度非常快。
-        <ol>
-          <li>非顺序的情况 : 主键是UUID 或 指定了主键</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>当表中有非聚集索引 (普通索引) 时,
-    <ol>
-      <li>依旧会按照主键构造一颗聚集索引的B+树,</li>
-      <li>同时会构造一颗<strong>非聚集索引</strong>的B+树
-        <ol>
-          <li>对于非聚集索引<strong>叶子节点</strong>的插入不再是顺序的了，这时就需要<strong>离散</strong>地访问非聚集索引页 (<strong>也是为什么表中有索引, 插入会变慢的原因</strong>)</li>
-          <li>由于随机读取的存在而导致了插入操作性能下降</li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>插入缓冲 :
-    <ol>
-      <li>对于非聚集索引的插入或更新操作，不是每一次直接插入到索引页中，而是先判断插入的非聚集索引页是否在缓冲池中
-        <ol>
-          <li>若在，则直接插入</li>
-          <li>若不在，
-            <ol>
-              <li>则先放入到一个Insert Buffer对象中，好似欺骗数据库这个非聚集的索引已经插到叶子节点，而实际并没有，只是存放在另一个磁盘位置。</li>
-              <li>然后再以一定的频率和情况进行Insert Buffer和辅助索引页子节点的merge (合并) 操作，</li>
-              <li>这时通常能将多个插入合并到一个操作中（因为在一个索引页中），这就大大提高了对于非聚集索引插入的性能。</li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-    </ol>
-  </li>
-  <li>启动插入缓冲的条件
-    <ol>
-      <li>索引是辅助索引 (secondary index) : 因为聚集索引是主键, 也要确保唯一性</li>
-      <li>索引不是唯一（unique）的 : 因为如果是唯一的话, 要确保现存的没有重复, 需要随机读, 这样插入缓冲就没意义了</li>
-    </ol>
-  </li>
-  <li>change buffer :
-    <ol>
-      <li>insert buffer的升级, 不仅对insert, 还对update, delete都有对应的update buffer, delete buffer, purge buffer</li>
-      <li>对象 : 非唯一的辅助索引</li>
-    </ol>
-  </li>
-</ol>
-
-<h2 id="两次写-double-write--解决部分写失效问题-确保可靠性">两次写 (Double Write) : <strong>解决部分写失效问题</strong>, 确保可靠性</h2>
-
-<ol>
-  <li>部分写失效 : 当更新内存页到磁盘中时, 发生宕机, 导致页只写了一部分.</li>
-  <li>redo log也不能解决部分写失效的问题 : 因为redo log记录的是对页的物理操作</li>
-  <li>解决办法 :</li>
-  <li>对缓冲池的脏页进行刷新的流程
-    <ol>
-      <li>不直接写磁盘，而是会通过memcpy函数将脏页先复制到内存中的doublewrite buffer</li>
-      <li>通过doublewrite buffer再分两次，每次1MB顺序地写入共享表空间的物理磁盘上 (因为doublewrite页是连续的，因此这个过程是顺序写的，开销并不是很大)</li>
-      <li>马上调用fsync函数，同步磁盘中的double write文件，避免缓冲写带来的问题</li>
-      <li>将doublewrite buffer中的页写入各个表空间文件中</li>
-      <li>恢复流程
-        <ol>
-          <li>从共享表空间中的doublewrite中找到该页的一个副本，将其复制到表空间文件</li>
-          <li>再应用重做日志</li>
-        </ol>
-      </li>
-      <li>架构
-<img src="\img\mysql\InnoDb_enginee-double_wrtite.png" alt="Image" /></li>
-    </ol>
-  </li>
-</ol>
-
-<h2 id="自适应哈希索引-adaptive-hash-index--对频繁访问的页-建立索引">自适应哈希索引 (Adaptive Hash Index) : 对频繁访问的页, 建立索引</h2>
-
-<ol>
-  <li>Innodb会监控对表上各索引页的查询, 如果观察到建立哈希索引可以带来速度提升, 则建立哈希索引</li>
-  <li>要求
-    <ol>
-      <li>查询<strong>语句是一样的</strong></li>
-      <li>以该模式<strong>访问了100次</strong></li>
-      <li>页通过该模式<strong>访问了N次</strong>, 其中N = 页中记录 / 16</li>
-      <li>只能是<strong>等于某个值</strong>的查询, 其他查询 (e.g. 范围查询) 是不能使用自适应哈希索引的</li>
-    </ol>
-  </li>
-  <li>性能提升
-    <ol>
-      <li>读取 &amp; 写入 : 提升2倍</li>
-      <li>辅助索引 : 连接性能提升5倍</li>
-    </ol>
-  </li>
-  <li>设计思想 : 数据库的自优化 (self-tuning)</li>
-</ol>
-
-<h2 id="异步io-async-io">异步IO (Async IO)</h2>
-
-<ol>
-  <li>同时发出多个IO请求</li>
-  <li>IO merge : 当判断到多个页是连续的, 可以将多个IO操作合并为1个IO, 提高IO per second 性能</li>
-</ol>
-
-<h2 id="刷新邻接页-flush-neighbor-page">刷新邻接页 (Flush Neighbor Page)</h2>
-
-<ol>
-  <li>当刷新一个脏页时，InnoDB存储引擎会检测该页所在区（extent）的所有页，如果是脏页，那么一起进行刷新。</li>
-  <li>通过AIO可以将多个IO写入操作合并为一个IO操作，故该工作机制在传统机械磁盘下有着显著的优势</li>
-</ol>
+<ul>
+  <li><a href="https://sourceforge.net/projects/brownie/">Brownie方案</a>（页面存档备份，存于互联网档案馆），是一项开放源代码工程，由SourceForge发起。Brownie曾被用以共享在不同域中的接入，而Cookies则被构想成单一域中的接入。这项方案已经停止开发。</li>
+  <li>P3P，用以让用户获得更多控制个人隐私权利的协议。在浏览网站时，它类似于Cookie。这项方案也已经停止开发。</li>
+  <li>在与服务器传输数据时，通过在地址后面添加唯一<u>查询串</u>，让服务器识别是否合法用户，也可以避免使用Cookie。</li>
+</ul>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2020/11/30/spring-boot/" data-toggle="tooltip" data-placement="top" title="Spring Boot 启动过程源码剖析">
+                        <a href="/2021/02/23/innodb/" data-toggle="tooltip" data-placement="top" title="InnoDB存储引擎">
                         Previous<br>
-                        <span>Spring Boot 启动过程源码剖析</span>
+                        <span>InnoDB存储引擎</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2021/03/24/cookies/" data-toggle="tooltip" data-placement="top" title="Cookies">
-                        Next<br>
-                        <span>Cookies</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -677,8 +457,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2021/02/23/innodb";
-    var disqus_url = "http://localhost:4000/2021/02/23/innodb/";
+    var disqus_identifier = "/2021/03/24/cookies";
+    var disqus_url = "http://localhost:4000/2021/03/24/cookies/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
