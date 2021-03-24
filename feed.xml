@@ -5,9 +5,124 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Mar 2021 21:42:14 +0800</pubDate>
-    <lastBuildDate>Wed, 24 Mar 2021 21:42:14 +0800</lastBuildDate>
+    <pubDate>Wed, 24 Mar 2021 22:32:33 +0800</pubDate>
+    <lastBuildDate>Wed, 24 Mar 2021 22:32:33 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Same origin policy</title>
+        <description>&lt;h2 id=&quot;same-origin-policy--同源策略介绍&quot;&gt;Same Origin Policy / 同源策略介绍&lt;/h2&gt;
+
+&lt;p&gt;在同源策略下，只有当A、B网页的origin相同的情况下，浏览器才会允许&lt;em&gt;A网页&lt;/em&gt;的scripts去访问&lt;em&gt;B网页&lt;/em&gt;的数据。&lt;/p&gt;
+
+&lt;p&gt;这个策略防止了某些恶意script通过DOM (Document Object Model) 访问另一个网页的敏感信息&lt;/p&gt;
+
+&lt;h2 id=&quot;origin的定义&quot;&gt;Origin的定义&lt;/h2&gt;
+
+&lt;p&gt;Origin被定义为 URI scheme + host name + port number的组合&lt;/p&gt;
+
+&lt;h2 id=&quot;sop的作用范围&quot;&gt;SOP的作用范围&lt;/h2&gt;
+
+&lt;p&gt;SOP只会应用到script上。这意味着image, css, 和动态加载scripts可以通过对应的HTML tags被跨域访问。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;fonts是一个值得注意的例外。&lt;/p&gt;
+
+  &lt;p&gt;&lt;em&gt;MDN Web Docs&lt;/em&gt;. Retrieved 2018-07-24. Web fonts are subject to the same domain restriction (font files must be on the same domain as the page using them), unless HTTP access controls  are used to relax this restriction.&lt;/p&gt;
+
+  &lt;p&gt;https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;em&gt;跨站请求伪造 (Cross-site request forgery, CSRF, XSRF)&lt;/em&gt; 就是利用同源策略不适用于&lt;a href=&quot;https://zh.wikipedia.org/wiki/HTML标签&quot;&gt;HTML标签&lt;/a&gt;的缺陷。&lt;/p&gt;
+
+&lt;h2 id=&quot;sample&quot;&gt;Sample&lt;/h2&gt;
+
+&lt;p&gt;e.g. http://www.example.com/dir/page.html&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Compared URL&lt;/th&gt;
+      &lt;th&gt;Outcome&lt;/th&gt;
+      &lt;th&gt;Reason&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;http://www.example.com&lt;/strong&gt;/dir/page2.html&lt;/td&gt;
+      &lt;td&gt;Success&lt;/td&gt;
+      &lt;td&gt;Same scheme, host and port&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;http://www.example.com&lt;/strong&gt;/dir2/other.html&lt;/td&gt;
+      &lt;td&gt;Success&lt;/td&gt;
+      &lt;td&gt;Same scheme, host and port&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;http://&lt;/strong&gt;username:password@&lt;strong&gt;www.example.com&lt;/strong&gt;/dir2/other.html&lt;/td&gt;
+      &lt;td&gt;Success&lt;/td&gt;
+      &lt;td&gt;Same scheme, host and port&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;http://www.example.com:&lt;strong&gt;81&lt;/strong&gt;/dir/other.html&lt;/td&gt;
+      &lt;td&gt;Failure&lt;/td&gt;
+      &lt;td&gt;Same scheme and host but different port&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;https&lt;/strong&gt;://www.example.com/dir/other.html&lt;/td&gt;
+      &lt;td&gt;Failure&lt;/td&gt;
+      &lt;td&gt;Different scheme&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;http://&lt;strong&gt;en.example.com&lt;/strong&gt;/dir/other.html&lt;/td&gt;
+      &lt;td&gt;Failure&lt;/td&gt;
+      &lt;td&gt;Different host&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;http://&lt;strong&gt;example.com&lt;/strong&gt;/dir/other.html&lt;/td&gt;
+      &lt;td&gt;Failure&lt;/td&gt;
+      &lt;td&gt;Different host (exact match required)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;http://&lt;strong&gt;v2.www.example.com&lt;/strong&gt;/dir/other.html&lt;/td&gt;
+      &lt;td&gt;Failure&lt;/td&gt;
+      &lt;td&gt;Different host (exact match required)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;http://www.example.com:&lt;strong&gt;80&lt;/strong&gt;/dir/other.html&lt;/td&gt;
+      &lt;td&gt;Depends&lt;/td&gt;
+      &lt;td&gt;Port explicit.  Depends on implementation in browser.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;同源策略存在的意义&quot;&gt;同源策略存在的意义&lt;/h2&gt;
+
+&lt;p&gt;这个机制对现代广泛依赖http cookies去维护用户session的web applications具有一个特殊意义。因为server基于http cookie的信息去暴露敏感信息或做状态改变的动作。client必要要维护在不相关站点提供的信息之间的严格隔离，从而可以防止数据机密性或完整性的缺失。&lt;/p&gt;
+
+&lt;p&gt;假设没有同源限制，A网站的API可以被任何来源的AJAX请求访问，包括获取用户的隐私信息，只看用户有没有登录，现在有个坏人做了一个网站B，坏人在B网页中用AJAX访问A网站的API，如果一个用户访问B之前已经登录了A，那这个请求包含A网站的cookie信息，也就会被A网站认为用户已经登录，这样用户在A网站的隐私信息就泄露给了控制B网站的坏人。&lt;/p&gt;
+
+&lt;p&gt;不过，如果A网站觉得一些信息跨站访问也无所谓，那就可以通过jsonp或者CORS规则暴露，关键是A网站主动允许不同源的请求。&lt;/p&gt;
+
+&lt;h2 id=&quot;relaxing-the-same-origin-policy&quot;&gt;Relaxing the same-origin policy&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;数据污染 / Data tainting&lt;/li&gt;
+  &lt;li&gt;document.domain property&lt;/li&gt;
+  &lt;li&gt;Cross-Origin Resource Sharing&lt;/li&gt;
+  &lt;li&gt;Cross-document messaging&lt;/li&gt;
+  &lt;li&gt;JSONP&lt;/li&gt;
+  &lt;li&gt;WebSockets&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 24 Mar 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/03/24/same-origin-policy/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/03/24/same-origin-policy/</guid>
+        
+        <category>HTTP</category>
+        
+        
+      </item>
     
       <item>
         <title>Cookies</title>
@@ -103,8 +218,8 @@ Set-Cookie: SSID=Ap4P…GTEq; Domain=foo.com; Path=/; Expires=Wed, 13 Jan 2021 2
 &lt;p&gt;鉴于Cookie的局限和反对者的声音，有如下一些替代方法：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://sourceforge.net/projects/brownie/&quot;&gt;Brownie方案&lt;/a&gt;（页面存档备份，存于互联网档案馆），是一项开放源代码工程，由SourceForge发起。Brownie曾被用以共享在不同域中的接入，而Cookies则被构想成单一域中的接入。这项方案已经停止开发。&lt;/li&gt;
-  &lt;li&gt;P3P，用以让用户获得更多控制个人隐私权利的协议。在浏览网站时，它类似于Cookie。这项方案也已经停止开发。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://sourceforge.net/projects/brownie/&quot;&gt;Brownie方案&lt;/a&gt;（页面存档备份，存于互联网档案馆），是一项开放源代码工程，由SourceForge发起。Brownie曾被用以共享在不同域中的接入，而Cookies则被构想成单一域中的接入。这项方案已经停止开发s。&lt;/li&gt;
+  &lt;li&gt;&lt;del&gt;P3P，用以让用户获得更多控制个人隐私权利的协议。在浏览网站时，它类似于Cookie。这项方案也已经停止开发。&lt;/del&gt;&lt;/li&gt;
   &lt;li&gt;在与服务器传输数据时，通过在地址后面添加唯一&lt;u&gt;查询串&lt;/u&gt;，让服务器识别是否合法用户，也可以避免使用Cookie。&lt;/li&gt;
 &lt;/ul&gt;
 </description>
