@@ -11,26 +11,26 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="context switch - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="oAuth2.0 授权码设计理念 - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="What is context switch
+    <meta property="og:description" content="oAuth意义
 ">
     
-    <meta property="article:published_time" content="2020-09-28T00:00:00Z">
+    <meta property="article:published_time" content="2021-04-21T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
     
     
-    <meta property="article:tag" content="Concurrence">
+    <meta property="article:tag" content="HTTP">
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2020/09/28/context-switch/">
+    <meta property="og:url" content="http://localhost:4000/2021/04/21/oauth20-design-idea/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>context switch - 王润森的博客 | Vincent Blog</title>
+    <title>oAuth2.0 授权码设计理念 - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2020/09/28/context-switch/">
+    <link rel="canonical" href="http://localhost:4000/2021/04/21/oauth20-design-idea/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -226,13 +226,13 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/archive/?tag=Concurrence" title="Concurrence">Concurrence</a>
+                        <a class="tag" href="/archive/?tag=HTTP" title="HTTP">HTTP</a>
                         
                     </div>
-                    <h1>context switch</h1>
+                    <h1>oAuth2.0 授权码设计理念</h1>
                     
-                    <h2 class="subheading">context switch</h2>
-                    <span class="meta">Posted by Vincent on September 28, 2020</span>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">Posted by Vincent on April 21, 2021</span>
                 </div>
             </div>
         </div>
@@ -258,60 +258,83 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h1 id="what-is-context-switch">What is context switch</h1>
+				<h1 id="oauth意义">oAuth意义</h1>
 
-<p>Nowadays, we often use computer for multiple tasks at the same time even it just contains 1 CPU. You might think that each CPU is actually able to execute multiple tasks at the same time? That is totally wrong. Actually each CPU in the computer can only execute one task at the same time. The reason why we got the previous illusion is that CPU switch too fast for us to notice. And we call each of this short moment (ms level) <strong>Time Slice</strong>.</p>
+<p>oAuth是open authorization的缩写。本质是在不暴露用户密码的情况下，授权第三方访问资源。</p>
 
-<p>If we compare <u>task</u> to a <u>car</u>, then <u>time slice</u> is the <u>fuel oil</u>. Without fuel oil, car is not runnable. So is the relationship between time slice and thread.</p>
+<h1 id="类比生活中的例子">类比生活中的例子</h1>
 
-<p>And time slice will be allocated by CPU for executing a specific thread. No matter how short it is, once a thread owns a time slice lucky, this thread is runnable. And once time slice come to an end, CPU will store the progress of this thread, which we call <strong>context</strong>, and look for the next lucky thread, and load its context.</p>
+<p>在生活中，我们经常点外卖。也会遇到外卖小哥在送外卖的时候，被保安拦住，得等保安打电话向业主确认真的有点那家外卖之后，才放行或给予临时钥匙的情况。</p>
 
-<p>This is what we called <strong>context switch</strong>.</p>
+<p>在这种情况下，外卖小哥就是想要访问资源的第三方，保安就是authorization server (AS)，而我们就是resource owner。</p>
 
-<p>As the time slice is short enough, so our human being is not able to be aware of the switching, which make us feel like that our computer is running multiple tasks at the same time. But actually our CPU is working so hard to switch among multiple threads.</p>
+<h1 id="为什么要引入授权码">为什么要引入授权码</h1>
 
-<h2 id="pros--cons">pros &amp; cons</h2>
+<p>上面生活中的例子，很完美地解决了问题。但是在互联网的世界，并不这般如意，因此也不能照搬照抄地复制上面的做法。具体有以下限制 :</p>
 
-<p>So now, it is obvious that the pros of context switch is that even 1 CPU can execute multiple task “at the same time”. Just like you hire a staff in a bank, while he is able to serve for multiple counter, how exciting it is.</p>
+<h3 id="浏览器页面只能显示一个--http协议是单向的">浏览器页面只能显示一个 &amp; Http协议是单向的</h3>
 
-<p>But every coin has two sides.</p>
+<p>在上面的生活例子，之所以能这样做，是因为外卖小哥会一直阻塞地等保安回复。</p>
 
-<p>The cons is also obvious, that is, you need to spend more effort on <strong>switching</strong>, which is not related to the real task. What`s worse, if the task/thread grows more and more, and it will consume all you memory for the context.</p>
+<p>而在互联网世界，在保安 (AS) 要向颁发token之前，没登录的用户必须先登录。登录过后，也得用户点击按钮来授权资源。所以前端的页面必定是不断跳转的。</p>
 
-<h2 id="solution">Solution</h2>
+<p>Http协议是单向的无状态协议。只有浏览器端主动连接到服务器端，而服务器端是无法主动找到浏览器端的。在前端不发起请求的情况下，后端无法通知前端。所以最终回到第三方页面，也只能通过redirect回去。</p>
 
-<p>So how could we reducer the context switching? Below are 4 useful ways :</p>
+<p>所以最终必须是携带着信息跳转回到第三方页面。</p>
 
-<ul>
-  <li>Lockless : a lock is scrapped by multiple thread is one of the reason why we need context switch frequently. So we should try our best to avoid using lock during the multiple thread scenario. e.g.
-    <ul>
-      <li>Use ConcurrentHashMap, whose segment lock will separate the id according to the hash algorithm, so that different thread will handle the data in different segment.</li>
-    </ul>
-  </li>
-  <li>CAS : Optimistic lock, no lock is required.</li>
-  <li>With minimal thread : the more thread it is, the more thread is waiting.</li>
-  <li>Coroutine : existed in framework, not supported by JDK.</li>
-</ul>
+<h3 id="token一旦暴露在前端就没有安全可言">token一旦暴露在前端，就没有安全可言</h3>
 
+<p>在生活例子中，保安把临时钥匙给外卖小哥就好了。但是在互联网中，客户端是很危险的一个地方。</p>
+
+<p>而像上面所说，最终要通知客户端，必须redirect回来，而redirect回来相当于把信息暴露在浏览器地址栏，是非常不安全的。所以redirect回来的信息只能是一次性的，有效期短的，这样才能防止黑客暴力破解。</p>
+
+<p>而最终的token，也必须只能在后端之间传递。</p>
+
+<h1 id="最终流程">最终流程</h1>
+
+<h3 id="准备阶段">准备阶段</h3>
+
+<ol>
+  <li>第三方网站先去authorization server注册，提供callback url</li>
+  <li>authorization server给予client id &amp; client secrets</li>
+  <li>第三方网站将client id配置在前端，将client id &amp; client secrets配置在后端</li>
+</ol>
+
+<h3 id="具体调用流程-eg-login-stackoverflow-with-github">具体调用流程 (e.g. login stackoverflow with github)</h3>
+
+<ol>
+  <li>用户在stackoverflow页面点击”<a href="https://github.com/login/oauth/authorize?client_id=01b478c0264a1fbd7183&amp;scope=user:email&amp;redirect_uri=https%3a%2f%2fstackauth.com%2fauth%2foauth2%2fgithub&amp;state=%7b%22sid%22%3a1%2c%22st%22%3a%2259%3a3%3abbc%2c16%3a2caf9dcc275b6890%2c10%3a1619019923%2c16%3a473f5f8910356986%2c10ec5ed522bb81f64a76d7a7a04f838794a45df932aea844b58244c81803b169%22%2c%22cdl%22%3anull%2c%22cid%22%3a%2201b478c0264a1fbd7183%22%2c%22k%22%3a%22GitHub%22%2c%22ses%22%3a%227f568e96f059466b94782a6eb0669e1a%22%7d&amp;response_type=code">login with github</a>”</li>
+  <li>去到github页面</li>
+  <li>若没登录，要先登录</li>
+  <li>登录后，问用户是否同意授权</li>
+  <li>用户同意授权后，redirect回注册的url，携带授权码</li>
+  <li>stackoverflow以授权码call自己的后端</li>
+  <li>后端以code &amp; client id &amp; client secrets请求github，拿token</li>
+  <li>github返回token给stackoverflow后端</li>
+  <li>stackoverflow后端以该token请求github资源</li>
+</ol>
+
+<h1 id="token的优势">token的优势</h1>
+
+<p>假如token真的泄露了，那也比直接泄露用户名和密码强。因为：</p>
+
+<ol>
+  <li>token是有效期的，并且一般有效期很短，几秒钟到几分钟，短期的，到期就自动失效。</li>
+  <li>token可以被用户主动撤销而失效</li>
+  <li>token可以访问的数据是有权限控制的，是有限的权限。</li>
+</ol>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2020/08/27/redis-introduction/" data-toggle="tooltip" data-placement="top" title="Redis introduction">
+                        <a href="/2021/03/24/same-origin-policy/" data-toggle="tooltip" data-placement="top" title="Same origin policy">
                         Previous<br>
-                        <span>Redis introduction</span>
+                        <span>Same origin policy</span>
                         </a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2020/11/30/spring-boot/" data-toggle="tooltip" data-placement="top" title="Spring Boot 启动过程源码剖析">
-                        Next<br>
-                        <span>Spring Boot 启动过程源码剖析</span>
-                        </a>
-                    </li>
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -408,8 +431,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2020/09/28/context-switch";
-    var disqus_url = "http://localhost:4000/2020/09/28/context-switch/";
+    var disqus_identifier = "/2021/04/21/oauth20-design-idea";
+    var disqus_url = "http://localhost:4000/2021/04/21/oauth20-design-idea/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

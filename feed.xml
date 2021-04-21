@@ -5,9 +5,86 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Mar 2021 22:50:07 +0800</pubDate>
-    <lastBuildDate>Wed, 24 Mar 2021 22:50:07 +0800</lastBuildDate>
+    <pubDate>Thu, 22 Apr 2021 00:56:55 +0800</pubDate>
+    <lastBuildDate>Thu, 22 Apr 2021 00:56:55 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>oAuth2.0 授权码设计理念</title>
+        <description>&lt;h1 id=&quot;oauth意义&quot;&gt;oAuth意义&lt;/h1&gt;
+
+&lt;p&gt;oAuth是open authorization的缩写。本质是在不暴露用户密码的情况下，授权第三方访问资源。&lt;/p&gt;
+
+&lt;h1 id=&quot;类比生活中的例子&quot;&gt;类比生活中的例子&lt;/h1&gt;
+
+&lt;p&gt;在生活中，我们经常点外卖。也会遇到外卖小哥在送外卖的时候，被保安拦住，得等保安打电话向业主确认真的有点那家外卖之后，才放行或给予临时钥匙的情况。&lt;/p&gt;
+
+&lt;p&gt;在这种情况下，外卖小哥就是想要访问资源的第三方，保安就是authorization server (AS)，而我们就是resource owner。&lt;/p&gt;
+
+&lt;h1 id=&quot;为什么要引入授权码&quot;&gt;为什么要引入授权码&lt;/h1&gt;
+
+&lt;p&gt;上面生活中的例子，很完美地解决了问题。但是在互联网的世界，并不这般如意，因此也不能照搬照抄地复制上面的做法。具体有以下限制 :&lt;/p&gt;
+
+&lt;h3 id=&quot;浏览器页面只能显示一个--http协议是单向的&quot;&gt;浏览器页面只能显示一个 &amp;amp; Http协议是单向的&lt;/h3&gt;
+
+&lt;p&gt;在上面的生活例子，之所以能这样做，是因为外卖小哥会一直阻塞地等保安回复。&lt;/p&gt;
+
+&lt;p&gt;而在互联网世界，在保安 (AS) 要向颁发token之前，没登录的用户必须先登录。登录过后，也得用户点击按钮来授权资源。所以前端的页面必定是不断跳转的。&lt;/p&gt;
+
+&lt;p&gt;Http协议是单向的无状态协议。只有浏览器端主动连接到服务器端，而服务器端是无法主动找到浏览器端的。在前端不发起请求的情况下，后端无法通知前端。所以最终回到第三方页面，也只能通过redirect回去。&lt;/p&gt;
+
+&lt;p&gt;所以最终必须是携带着信息跳转回到第三方页面。&lt;/p&gt;
+
+&lt;h3 id=&quot;token一旦暴露在前端就没有安全可言&quot;&gt;token一旦暴露在前端，就没有安全可言&lt;/h3&gt;
+
+&lt;p&gt;在生活例子中，保安把临时钥匙给外卖小哥就好了。但是在互联网中，客户端是很危险的一个地方。&lt;/p&gt;
+
+&lt;p&gt;而像上面所说，最终要通知客户端，必须redirect回来，而redirect回来相当于把信息暴露在浏览器地址栏，是非常不安全的。所以redirect回来的信息只能是一次性的，有效期短的，这样才能防止黑客暴力破解。&lt;/p&gt;
+
+&lt;p&gt;而最终的token，也必须只能在后端之间传递。&lt;/p&gt;
+
+&lt;h1 id=&quot;最终流程&quot;&gt;最终流程&lt;/h1&gt;
+
+&lt;h3 id=&quot;准备阶段&quot;&gt;准备阶段&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;第三方网站先去authorization server注册，提供callback url&lt;/li&gt;
+  &lt;li&gt;authorization server给予client id &amp;amp; client secrets&lt;/li&gt;
+  &lt;li&gt;第三方网站将client id配置在前端，将client id &amp;amp; client secrets配置在后端&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;具体调用流程-eg-login-stackoverflow-with-github&quot;&gt;具体调用流程 (e.g. login stackoverflow with github)&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;用户在stackoverflow页面点击”&lt;a href=&quot;https://github.com/login/oauth/authorize?client_id=01b478c0264a1fbd7183&amp;amp;scope=user:email&amp;amp;redirect_uri=https%3a%2f%2fstackauth.com%2fauth%2foauth2%2fgithub&amp;amp;state=%7b%22sid%22%3a1%2c%22st%22%3a%2259%3a3%3abbc%2c16%3a2caf9dcc275b6890%2c10%3a1619019923%2c16%3a473f5f8910356986%2c10ec5ed522bb81f64a76d7a7a04f838794a45df932aea844b58244c81803b169%22%2c%22cdl%22%3anull%2c%22cid%22%3a%2201b478c0264a1fbd7183%22%2c%22k%22%3a%22GitHub%22%2c%22ses%22%3a%227f568e96f059466b94782a6eb0669e1a%22%7d&amp;amp;response_type=code&quot;&gt;login with github&lt;/a&gt;”&lt;/li&gt;
+  &lt;li&gt;去到github页面&lt;/li&gt;
+  &lt;li&gt;若没登录，要先登录&lt;/li&gt;
+  &lt;li&gt;登录后，问用户是否同意授权&lt;/li&gt;
+  &lt;li&gt;用户同意授权后，redirect回注册的url，携带授权码&lt;/li&gt;
+  &lt;li&gt;stackoverflow以授权码call自己的后端&lt;/li&gt;
+  &lt;li&gt;后端以code &amp;amp; client id &amp;amp; client secrets请求github，拿token&lt;/li&gt;
+  &lt;li&gt;github返回token给stackoverflow后端&lt;/li&gt;
+  &lt;li&gt;stackoverflow后端以该token请求github资源&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h1 id=&quot;token的优势&quot;&gt;token的优势&lt;/h1&gt;
+
+&lt;p&gt;假如token真的泄露了，那也比直接泄露用户名和密码强。因为：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;token是有效期的，并且一般有效期很短，几秒钟到几分钟，短期的，到期就自动失效。&lt;/li&gt;
+  &lt;li&gt;token可以被用户主动撤销而失效&lt;/li&gt;
+  &lt;li&gt;token可以访问的数据是有权限控制的，是有限的权限。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Wed, 21 Apr 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/04/21/oauth20-design-idea/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/04/21/oauth20-design-idea/</guid>
+        
+        <category>HTTP</category>
+        
+        
+      </item>
     
       <item>
         <title>Same origin policy</title>
