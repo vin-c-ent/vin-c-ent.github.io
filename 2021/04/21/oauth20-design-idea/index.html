@@ -295,7 +295,7 @@
 <h3 id="准备阶段">准备阶段</h3>
 
 <ol>
-  <li>第三方网站先去authorization server注册，提供callback url</li>
+  <li>第三方网站先去authorization server注册，提供一到多个redirect url</li>
   <li>authorization server给予client id &amp; client secrets</li>
   <li>第三方网站将client id配置在前端，将client id &amp; client secrets配置在后端</li>
 </ol>
@@ -303,15 +303,35 @@
 <h3 id="具体调用流程-eg-login-stackoverflow-with-github">具体调用流程 (e.g. login stackoverflow with github)</h3>
 
 <ol>
-  <li>用户在stackoverflow页面点击”<a href="https://github.com/login/oauth/authorize?client_id=01b478c0264a1fbd7183&amp;scope=user:email&amp;redirect_uri=https%3a%2f%2fstackauth.com%2fauth%2foauth2%2fgithub&amp;state=%7b%22sid%22%3a1%2c%22st%22%3a%2259%3a3%3abbc%2c16%3a2caf9dcc275b6890%2c10%3a1619019923%2c16%3a473f5f8910356986%2c10ec5ed522bb81f64a76d7a7a04f838794a45df932aea844b58244c81803b169%22%2c%22cdl%22%3anull%2c%22cid%22%3a%2201b478c0264a1fbd7183%22%2c%22k%22%3a%22GitHub%22%2c%22ses%22%3a%227f568e96f059466b94782a6eb0669e1a%22%7d&amp;response_type=code">login with github</a>”</li>
-  <li>去到github页面</li>
-  <li>若没登录，要先登录</li>
-  <li>登录后，问用户是否同意授权</li>
-  <li>用户同意授权后，redirect回注册的url，携带授权码</li>
-  <li>stackoverflow以授权码call自己的后端</li>
-  <li>后端以code &amp; client id &amp; client secrets请求github，拿token</li>
-  <li>github返回token给stackoverflow后端</li>
-  <li>stackoverflow后端以该token请求github资源</li>
+  <li>
+    <p>用户在stackoverflow页面点击”<a href="https://github.com/login/oauth/authorize?client_id=01b478c0264a1fbd7183&amp;scope=user:email&amp;redirect_uri=https%3a%2f%2fstackauth.com%2fauth%2foauth2%2fgithub&amp;state=%7b%22sid%22%3a1%2c%22st%22%3a%2259%3a3%3abbc%2c16%3a2caf9dcc275b6890%2c10%3a1619019923%2c16%3a473f5f8910356986%2c10ec5ed522bb81f64a76d7a7a04f838794a45df932aea844b58244c81803b169%22%2c%22cdl%22%3anull%2c%22cid%22%3a%2201b478c0264a1fbd7183%22%2c%22k%22%3a%22GitHub%22%2c%22ses%22%3a%227f568e96f059466b94782a6eb0669e1a%22%7d&amp;response_type=code">login with github</a>”</p>
+
+    <p>这里会传redirect url，但这并不意味着你传什么，github真的会把授权码redirect到这个url。这里的redirect url是为了validation的。这样可以防止攻击者使用钓鱼手段让用户点击一个含有redirect_uri参数，但指向攻击者控制的server的连接。</p>
+  </li>
+  <li>
+    <p>去到github页面</p>
+  </li>
+  <li>
+    <p>若没登录，要先登录</p>
+  </li>
+  <li>
+    <p>登录后，问用户是否同意授权</p>
+  </li>
+  <li>
+    <p>用户同意授权后，redirect回注册的url，携带授权码</p>
+  </li>
+  <li>
+    <p>stackoverflow以授权码call自己的后端</p>
+  </li>
+  <li>
+    <p>后端以code &amp; client id &amp; client secrets请求github，拿token</p>
+  </li>
+  <li>
+    <p>github返回token给stackoverflow后端</p>
+  </li>
+  <li>
+    <p>stackoverflow后端以该token请求github资源</p>
+  </li>
 </ol>
 
 <h1 id="token的优势">token的优势</h1>

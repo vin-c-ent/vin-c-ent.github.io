@@ -5,8 +5,8 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 22 Apr 2021 00:56:55 +0800</pubDate>
-    <lastBuildDate>Thu, 22 Apr 2021 00:56:55 +0800</lastBuildDate>
+    <pubDate>Sun, 25 Apr 2021 23:31:14 +0800</pubDate>
+    <lastBuildDate>Sun, 25 Apr 2021 23:31:14 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -48,7 +48,7 @@
 &lt;h3 id=&quot;准备阶段&quot;&gt;准备阶段&lt;/h3&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;第三方网站先去authorization server注册，提供callback url&lt;/li&gt;
+  &lt;li&gt;第三方网站先去authorization server注册，提供一到多个redirect url&lt;/li&gt;
   &lt;li&gt;authorization server给予client id &amp;amp; client secrets&lt;/li&gt;
   &lt;li&gt;第三方网站将client id配置在前端，将client id &amp;amp; client secrets配置在后端&lt;/li&gt;
 &lt;/ol&gt;
@@ -56,15 +56,35 @@
 &lt;h3 id=&quot;具体调用流程-eg-login-stackoverflow-with-github&quot;&gt;具体调用流程 (e.g. login stackoverflow with github)&lt;/h3&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;用户在stackoverflow页面点击”&lt;a href=&quot;https://github.com/login/oauth/authorize?client_id=01b478c0264a1fbd7183&amp;amp;scope=user:email&amp;amp;redirect_uri=https%3a%2f%2fstackauth.com%2fauth%2foauth2%2fgithub&amp;amp;state=%7b%22sid%22%3a1%2c%22st%22%3a%2259%3a3%3abbc%2c16%3a2caf9dcc275b6890%2c10%3a1619019923%2c16%3a473f5f8910356986%2c10ec5ed522bb81f64a76d7a7a04f838794a45df932aea844b58244c81803b169%22%2c%22cdl%22%3anull%2c%22cid%22%3a%2201b478c0264a1fbd7183%22%2c%22k%22%3a%22GitHub%22%2c%22ses%22%3a%227f568e96f059466b94782a6eb0669e1a%22%7d&amp;amp;response_type=code&quot;&gt;login with github&lt;/a&gt;”&lt;/li&gt;
-  &lt;li&gt;去到github页面&lt;/li&gt;
-  &lt;li&gt;若没登录，要先登录&lt;/li&gt;
-  &lt;li&gt;登录后，问用户是否同意授权&lt;/li&gt;
-  &lt;li&gt;用户同意授权后，redirect回注册的url，携带授权码&lt;/li&gt;
-  &lt;li&gt;stackoverflow以授权码call自己的后端&lt;/li&gt;
-  &lt;li&gt;后端以code &amp;amp; client id &amp;amp; client secrets请求github，拿token&lt;/li&gt;
-  &lt;li&gt;github返回token给stackoverflow后端&lt;/li&gt;
-  &lt;li&gt;stackoverflow后端以该token请求github资源&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用户在stackoverflow页面点击”&lt;a href=&quot;https://github.com/login/oauth/authorize?client_id=01b478c0264a1fbd7183&amp;amp;scope=user:email&amp;amp;redirect_uri=https%3a%2f%2fstackauth.com%2fauth%2foauth2%2fgithub&amp;amp;state=%7b%22sid%22%3a1%2c%22st%22%3a%2259%3a3%3abbc%2c16%3a2caf9dcc275b6890%2c10%3a1619019923%2c16%3a473f5f8910356986%2c10ec5ed522bb81f64a76d7a7a04f838794a45df932aea844b58244c81803b169%22%2c%22cdl%22%3anull%2c%22cid%22%3a%2201b478c0264a1fbd7183%22%2c%22k%22%3a%22GitHub%22%2c%22ses%22%3a%227f568e96f059466b94782a6eb0669e1a%22%7d&amp;amp;response_type=code&quot;&gt;login with github&lt;/a&gt;”&lt;/p&gt;
+
+    &lt;p&gt;这里会传redirect url，但这并不意味着你传什么，github真的会把授权码redirect到这个url。这里的redirect url是为了validation的。这样可以防止攻击者使用钓鱼手段让用户点击一个含有redirect_uri参数，但指向攻击者控制的server的连接。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;去到github页面&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;若没登录，要先登录&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;登录后，问用户是否同意授权&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用户同意授权后，redirect回注册的url，携带授权码&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;stackoverflow以授权码call自己的后端&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;后端以code &amp;amp; client id &amp;amp; client secrets请求github，拿token&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;github返回token给stackoverflow后端&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;stackoverflow后端以该token请求github资源&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h1 id=&quot;token的优势&quot;&gt;token的优势&lt;/h1&gt;
