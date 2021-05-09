@@ -5,9 +5,408 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 25 Apr 2021 23:31:14 +0800</pubDate>
-    <lastBuildDate>Sun, 25 Apr 2021 23:31:14 +0800</lastBuildDate>
+    <pubDate>Sun, 09 May 2021 21:23:57 +0800</pubDate>
+    <lastBuildDate>Sun, 09 May 2021 21:23:57 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Transport Layer</title>
+        <description>&lt;p&gt;[TOC]&lt;/p&gt;
+
+&lt;h1 id=&quot;运输层&quot;&gt;运输层&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;面向通信的最高层，用户功能的最底层&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;传输层是只在主机才有的层次。像网络核心部分中的路由器，在转发的时候，都只用到下三层的功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210507212654358.png&quot; alt=&quot;image-20210507212654358&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;意义&quot;&gt;意义&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;u&gt;网络层&lt;/u&gt;负责将包发送到主机，为&lt;u&gt;主机&lt;/u&gt;之间提供逻辑通信。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;u&gt;传输层&lt;/u&gt;负责将包发送到进程，为&lt;u&gt;应用进程&lt;/u&gt;之间提供端到端的逻辑通信&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“逻辑通信”的意思是：从应用层来看，只要把应用层报文交给下面的运输层，运输层就可以把这报文传送到对方的运输层（那怕双方相距很远，例如几千公里），好像这种通信就是沿水平方向直接传送数据。但事实上这两个运输层之间并没有一条水平方向的物理连接。数据的传送是沿着图中的虚线方向（经过多个层次）传送的。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210507213157082.png&quot; alt=&quot;image-20210507213157082&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;基本功能&quot;&gt;基本功能&lt;/h2&gt;
+
+&lt;h3 id=&quot;复用-multiplexing&quot;&gt;复用 (multiplexing)&lt;/h3&gt;
+
+&lt;p&gt;发送方不同的应用进程都可以使用同一个运输层协议转送数据。&lt;/p&gt;
+
+&lt;h3 id=&quot;分用-demultiplexing&quot;&gt;分用 (demultiplexing)&lt;/h3&gt;
+
+&lt;p&gt;接收方的运输层在剥去报文的首部后能够把这些数据正确交付目的应用进程。&lt;/p&gt;
+
+&lt;h3 id=&quot;差错检测&quot;&gt;差错检测&lt;/h3&gt;
+
+&lt;p&gt;网络层只检验首部，不检查数据部分。&lt;/p&gt;
+
+&lt;h2 id=&quot;实现&quot;&gt;实现&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;UDP (用户数据报协议 / User Datagram Protocol)&lt;/li&gt;
+  &lt;li&gt;TCP (传输控制协议 / Transmission Control Protocol)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210507213953959.png&quot; alt=&quot;image-20210507213953959&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;udp-用户数据报协议--user-datagram-protocol&quot;&gt;UDP (用户数据报协议 / User Datagram Protocol)&lt;/h1&gt;
+
+&lt;h2 id=&quot;特点&quot;&gt;特点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;无连接的。&lt;/p&gt;
+
+    &lt;p&gt;不需要先建立连接。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;尽最大努力交付。&lt;/p&gt;
+
+    &lt;p&gt;不需要维持复杂的连接状态表。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;面向报文的。&lt;/p&gt;
+
+    &lt;p&gt;无论应用层传来多长的报文，UDP照样加上首部，再传给网络层。不做合并和拆分。(但是IP层会进行分片)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;没有拥塞控制。&lt;/p&gt;
+
+    &lt;p&gt;适合允许丢失一些数据、而不能容忍时延的应用。
+e.g. 要求主机以恒定速率发送数据的实时应用 (如 ip电话、实时视频会议)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;支持1对1、1对多、多对1、多对多的交互通信。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;首部开销小&lt;/p&gt;
+
+    &lt;p&gt;UDP : 8字节 (源端口、目的端口、长度、检验和)&lt;/p&gt;
+
+    &lt;p&gt;TCP : 20字节&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;优点&quot;&gt;优点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;开销小&lt;/li&gt;
+  &lt;li&gt;支持1对1、1对多、多对1、多对多的交互通信&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;缺点&quot;&gt;缺点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;不可靠&lt;/li&gt;
+  &lt;li&gt;不做拆分，影响网络层的效率。&lt;/li&gt;
+  &lt;li&gt;没有拥塞控制。最坏情况会使网络发生拥塞，结果大家都无法正常接收。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;首部格式&quot;&gt;首部格式&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210507221240523.png&quot; alt=&quot;image-20210507221240523&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;虽然UDP不可靠，不保证绝对交付。但是还是会做数据部分的校验的。&lt;/p&gt;
+
+&lt;h1 id=&quot;tcp-传输控制协议--transmission-control-protocol&quot;&gt;TCP (传输控制协议 / Transmission Control Protocol)&lt;/h1&gt;
+
+&lt;h2 id=&quot;特点-1&quot;&gt;特点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;需要先建立连接，结束要释放连接&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;一对一的。点对点的，不提供广播、多播服务&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;提供可靠的运输服务&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;全双工通信&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;面向字节流。
+应用程序以数据块的形式交给TCP，但是TCP仅把它看成一串字节流。&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210507222218749.png&quot; alt=&quot;image-20210507222218749&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;优点-1&quot;&gt;优点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;可靠&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;缺点-1&quot;&gt;缺点&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;开销大。需要确认、流量控制、计时器以及连接管理等。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;socket--套接字&quot;&gt;socket / 套接字&lt;/h2&gt;
+
+&lt;p&gt;因为TCP协议既要点到点，又要不与操作系统有耦合，而且进程的创建和撤销都是动态的，所以尽管运输层是针对进程，也不能直接使用进程号作为终点。&lt;/p&gt;
+
+&lt;p&gt;于是乎，就采用了端口 (port)，而应用程序也监听着端口，从而实现消费。&lt;/p&gt;
+
+&lt;p&gt;ip和port的组合就叫做socket。socket = (ip:port)&lt;/p&gt;
+
+&lt;h2 id=&quot;首部&quot;&gt;首部&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509084842221.png&quot; alt=&quot;image-20210509084842221&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;前20个字节固定，有额外40个字节扩展空间，以4字节为单位。&lt;/p&gt;
+
+&lt;h2 id=&quot;保证可靠性&quot;&gt;保证可靠性&lt;/h2&gt;
+
+&lt;h3 id=&quot;要求&quot;&gt;要求&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;传输信道不产生差错。&lt;/li&gt;
+  &lt;li&gt;不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;停止等待协议--自动重传请求-arq-automatic-repeat-request&quot;&gt;停止等待协议 / 自动重传请求 ARQ (Automatic Repeat reQuest)&lt;/h3&gt;
+
+&lt;p&gt;每发送完一个分组就停止发送，等待对方的确认。在收到确认后再发送下一个分组。&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;必须暂时保留已发送分组的副本 (for 超时重传)&lt;/li&gt;
+  &lt;li&gt;分组和确认分组都必须进行编号。
+这样才能明确是哪个发送出去的分组收到了确认，而哪个分组还没收到确认。
+因为有可能包没有丢失，只是延迟了很久，所以后面到达服务器的时候，服务器要判断编号，看是新的包还是旧的。&lt;/li&gt;
+  &lt;li&gt;超时计时器设置的重传时间应当比数据在分组传输的平均往返时间更长一些。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;优点-2&quot;&gt;优点&lt;/h4&gt;
+
+&lt;p&gt;简单&lt;/p&gt;
+
+&lt;h4 id=&quot;缺点-2&quot;&gt;缺点&lt;/h4&gt;
+
+&lt;p&gt;信道利用率低&lt;/p&gt;
+
+&lt;h4 id=&quot;异常情况&quot;&gt;异常情况&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;数据有差错
+接收方 : 丢弃。&lt;/p&gt;
+
+    &lt;p&gt;发送方 : 超时重传，需要在发送方中设置一个超时计时器，到时前收到对方的确认就撤销&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210507223636081.png&quot; alt=&quot;image-20210507223636081&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;确认丢失
+接收方 : 丢弃，不向上层交付。向接收方发送确认
+&lt;img src=&quot;\img\transport_layer\image-20210508221727722.png&quot; alt=&quot;image-20210508221727722&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;确认迟到
+发送方 : 丢弃&lt;/p&gt;
+
+    &lt;p&gt;接收方 : 丢弃重复的请求，重传确认&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210508221747407.png&quot; alt=&quot;image-20210508221747407&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;连续arq协议&quot;&gt;连续ARQ协议&lt;/h3&gt;
+
+&lt;p&gt;发送方 : 窗口内并发发送&lt;/p&gt;
+
+&lt;p&gt;接收方 : 累计确认&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509084233798.png&quot; alt=&quot;image-20210509084233798&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;超时重传时间的选择&quot;&gt;超时重传时间的选择&lt;/h3&gt;
+
+&lt;p&gt;以上协议都设计到超时重传时间的设置，但是超时重传时间其实是很难把握的。&lt;/p&gt;
+
+&lt;p&gt;实际上采用自适应算法，记录报文段发出和收到确认的时间，并加权平均。&lt;/p&gt;
+
+&lt;p&gt;一旦报文被重传了，因为无法确定是哪个报文的重传，所以也就不采用其作为往返时间样本。再把重传时间增大一些&lt;/p&gt;
+
+&lt;h3 id=&quot;选择确认sack-selective-ack&quot;&gt;选择确认SACK (Selective ACK)&lt;/h3&gt;
+
+&lt;p&gt;若收到的报文中间缺少一些序号的数据，选择确认SACK可以只传送缺少的数据，而不重传已经到达接收方的数据。&lt;/p&gt;
+
+&lt;p&gt;具体做法是 :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;依旧采用”确认号”字段，标识已经连续收到的最大边界。&lt;/li&gt;
+  &lt;li&gt;在首部加上”允许SACK”的选项。最多指明4个边界块 (因为一个边界块有2个边界，一个边界4个字节，一共32个字节。还有一个字节指明SACK选项，一个字节指明这个选项要占用多少字节)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;滑动窗口&quot;&gt;滑动窗口&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509100935488.png&quot; alt=&quot;image-20210509100935488&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;作用&quot;&gt;作用&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;流量控制&lt;/li&gt;
+  &lt;li&gt;性能优化 : 确认应答不再以每个分段，而是以更大的单位进行确认。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;tcp缓存和窗口的关系&quot;&gt;TCP缓存和窗口的关系&lt;/h4&gt;
+
+&lt;p&gt;发送窗口其实是TCP缓存中的一小节，以指针确定边界。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509101117220.png&quot; alt=&quot;image-20210509101117220&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;实现流量控制&quot;&gt;实现流量控制&lt;/h4&gt;
+
+&lt;p&gt;流量控制就是让发送方别发那么快，让接收方来得及接收。&lt;/p&gt;
+
+&lt;p&gt;具体做法 :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;接收方回复发送方rwnd (reveiver window / 接收窗口) 的字节大小。发送方收到后调节。&lt;/li&gt;
+  &lt;li&gt;要是rwnd变为0
+    &lt;ul&gt;
+      &lt;li&gt;接收方有空间的时候，会向发送方发送rwnd报文段&lt;/li&gt;
+      &lt;li&gt;发送方设有一个持续计时器，到时就发送探测报文段，如果还是0，就重设持续计时器(防止接收方的rwnd报文段丢失)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tcp的拥塞控制&quot;&gt;TCP的拥塞控制&lt;/h3&gt;
+
+&lt;p&gt;拥塞控制 : 防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不至于过载。是一个全局性的过程。&lt;/p&gt;
+
+&lt;h4 id=&quot;和流量控制的区别&quot;&gt;和流量控制的区别&lt;/h4&gt;
+
+&lt;p&gt;流量控制往往指点对点通信量的控制，是个端到端的问题。要做的是抑制发送端发送数据的速率，以便使接收端来得及接收。&lt;/p&gt;
+
+&lt;p&gt;而拥塞控制是一个全局的问题，要做的是让整个网络不至于过载。&lt;/p&gt;
+
+&lt;h4 id=&quot;具体做法&quot;&gt;具体做法&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;开环控制 : 在设计网络前，事先把导致拥塞的因素都考虑周到，一旦运行，不再干预。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;闭环控制 : 运行时干预&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;监测网络系统&lt;/li&gt;
+      &lt;li&gt;把拥塞信息发送到可采取行动的地方&lt;/li&gt;
+      &lt;li&gt;调整网络系统的运行，以解决出现的问题&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;拥塞算法&quot;&gt;拥塞算法&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;慢开始 (slow-start) &amp;amp; 拥塞避免 (congestion avoidance)&lt;/p&gt;
+
+    &lt;p&gt;发送方维持一个拥塞窗口变量 cwnd (congestion window)，并让自己的发送窗口等于拥塞窗口。&lt;/p&gt;
+
+    &lt;p&gt;只要网络没有出现拥塞 (没有收到确认报文)，拥塞窗口就增大一点，反之减少。&lt;/p&gt;
+
+    &lt;p&gt;加法增大乘法减少 :&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509181921356.png&quot; alt=&quot;image-20210509181921356&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;快重传 (fast retransmit) &amp;amp; 快恢复 (fast recovery)&lt;/p&gt;
+
+    &lt;p&gt;快重传 :&lt;/p&gt;
+
+    &lt;p&gt;收到失序报文后，接收方立刻发送确认号位置的重复确认。(让发送方及早知道没有到达的报文段)&lt;/p&gt;
+
+    &lt;p&gt;发送方一连收到3个重复确认，就应当立即重传对方尚未收到的报文段，而不必等到重传计时器到时。&lt;/p&gt;
+
+    &lt;p&gt;快恢复 :&lt;/p&gt;
+
+    &lt;p&gt;当发送方连续收到3个重复确认时，就执行”乘法减少”，预防网络拥塞&lt;/p&gt;
+
+    &lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509190330041.png&quot; alt=&quot;image-20210509190330041&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;随机早期检测red-random-early-detection&quot;&gt;随机早期检测RED (Random Early Detection)&lt;/h4&gt;
+
+&lt;p&gt;为了防止由于网络层导致拥塞，当路由器队列长度在最大和最小之间，按照一定概率将新到达的分组丢弃&lt;/p&gt;
+
+&lt;h2 id=&quot;三次握手&quot;&gt;三次握手&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509192801313.png&quot; alt=&quot;image-20210509192801313&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;为什么要第三次握手&quot;&gt;为什么要第三次握手&lt;/h3&gt;
+
+&lt;p&gt;一部分原因是检测双向联通，因为此时服务器端不确定client有收包的能力。&lt;/p&gt;
+
+&lt;p&gt;另一个原因是，防止网络不好的时候，client第一次发出去的请求延时了很久，导致一次连接可能client请求了很多次，但是有效的却只有一次。如果2次握手，那么server就需要打开多个连接，多余的连接server必须一直等待client发来数据，白白浪费资源。&lt;/p&gt;
+
+&lt;h2 id=&quot;四次挥手&quot;&gt;四次挥手&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509193331413.png&quot; alt=&quot;image-20210509193331413&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;为什么server要发送2次&quot;&gt;为什么server要发送2次&lt;/h3&gt;
+
+&lt;p&gt;当server发送了第一次ack，此时TCP连接处于半关闭状态，TCP需要通知高层应用程序，这时候可以进行一些收尾工作。当server没有数据要发往client，此时TCP会再发送一次请求给client。&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;半关闭状态 : client没有数据要发送了，当server给client发送数据，client还是要接收)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;为什么client要有持续2msl-maximum-segment-lifetime的守寡期&quot;&gt;为什么client要有持续2MSL (Maximum Segment Lifetime)的守寡期&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;因为client发送的最后一个ACK可能会丢失，那么server收不到client的 FIN + ACK，就会重发。而client要是立即释放连接，就无法收到这个重发了，这样server就无法释放连接，进入CLOSED状态&lt;/li&gt;
+  &lt;li&gt;防止”已失效的连接请求报文段”出现在本连接中。在这2MSL的等待中，可以使这段时间内所产生的所有报文段在网络中消失。那么下一次新连接中就不会出现这种旧的连接请求报文段了。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;保活计时器&quot;&gt;保活计时器&lt;/h3&gt;
+
+&lt;p&gt;连接建立后，要是client故障了，server收不到client的请求，便无法关闭连接。&lt;/p&gt;
+
+&lt;p&gt;所以server每收到一次client的请求，便会有重设保活计时器。&lt;/p&gt;
+
+&lt;p&gt;当到时间 (2小时)，就会发送一个探测报文，再每隔75分钟发送一次。要是连续10次都没有收到client的response，就关闭连接。&lt;/p&gt;
+
+&lt;h2 id=&quot;tcp的有限状态机&quot;&gt;TCP的有限状态机&lt;/h2&gt;
+
+&lt;p&gt;图中每一个方框即TCP可能具有的状态。&lt;/p&gt;
+
+&lt;p&gt;每个方框中的大写英文字符串是TCP标准所使用的TCP连接状态名。&lt;/p&gt;
+
+&lt;p&gt;状态之间的箭头表示可能发生的状态变迁。&lt;/p&gt;
+
+&lt;p&gt;箭头旁边的字，表明引起这种变迁的原因，或表明发生状态变迁后又出现什么动作。&lt;/p&gt;
+
+&lt;p&gt;粗实线箭头表示对客户进程的正常变迁。&lt;/p&gt;
+
+&lt;p&gt;粗虚线箭头表示对服务器进程的正常变迁。&lt;/p&gt;
+
+&lt;p&gt;另一种细线箭头表示异常变迁。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;\img\transport_layer\image-20210509195916175.png&quot; alt=&quot;image-20210509195916175&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 07 May 2021 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2021/05/07/transport-layer/</link>
+        <guid isPermaLink="true">http://localhost:4000/2021/05/07/transport-layer/</guid>
+        
+        <category>HTTP</category>
+        
+        
+      </item>
     
       <item>
         <title>oAuth2.0 授权码设计理念</title>
@@ -1200,51 +1599,6 @@ for &lt;strong&gt;rapid&lt;/strong&gt; development of maintainable &lt;strong&gt
         <guid isPermaLink="true">http://localhost:4000/2020/08/14/hello-kubernetes/</guid>
         
         <category>K8S</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Hello 2020</title>
-        <description>&lt;h2 id=&quot;hello-blog&quot;&gt;Hello Blog&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;在毕业后的第5年，之前拖延了许久的blog，终于也开通了。&lt;/p&gt;
-
-&lt;p&gt;说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。&lt;/p&gt;
-
-&lt;p&gt;说开通吧，一来懒得折腾，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。&lt;/p&gt;
-
-&lt;p&gt;说不开通吧，一直记在笔记软件里面，又似乎欠缺了些交流，也不能锻炼自己的写作能力。&lt;/p&gt;
-
-&lt;p&gt;这人啊，有时候目的性太强，反而什么都干不成，这就是想得太多，做得太少吧，太计较得失，聪明反被聪明误。就像热血动漫里面的主角，不顾后果，不想以后，只专注于眼前，反而可以成功。所以趁最近有几天假期，就闷头苦干去弄好这博客算了。也算了却一桩心事，让自己点点滴滴的进步有个家。&lt;/p&gt;
-
-&lt;h2 id=&quot;2020&quot;&gt;2020&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;无论现在你觉得过得有多好，要是不能持续进步，你都要放弃掉，去往下一个更大的天地。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;2020是一个多事之年，新冠肺炎，中美贸易战，以及他们带来的一系列连锁反应，无不影响着我们老百姓的生活。&lt;/p&gt;
-
-&lt;p&gt;我个人也离开了工作3年的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;，从广州去了深圳。无他，就是趁年轻，多点历练，多看看其他公司的项目是怎样的。&lt;/p&gt;
-
-&lt;p&gt;离开之前，上司Chris知道我的想法也有劝说过内部换项目 (真的很感谢)。但是想着既然要变，就变得彻彻底底，索性换公司算了，还能体验下其他公司文化氛围是怎样的。&lt;/p&gt;
-
-&lt;p&gt;其实2019也动了想走的念头了，一来因为家里有宝宝出生，忙不过来。二来因为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Accenture&lt;/code&gt;真的是一家让人很舒服的公司。所以才一拖再拖。&lt;/p&gt;
-
-&lt;p&gt;新公司是深圳的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OCBC&lt;/code&gt;。新同事都挺nice的，没有办公室政治，暂时也不忙，也能锻炼到自己荒废了许久的英语。意外的是，这几个月还大把大把时间地让我学习React以及多线程的最佳实践，总体来说还是很满意的。&lt;/p&gt;
-
-&lt;p&gt;总之，先脚踏实地，埋头苦干，锻炼好自己的英语，前端，有机会也考几个证先吧。&lt;/p&gt;
-</description>
-        <pubDate>Wed, 12 Aug 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/08/12/hello-2020/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/08/12/hello-2020/</guid>
-        
-        <category>生活</category>
         
         
       </item>

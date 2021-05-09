@@ -11,13 +11,13 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Same origin policy - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="Transport Layer - 王润森的博客 | Vincent Blog">
     
     <meta property="og:type" content="article">
-    <meta property="og:description" content="Same Origin Policy / 同源策略介绍
+    <meta property="og:description" content="[TOC]
 ">
     
-    <meta property="article:published_time" content="2021-03-24T00:00:00Z">
+    <meta property="article:published_time" content="2021-05-07T00:00:00Z">
     
     
     <meta property="article:author" content="Vincent">
@@ -27,10 +27,10 @@
     
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2021/03/24/same-origin-policy/">
+    <meta property="og:url" content="http://localhost:4000/2021/05/07/transport-layer/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>Same origin policy - 王润森的博客 | Vincent Blog</title>
+    <title>Transport Layer - 王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2021/03/24/same-origin-policy/">
+    <link rel="canonical" href="http://localhost:4000/2021/05/07/transport-layer/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -231,10 +231,10 @@
                         <a class="tag" href="/archive/?tag=HTTP" title="HTTP">HTTP</a>
                         
                     </div>
-                    <h1>Same origin policy</h1>
+                    <h1>Transport Layer</h1>
                     
-                    <h2 class="subheading">SOP</h2>
-                    <span class="meta">Posted by Vincent on March 24, 2021</span>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">Posted by Vincent on May 7, 2021</span>
                 </div>
             </div>
         </div>
@@ -260,128 +260,405 @@
                 <!-- Multi-Lingual -->
                 
 
-				<h2 id="same-origin-policy--同源策略介绍">Same Origin Policy / 同源策略介绍</h2>
+				<p>[TOC]</p>
 
-<p>在同源策略下，只有当A、B网页的origin相同的情况下，浏览器才会允许<em>A网页</em>的scripts去访问<em>B网页</em>的数据。</p>
-
-<p>这个策略防止了某些恶意script通过DOM (Document Object Model) 访问另一个网页的敏感信息</p>
-
-<h2 id="origin的定义">Origin的定义</h2>
-
-<p>Origin被定义为 URI scheme + host name + port number的组合</p>
-
-<h2 id="sop的作用范围">SOP的作用范围</h2>
-
-<p>SOP只会应用到script上。这意味着image, css, 和动态加载scripts可以通过对应的HTML tags被跨域访问。</p>
+<h1 id="运输层">运输层</h1>
 
 <blockquote>
-  <p>fonts是一个值得注意的例外。</p>
-
-  <p><em>MDN Web Docs</em>. Retrieved 2018-07-24. Web fonts are subject to the same domain restriction (font files must be on the same domain as the page using them), unless HTTP access controls  are used to relax this restriction.</p>
-
-  <p>https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face</p>
+  <p>面向通信的最高层，用户功能的最底层</p>
 </blockquote>
 
-<p><em>跨站请求伪造 (Cross-site request forgery, CSRF, XSRF)</em> 就是利用同源策略不适用于<a href="https://zh.wikipedia.org/wiki/HTML标签">HTML标签</a>的缺陷。</p>
+<p>传输层是只在主机才有的层次。像网络核心部分中的路由器，在转发的时候，都只用到下三层的功能。</p>
 
-<h2 id="sample">Sample</h2>
+<p><img src="\img\transport_layer\image-20210507212654358.png" alt="image-20210507212654358" /></p>
 
-<p>e.g. http://www.example.com/dir/page.html</p>
+<h2 id="意义">意义</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Compared URL</th>
-      <th>Outcome</th>
-      <th>Reason</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>http://www.example.com</strong>/dir/page2.html</td>
-      <td>Success</td>
-      <td>Same scheme, host and port</td>
-    </tr>
-    <tr>
-      <td><strong>http://www.example.com</strong>/dir2/other.html</td>
-      <td>Success</td>
-      <td>Same scheme, host and port</td>
-    </tr>
-    <tr>
-      <td><strong>http://</strong>username:password@<strong>www.example.com</strong>/dir2/other.html</td>
-      <td>Success</td>
-      <td>Same scheme, host and port</td>
-    </tr>
-    <tr>
-      <td>http://www.example.com:<strong>81</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Same scheme and host but different port</td>
-    </tr>
-    <tr>
-      <td><strong>https</strong>://www.example.com/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different scheme</td>
-    </tr>
-    <tr>
-      <td>http://<strong>en.example.com</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different host</td>
-    </tr>
-    <tr>
-      <td>http://<strong>example.com</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different host (exact match required)</td>
-    </tr>
-    <tr>
-      <td>http://<strong>v2.www.example.com</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different host (exact match required)</td>
-    </tr>
-    <tr>
-      <td>http://www.example.com:<strong>80</strong>/dir/other.html</td>
-      <td>Depends</td>
-      <td>Port explicit.  Depends on implementation in browser.</td>
-    </tr>
-  </tbody>
-</table>
+<p><strong><u>网络层</u>负责将包发送到主机，为<u>主机</u>之间提供逻辑通信。</strong></p>
 
-<h2 id="同源策略存在的意义">同源策略存在的意义</h2>
+<p><strong><u>传输层</u>负责将包发送到进程，为<u>应用进程</u>之间提供端到端的逻辑通信</strong></p>
 
-<p>这个机制对现代广泛依赖http cookies去维护用户session的web applications具有一个特殊意义。因为server基于http cookie的信息去暴露敏感信息或做状态改变的动作。client必要要维护在不相关站点提供的信息之间的严格隔离，从而可以防止数据机密性或完整性的缺失。</p>
+<blockquote>
+  <p>“逻辑通信”的意思是：从应用层来看，只要把应用层报文交给下面的运输层，运输层就可以把这报文传送到对方的运输层（那怕双方相距很远，例如几千公里），好像这种通信就是沿水平方向直接传送数据。但事实上这两个运输层之间并没有一条水平方向的物理连接。数据的传送是沿着图中的虚线方向（经过多个层次）传送的。</p>
+</blockquote>
 
-<p>假设没有同源限制，A网站的API可以被任何来源的AJAX请求访问，包括获取用户的隐私信息，只看用户有没有登录，现在有个坏人做了一个网站B，坏人在B网页中用AJAX访问A网站的API，如果一个用户访问B之前已经登录了A，那这个请求包含A网站的cookie信息，也就会被A网站认为用户已经登录，这样用户在A网站的隐私信息就泄露给了控制B网站的坏人。</p>
+<p><img src="\img\transport_layer\image-20210507213157082.png" alt="image-20210507213157082" /></p>
 
-<p>不过，如果A网站觉得一些信息跨站访问也无所谓，那就可以通过jsonp或者CORS规则暴露，关键是A网站主动允许不同源的请求。</p>
+<h2 id="基本功能">基本功能</h2>
 
-<h2 id="relaxing-the-same-origin-policy">Relaxing the same-origin policy</h2>
+<h3 id="复用-multiplexing">复用 (multiplexing)</h3>
+
+<p>发送方不同的应用进程都可以使用同一个运输层协议转送数据。</p>
+
+<h3 id="分用-demultiplexing">分用 (demultiplexing)</h3>
+
+<p>接收方的运输层在剥去报文的首部后能够把这些数据正确交付目的应用进程。</p>
+
+<h3 id="差错检测">差错检测</h3>
+
+<p>网络层只检验首部，不检查数据部分。</p>
+
+<h2 id="实现">实现</h2>
+
+<ol>
+  <li>UDP (用户数据报协议 / User Datagram Protocol)</li>
+  <li>TCP (传输控制协议 / Transmission Control Protocol)</li>
+</ol>
+
+<p><img src="\img\transport_layer\image-20210507213953959.png" alt="image-20210507213953959" /></p>
+
+<h1 id="udp-用户数据报协议--user-datagram-protocol">UDP (用户数据报协议 / User Datagram Protocol)</h1>
+
+<h2 id="特点">特点</h2>
+
+<ol>
+  <li>
+    <p>无连接的。</p>
+
+    <p>不需要先建立连接。</p>
+  </li>
+  <li>
+    <p>尽最大努力交付。</p>
+
+    <p>不需要维持复杂的连接状态表。</p>
+  </li>
+  <li>
+    <p>面向报文的。</p>
+
+    <p>无论应用层传来多长的报文，UDP照样加上首部，再传给网络层。不做合并和拆分。(但是IP层会进行分片)</p>
+  </li>
+  <li>
+    <p>没有拥塞控制。</p>
+
+    <p>适合允许丢失一些数据、而不能容忍时延的应用。
+e.g. 要求主机以恒定速率发送数据的实时应用 (如 ip电话、实时视频会议)</p>
+  </li>
+  <li>
+    <p>支持1对1、1对多、多对1、多对多的交互通信。</p>
+  </li>
+  <li>
+    <p>首部开销小</p>
+
+    <p>UDP : 8字节 (源端口、目的端口、长度、检验和)</p>
+
+    <p>TCP : 20字节</p>
+  </li>
+</ol>
+
+<h2 id="优点">优点</h2>
+
+<ol>
+  <li>开销小</li>
+  <li>支持1对1、1对多、多对1、多对多的交互通信</li>
+</ol>
+
+<h2 id="缺点">缺点</h2>
+
+<ol>
+  <li>不可靠</li>
+  <li>不做拆分，影响网络层的效率。</li>
+  <li>没有拥塞控制。最坏情况会使网络发生拥塞，结果大家都无法正常接收。</li>
+</ol>
+
+<h2 id="首部格式">首部格式</h2>
+
+<p><img src="\img\transport_layer\image-20210507221240523.png" alt="image-20210507221240523" /></p>
+
+<p>虽然UDP不可靠，不保证绝对交付。但是还是会做数据部分的校验的。</p>
+
+<h1 id="tcp-传输控制协议--transmission-control-protocol">TCP (传输控制协议 / Transmission Control Protocol)</h1>
+
+<h2 id="特点-1">特点</h2>
+
+<ol>
+  <li>
+    <p>需要先建立连接，结束要释放连接</p>
+  </li>
+  <li>
+    <p>一对一的。点对点的，不提供广播、多播服务</p>
+  </li>
+  <li>
+    <p>提供可靠的运输服务</p>
+  </li>
+  <li>
+    <p>全双工通信</p>
+  </li>
+  <li>
+    <p>面向字节流。
+应用程序以数据块的形式交给TCP，但是TCP仅把它看成一串字节流。</p>
+
+    <p><img src="\img\transport_layer\image-20210507222218749.png" alt="image-20210507222218749" /></p>
+  </li>
+</ol>
+
+<h2 id="优点-1">优点</h2>
+
+<ol>
+  <li>可靠</li>
+</ol>
+
+<h2 id="缺点-1">缺点</h2>
+
+<ol>
+  <li>开销大。需要确认、流量控制、计时器以及连接管理等。</li>
+</ol>
+
+<h2 id="socket--套接字">socket / 套接字</h2>
+
+<p>因为TCP协议既要点到点，又要不与操作系统有耦合，而且进程的创建和撤销都是动态的，所以尽管运输层是针对进程，也不能直接使用进程号作为终点。</p>
+
+<p>于是乎，就采用了端口 (port)，而应用程序也监听着端口，从而实现消费。</p>
+
+<p>ip和port的组合就叫做socket。socket = (ip:port)</p>
+
+<h2 id="首部">首部</h2>
+
+<p><img src="\img\transport_layer\image-20210509084842221.png" alt="image-20210509084842221" /></p>
+
+<p>前20个字节固定，有额外40个字节扩展空间，以4字节为单位。</p>
+
+<h2 id="保证可靠性">保证可靠性</h2>
+
+<h3 id="要求">要求</h3>
+
+<ol>
+  <li>传输信道不产生差错。</li>
+  <li>不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据。</li>
+</ol>
+
+<h3 id="停止等待协议--自动重传请求-arq-automatic-repeat-request">停止等待协议 / 自动重传请求 ARQ (Automatic Repeat reQuest)</h3>
+
+<p>每发送完一个分组就停止发送，等待对方的确认。在收到确认后再发送下一个分组。</p>
+
+<ol>
+  <li>必须暂时保留已发送分组的副本 (for 超时重传)</li>
+  <li>分组和确认分组都必须进行编号。
+这样才能明确是哪个发送出去的分组收到了确认，而哪个分组还没收到确认。
+因为有可能包没有丢失，只是延迟了很久，所以后面到达服务器的时候，服务器要判断编号，看是新的包还是旧的。</li>
+  <li>超时计时器设置的重传时间应当比数据在分组传输的平均往返时间更长一些。</li>
+</ol>
+
+<h4 id="优点-2">优点</h4>
+
+<p>简单</p>
+
+<h4 id="缺点-2">缺点</h4>
+
+<p>信道利用率低</p>
+
+<h4 id="异常情况">异常情况</h4>
+
+<ol>
+  <li>
+    <p>数据有差错
+接收方 : 丢弃。</p>
+
+    <p>发送方 : 超时重传，需要在发送方中设置一个超时计时器，到时前收到对方的确认就撤销</p>
+
+    <p><img src="\img\transport_layer\image-20210507223636081.png" alt="image-20210507223636081" /></p>
+  </li>
+  <li>
+    <p>确认丢失
+接收方 : 丢弃，不向上层交付。向接收方发送确认
+<img src="\img\transport_layer\image-20210508221727722.png" alt="image-20210508221727722" /></p>
+  </li>
+  <li>
+    <p>确认迟到
+发送方 : 丢弃</p>
+
+    <p>接收方 : 丢弃重复的请求，重传确认</p>
+
+    <p><img src="\img\transport_layer\image-20210508221747407.png" alt="image-20210508221747407" /></p>
+  </li>
+</ol>
+
+<h3 id="连续arq协议">连续ARQ协议</h3>
+
+<p>发送方 : 窗口内并发发送</p>
+
+<p>接收方 : 累计确认</p>
+
+<p><img src="\img\transport_layer\image-20210509084233798.png" alt="image-20210509084233798" /></p>
+
+<h3 id="超时重传时间的选择">超时重传时间的选择</h3>
+
+<p>以上协议都设计到超时重传时间的设置，但是超时重传时间其实是很难把握的。</p>
+
+<p>实际上采用自适应算法，记录报文段发出和收到确认的时间，并加权平均。</p>
+
+<p>一旦报文被重传了，因为无法确定是哪个报文的重传，所以也就不采用其作为往返时间样本。再把重传时间增大一些</p>
+
+<h3 id="选择确认sack-selective-ack">选择确认SACK (Selective ACK)</h3>
+
+<p>若收到的报文中间缺少一些序号的数据，选择确认SACK可以只传送缺少的数据，而不重传已经到达接收方的数据。</p>
+
+<p>具体做法是 :</p>
 
 <ul>
-  <li>数据污染 / Data tainting</li>
-  <li>document.domain property</li>
-  <li>Cross-Origin Resource Sharing</li>
-  <li>Cross-document messaging</li>
-  <li>JSONP</li>
-  <li>WebSockets</li>
+  <li>依旧采用”确认号”字段，标识已经连续收到的最大边界。</li>
+  <li>在首部加上”允许SACK”的选项。最多指明4个边界块 (因为一个边界块有2个边界，一个边界4个字节，一共32个字节。还有一个字节指明SACK选项，一个字节指明这个选项要占用多少字节)</li>
 </ul>
+
+<h3 id="滑动窗口">滑动窗口</h3>
+
+<p><img src="\img\transport_layer\image-20210509100935488.png" alt="image-20210509100935488" /></p>
+
+<h4 id="作用">作用</h4>
+
+<ul>
+  <li>流量控制</li>
+  <li>性能优化 : 确认应答不再以每个分段，而是以更大的单位进行确认。</li>
+</ul>
+
+<h4 id="tcp缓存和窗口的关系">TCP缓存和窗口的关系</h4>
+
+<p>发送窗口其实是TCP缓存中的一小节，以指针确定边界。</p>
+
+<p><img src="\img\transport_layer\image-20210509101117220.png" alt="image-20210509101117220" /></p>
+
+<h4 id="实现流量控制">实现流量控制</h4>
+
+<p>流量控制就是让发送方别发那么快，让接收方来得及接收。</p>
+
+<p>具体做法 :</p>
+
+<ul>
+  <li>接收方回复发送方rwnd (reveiver window / 接收窗口) 的字节大小。发送方收到后调节。</li>
+  <li>要是rwnd变为0
+    <ul>
+      <li>接收方有空间的时候，会向发送方发送rwnd报文段</li>
+      <li>发送方设有一个持续计时器，到时就发送探测报文段，如果还是0，就重设持续计时器(防止接收方的rwnd报文段丢失)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="tcp的拥塞控制">TCP的拥塞控制</h3>
+
+<p>拥塞控制 : 防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不至于过载。是一个全局性的过程。</p>
+
+<h4 id="和流量控制的区别">和流量控制的区别</h4>
+
+<p>流量控制往往指点对点通信量的控制，是个端到端的问题。要做的是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+
+<p>而拥塞控制是一个全局的问题，要做的是让整个网络不至于过载。</p>
+
+<h4 id="具体做法">具体做法</h4>
+
+<ul>
+  <li>
+    <p>开环控制 : 在设计网络前，事先把导致拥塞的因素都考虑周到，一旦运行，不再干预。</p>
+  </li>
+  <li>
+    <p>闭环控制 : 运行时干预</p>
+    <ul>
+      <li>监测网络系统</li>
+      <li>把拥塞信息发送到可采取行动的地方</li>
+      <li>调整网络系统的运行，以解决出现的问题</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="拥塞算法">拥塞算法</h4>
+
+<ol>
+  <li>
+    <p>慢开始 (slow-start) &amp; 拥塞避免 (congestion avoidance)</p>
+
+    <p>发送方维持一个拥塞窗口变量 cwnd (congestion window)，并让自己的发送窗口等于拥塞窗口。</p>
+
+    <p>只要网络没有出现拥塞 (没有收到确认报文)，拥塞窗口就增大一点，反之减少。</p>
+
+    <p>加法增大乘法减少 :</p>
+
+    <p><img src="\img\transport_layer\image-20210509181921356.png" alt="image-20210509181921356" /></p>
+  </li>
+  <li>
+    <p>快重传 (fast retransmit) &amp; 快恢复 (fast recovery)</p>
+
+    <p>快重传 :</p>
+
+    <p>收到失序报文后，接收方立刻发送确认号位置的重复确认。(让发送方及早知道没有到达的报文段)</p>
+
+    <p>发送方一连收到3个重复确认，就应当立即重传对方尚未收到的报文段，而不必等到重传计时器到时。</p>
+
+    <p>快恢复 :</p>
+
+    <p>当发送方连续收到3个重复确认时，就执行”乘法减少”，预防网络拥塞</p>
+
+    <p><img src="\img\transport_layer\image-20210509190330041.png" alt="image-20210509190330041" /></p>
+  </li>
+</ol>
+
+<h4 id="随机早期检测red-random-early-detection">随机早期检测RED (Random Early Detection)</h4>
+
+<p>为了防止由于网络层导致拥塞，当路由器队列长度在最大和最小之间，按照一定概率将新到达的分组丢弃</p>
+
+<h2 id="三次握手">三次握手</h2>
+
+<p><img src="\img\transport_layer\image-20210509192801313.png" alt="image-20210509192801313" /></p>
+
+<h3 id="为什么要第三次握手">为什么要第三次握手</h3>
+
+<p>一部分原因是检测双向联通，因为此时服务器端不确定client有收包的能力。</p>
+
+<p>另一个原因是，防止网络不好的时候，client第一次发出去的请求延时了很久，导致一次连接可能client请求了很多次，但是有效的却只有一次。如果2次握手，那么server就需要打开多个连接，多余的连接server必须一直等待client发来数据，白白浪费资源。</p>
+
+<h2 id="四次挥手">四次挥手</h2>
+
+<p><img src="\img\transport_layer\image-20210509193331413.png" alt="image-20210509193331413" /></p>
+
+<h3 id="为什么server要发送2次">为什么server要发送2次</h3>
+
+<p>当server发送了第一次ack，此时TCP连接处于半关闭状态，TCP需要通知高层应用程序，这时候可以进行一些收尾工作。当server没有数据要发往client，此时TCP会再发送一次请求给client。</p>
+
+<blockquote>
+  <p>半关闭状态 : client没有数据要发送了，当server给client发送数据，client还是要接收)</p>
+</blockquote>
+
+<h3 id="为什么client要有持续2msl-maximum-segment-lifetime的守寡期">为什么client要有持续2MSL (Maximum Segment Lifetime)的守寡期</h3>
+
+<ol>
+  <li>因为client发送的最后一个ACK可能会丢失，那么server收不到client的 FIN + ACK，就会重发。而client要是立即释放连接，就无法收到这个重发了，这样server就无法释放连接，进入CLOSED状态</li>
+  <li>防止”已失效的连接请求报文段”出现在本连接中。在这2MSL的等待中，可以使这段时间内所产生的所有报文段在网络中消失。那么下一次新连接中就不会出现这种旧的连接请求报文段了。</li>
+</ol>
+
+<h3 id="保活计时器">保活计时器</h3>
+
+<p>连接建立后，要是client故障了，server收不到client的请求，便无法关闭连接。</p>
+
+<p>所以server每收到一次client的请求，便会有重设保活计时器。</p>
+
+<p>当到时间 (2小时)，就会发送一个探测报文，再每隔75分钟发送一次。要是连续10次都没有收到client的response，就关闭连接。</p>
+
+<h2 id="tcp的有限状态机">TCP的有限状态机</h2>
+
+<p>图中每一个方框即TCP可能具有的状态。</p>
+
+<p>每个方框中的大写英文字符串是TCP标准所使用的TCP连接状态名。</p>
+
+<p>状态之间的箭头表示可能发生的状态变迁。</p>
+
+<p>箭头旁边的字，表明引起这种变迁的原因，或表明发生状态变迁后又出现什么动作。</p>
+
+<p>粗实线箭头表示对客户进程的正常变迁。</p>
+
+<p>粗虚线箭头表示对服务器进程的正常变迁。</p>
+
+<p>另一种细线箭头表示异常变迁。</p>
+
+<p><img src="\img\transport_layer\image-20210509195916175.png" alt="image-20210509195916175" /></p>
 
 
                 <hr style="visibility: hidden;">
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2021/03/24/cookies/" data-toggle="tooltip" data-placement="top" title="Cookies">
-                        Previous<br>
-                        <span>Cookies</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
                         <a href="/2021/04/21/oauth20-design-idea/" data-toggle="tooltip" data-placement="top" title="oAuth2.0 授权码设计理念">
-                        Next<br>
+                        Previous<br>
                         <span>oAuth2.0 授权码设计理念</span>
                         </a>
                     </li>
+                    
                     
                 </ul>
                 <hr style="visibility: hidden;">
@@ -478,8 +755,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2021/03/24/same-origin-policy";
-    var disqus_url = "http://localhost:4000/2021/03/24/same-origin-policy/";
+    var disqus_identifier = "/2021/05/07/transport-layer";
+    var disqus_url = "http://localhost:4000/2021/05/07/transport-layer/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

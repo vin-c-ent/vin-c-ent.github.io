@@ -11,26 +11,16 @@
     <meta name="theme-color" content="#000000">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Same origin policy - 王润森的博客 | Vincent Blog">
+    <meta property="og:title" content="王润森的博客 | Vincent Blog">
     
-    <meta property="og:type" content="article">
-    <meta property="og:description" content="Same Origin Policy / 同源策略介绍
-">
-    
-    <meta property="article:published_time" content="2021-03-24T00:00:00Z">
-    
-    
-    <meta property="article:author" content="Vincent">
-    
-    
-    <meta property="article:tag" content="HTTP">
-    
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="我干了什么 究竟拿了时间换了什么">
     
     <meta property="og:image" content="http://localhost:4000/img/avatar-vincent-ny.png">
-    <meta property="og:url" content="http://localhost:4000/2021/03/24/same-origin-policy/">
+    <meta property="og:url" content="http://localhost:4000/page2/">
     <meta property="og:site_name" content="王润森的博客 | Vincent Blog">
     
-    <title>Same origin policy - 王润森的博客 | Vincent Blog</title>
+    <title>王润森的博客 | Vincent Blog</title>
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="/pwa/manifest.json">
@@ -39,7 +29,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="http://localhost:4000/2021/03/24/same-origin-policy/">
+    <link rel="canonical" href="http://localhost:4000/page2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -70,8 +60,8 @@
 
     <!-- Navigation -->
 
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top invert">
-    
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -200,233 +190,106 @@
   </div>
 </div>
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/home-bg.jpg" width="0" height="0"> -->
-
-<!-- Post Header -->
+    <!-- Page Header -->
 
 
 
-<style type="text/css">
-    header.intro-header{
-        position: relative;
-        background-image: url('/img/home-bg.jpg');
-        background: ;
-    }
 
-    
-</style>
 
-<header class="intro-header style-text" >
 
-    <div class="header-mask"></div>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/archive/?tag=HTTP" title="HTTP">HTTP</a>
-                        
-                    </div>
-                    <h1>Same origin policy</h1>
-                    
-                    <h2 class="subheading">SOP</h2>
-                    <span class="meta">Posted by Vincent on March 24, 2021</span>
-                </div>
-            </div>
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+        <div class="site-heading">
+        
+          <h1>Vincent Blog</h1>
+          <span class="subheading">我干了什么 究竟拿了时间换了什么</span>
         </div>
+      </div>
     </div>
+  </div>
 </header>
 
 
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                postlist-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2020/08/12/hello-2020/">
+        <h2 class="post-title">
+            Hello 2020
+        </h2>
+        
+        <h3 class="post-subtitle">
+            Hello World, Hello Blog 2020
+        </h3>
+        
+        <div class="post-content-preview">
+            
+                Hello Blog
 
 
+  不限制自己的人，会穷举各种方法来解决问题，限制自己的人，只会找各式各样的问题或借口。
 
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
+在毕业后的第5年，之前拖延了许久的blog，终于也开通了。
 
-    <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+说实话，之前一直徘徊于开通与不开通之间。无论开通还是不开通，都有各自的理由去说服对方。
 
-                <!-- Multi-Lingual -->
-                
+说开通吧，一来懒得折腾，二来弄了也觉得没什么用，毕竟有东西也可以记在一些笔记软件里面。
 
-				<h2 id="same-origin-policy--同源策略介绍">Same Origin Policy / 同源策略介绍</h2>
+说不开通吧，一直记在笔记软件里面...
+            
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Vincent on August 12, 2020
+    </p>
+</div>
+<hr>
 
-<p>在同源策略下，只有当A、B网页的origin相同的情况下，浏览器才会允许<em>A网页</em>的scripts去访问<em>B网页</em>的数据。</p>
 
-<p>这个策略防止了某些恶意script通过DOM (Document Object Model) 访问另一个网页的敏感信息</p>
+<!-- Pager -->
 
-<h2 id="origin的定义">Origin的定义</h2>
-
-<p>Origin被定义为 URI scheme + host name + port number的组合</p>
-
-<h2 id="sop的作用范围">SOP的作用范围</h2>
-
-<p>SOP只会应用到script上。这意味着image, css, 和动态加载scripts可以通过对应的HTML tags被跨域访问。</p>
-
-<blockquote>
-  <p>fonts是一个值得注意的例外。</p>
-
-  <p><em>MDN Web Docs</em>. Retrieved 2018-07-24. Web fonts are subject to the same domain restriction (font files must be on the same domain as the page using them), unless HTTP access controls  are used to relax this restriction.</p>
-
-  <p>https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face</p>
-</blockquote>
-
-<p><em>跨站请求伪造 (Cross-site request forgery, CSRF, XSRF)</em> 就是利用同源策略不适用于<a href="https://zh.wikipedia.org/wiki/HTML标签">HTML标签</a>的缺陷。</p>
-
-<h2 id="sample">Sample</h2>
-
-<p>e.g. http://www.example.com/dir/page.html</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Compared URL</th>
-      <th>Outcome</th>
-      <th>Reason</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>http://www.example.com</strong>/dir/page2.html</td>
-      <td>Success</td>
-      <td>Same scheme, host and port</td>
-    </tr>
-    <tr>
-      <td><strong>http://www.example.com</strong>/dir2/other.html</td>
-      <td>Success</td>
-      <td>Same scheme, host and port</td>
-    </tr>
-    <tr>
-      <td><strong>http://</strong>username:password@<strong>www.example.com</strong>/dir2/other.html</td>
-      <td>Success</td>
-      <td>Same scheme, host and port</td>
-    </tr>
-    <tr>
-      <td>http://www.example.com:<strong>81</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Same scheme and host but different port</td>
-    </tr>
-    <tr>
-      <td><strong>https</strong>://www.example.com/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different scheme</td>
-    </tr>
-    <tr>
-      <td>http://<strong>en.example.com</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different host</td>
-    </tr>
-    <tr>
-      <td>http://<strong>example.com</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different host (exact match required)</td>
-    </tr>
-    <tr>
-      <td>http://<strong>v2.www.example.com</strong>/dir/other.html</td>
-      <td>Failure</td>
-      <td>Different host (exact match required)</td>
-    </tr>
-    <tr>
-      <td>http://www.example.com:<strong>80</strong>/dir/other.html</td>
-      <td>Depends</td>
-      <td>Port explicit.  Depends on implementation in browser.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="同源策略存在的意义">同源策略存在的意义</h2>
-
-<p>这个机制对现代广泛依赖http cookies去维护用户session的web applications具有一个特殊意义。因为server基于http cookie的信息去暴露敏感信息或做状态改变的动作。client必要要维护在不相关站点提供的信息之间的严格隔离，从而可以防止数据机密性或完整性的缺失。</p>
-
-<p>假设没有同源限制，A网站的API可以被任何来源的AJAX请求访问，包括获取用户的隐私信息，只看用户有没有登录，现在有个坏人做了一个网站B，坏人在B网页中用AJAX访问A网站的API，如果一个用户访问B之前已经登录了A，那这个请求包含A网站的cookie信息，也就会被A网站认为用户已经登录，这样用户在A网站的隐私信息就泄露给了控制B网站的坏人。</p>
-
-<p>不过，如果A网站觉得一些信息跨站访问也无所谓，那就可以通过jsonp或者CORS规则暴露，关键是A网站主动允许不同源的请求。</p>
-
-<h2 id="relaxing-the-same-origin-policy">Relaxing the same-origin policy</h2>
-
-<ul>
-  <li>数据污染 / Data tainting</li>
-  <li>document.domain property</li>
-  <li>Cross-Origin Resource Sharing</li>
-  <li>Cross-document messaging</li>
-  <li>JSONP</li>
-  <li>WebSockets</li>
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/">&larr; Newer Posts</a>
+    </li>
+    
+    
 </ul>
 
 
-                <hr style="visibility: hidden;">
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2021/03/24/cookies/" data-toggle="tooltip" data-placement="top" title="Cookies">
-                        Previous<br>
-                        <span>Cookies</span>
-                        </a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2021/04/21/oauth20-design-idea/" data-toggle="tooltip" data-placement="top" title="oAuth2.0 授权码设计理念">
-                        Next<br>
-                        <span>oAuth2.0 授权码设计理念</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-                <hr style="visibility: hidden;">
-
-                
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
-                
-
-                
-            </div>  
-
-    <!-- Side Catalog Container -->
-        
-            <div class="
-                col-lg-2 col-lg-offset-0
-                visible-lg-block
-                sidebar-container
-                catalog-container">
-                <div class="side-catalog">
-                    <hr class="hidden-sm hidden-xs">
-                    <h5>
-                        <a class="catalog-toggle" href="#">CATALOG</a>
-                    </h5>
-                    <ul class="catalog-body"></ul>
-                </div>
-            </div>
-        
-
+    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
                 <!-- Featured Tags -->
                 
 
 
 <section>
-    
-        <hr class="hidden-sm hidden-xs">
     
     <h5><a href="/archive/">FEATURED TAGS</a></h5>
     <div class="tags">
@@ -443,6 +306,53 @@
     </div>
 </section>
 
+
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+  <hr>
+  <h5><a href="/about/">ABOUT ME</a></h5>
+  <div class="short-about">
+    
+    <img src="/img/avatar-vincent-ny.png" />
+    
+    
+    <p>Little by little and bit by bit<br>坚持就是胜利</p>
+    
+    <!-- SNS Link -->
+    
+
+
+<ul class="list-inline">
+
+
+  
+  
+  
+  
+  
+  
+  <li>
+    <a target="_blank" href="https://github.com/vin-c-ent">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+  
+  <li>
+    <a target="_blank" href="https://www.linkedin.com/in/vincent-wang-289b0885">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  
+</ul>
+  </div>
+</section>
 
                 <!-- Friends Blog -->
                 
@@ -462,69 +372,10 @@
   
 </ul>
 
-            </div>
-        </div>
-    </div>
-</article>
-
-<!-- add support for mathjax by voleking-->
-
-
-
-
-
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "blog-1psx9avwmh";
-    var disqus_identifier = "/2021/03/24/same-origin-policy";
-    var disqus_url = "http://localhost:4000/2021/03/24/same-origin-policy/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
-
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'right',
-          // icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
+    		</div>
+        
+	</div>
+</div>
 
 
 
