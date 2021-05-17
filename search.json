@@ -3,7 +3,7 @@
     {
       "title"    : "Transport Layer",
       "subtitle" : "",
-      "tags"     : "HTTP",
+      "tags"     : "Network",
       "url"      : "/2021/05/07/transport-layer/",
       "date"     : "2021-05-07 00:00:00 +0800"
     } ,
@@ -11,7 +11,7 @@
     {
       "title"    : "oAuth2.0 授权码设计理念",
       "subtitle" : "",
-      "tags"     : "HTTP",
+      "tags"     : "Network",
       "url"      : "/2021/04/21/oauth20-design-idea/",
       "date"     : "2021-04-21 00:00:00 +0800"
     } ,
@@ -19,7 +19,7 @@
     {
       "title"    : "Same origin policy",
       "subtitle" : "SOP",
-      "tags"     : "HTTP",
+      "tags"     : "Networks",
       "url"      : "/2021/03/24/same-origin-policy/",
       "date"     : "2021-03-24 00:00:00 +0800"
     } ,
@@ -27,7 +27,7 @@
     {
       "title"    : "Cookies",
       "subtitle" : "",
-      "tags"     : "HTTP",
+      "tags"     : "Network",
       "url"      : "/2021/03/24/cookies/",
       "date"     : "2021-03-24 00:00:00 +0800"
     } ,
