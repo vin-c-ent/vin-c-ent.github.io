@@ -5,9 +5,220 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 19 May 2021 22:24:54 +0800</pubDate>
-    <lastBuildDate>Wed, 19 May 2021 22:24:54 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Jun 2026 11:09:24 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Jun 2026 11:09:24 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>AI Landscape</title>
+        <description>&lt;h1 id=&quot;-ai-生态图谱主流公司与产品全景概览&quot;&gt;🤖 AI 生态图谱：主流公司与产品全景概览&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;截至 2026 年，AI 赛道已从“大模型竞赛”演进为“应用落地与生态构建”的关键阶段。本文梳理了全球最具影响力的 AI 公司及其核心产品矩阵，帮助您快速把握行业格局。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-国际科技巨头&quot;&gt;🏢 国际科技巨头&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;OpenAI&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;ChatGPT, GPT-4o, Codex&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/openai.png&quot; alt=&quot;OpenAI&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Google DeepMind&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Gemini&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/google.png&quot; alt=&quot;Google&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Anthropic&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Claude 3.7 Sonnet, Claude Code&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/anthropic.png&quot; alt=&quot;Anthropic&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Microsoft&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Copilot (GitHub Copilot, MS 365 Copilot)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/microsoft.png&quot; alt=&quot;Microsoft&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Meta&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Llama 3, Meta AI&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/meta.png&quot; alt=&quot;Meta&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;xAI&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Grok-3, Cursor&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/xai.png&quot; alt=&quot;xAI&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-中国ai力量&quot;&gt;🇨🇳 中国AI力量&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;深度求索 (DeepSeek)&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;DeepSeek-R1, DeepSeek-V3&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/deepseek.png&quot; alt=&quot;DeepSeek&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;字节跳动&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;豆包 (Doubao), 即梦 (Jimeng), TRAE (AI IDE), Coze (扣子)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/byte-dance.png&quot; alt=&quot;ByteDance&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;阿里巴巴&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;通义千问 (Qwen) 系列&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/alibaba.png&quot; alt=&quot;Alibaba&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;百度&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;文心一言 (ERNIE), 千帆平台&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/baidu.png&quot; alt=&quot;Baidu&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;智谱AI (Zhipu)&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;智谱清言 (ChatGLM), AutoGLM&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/zhipu.png&quot; alt=&quot;Zhipu&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;月之暗面 (Moonshot)&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Kimi 智能助手&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/moonshot.png&quot; alt=&quot;Moonshot&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;MiniMax&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;MiniMax系列模型、Talkie/星野、海螺AI&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/minimax.png&quot; alt=&quot;Moonshot&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-ai编程&quot;&gt;🌟 AI编程&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Anthropic&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Claude Code&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/anthropic.png&quot; alt=&quot;Anthropic&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;OpenAI&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Codex&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/openai.png&quot; alt=&quot;OpenAI&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;xAI&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Cursor&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/xai.png&quot; alt=&quot;xAI&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;字节跳动&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;TRAE&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/byte-dance.png&quot; alt=&quot;ByteDance&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Anomaly Innovations&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;OpenCode (开源 AI 编程代理)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-多模态&quot;&gt;🌟 多模态&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Stability AI&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Stable Diffusion&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Midjourney&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Midjourney V7&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/midjourney.png&quot; alt=&quot;Midjourney&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-tooling&quot;&gt;🌟 Tooling&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;字节跳动&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Coze (扣子)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/byte-dance.png&quot; alt=&quot;ByteDance&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Ollama Inc&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Ollama (本地大模型运行工具, 支持Llama/Qwen等)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;em&gt;📌 本文将持续更新，欢迎收藏关注。如有遗漏或建议，欢迎留言补充！&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 22 Jun 2026 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2026/06/22/ai-landscape/</link>
+        <guid isPermaLink="true">http://localhost:4000/2026/06/22/ai-landscape/</guid>
+        
+        <category>AI</category>
+        
+        
+      </item>
     
       <item>
         <title>Transport Layer</title>
@@ -1543,62 +1754,6 @@ for &lt;strong&gt;rapid&lt;/strong&gt; development of maintainable &lt;strong&gt
         <pubDate>Fri, 21 Aug 2020 00:00:00 +0800</pubDate>
         <link>http://localhost:4000/2020/08/21/hello-netty/</link>
         <guid isPermaLink="true">http://localhost:4000/2020/08/21/hello-netty/</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Hello Kubernetes</title>
-        <description>&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
-
-&lt;p&gt;以往的大型单体应用由于无法频繁迭代、独立开发等原因，正逐渐被拆分成小的、可独立运行的组件，我们称之为&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;微服务&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;微服务彼此之间解耦，所以具备独立开发、部署、升级、伸缩等优点，使得我们可以对每一个微服务实现快速迭代，并且迭代速度与市场需求变化速度保持一致。&lt;/p&gt;
-
-&lt;p&gt;但是随着部署组件的增多，配置、管理并保持系统的正常运行变得越来越困难。手动做所有的事情，显然不太可行。于是我们需要一些自动化的措施，包括自动调度、配置、监管和故障处理。这正是&lt;a href=&quot;https://kubernetes.io/&quot;&gt;Kubernetes&lt;/a&gt;的用武之地。&lt;/p&gt;
-
-&lt;h2 id=&quot;evolution-of-application-deployment&quot;&gt;Evolution of application deployment&lt;/h2&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;组件之间紧密耦合在一个单体应用中。但是这种方式不利于开发、部署、扩展。
-    &lt;ul&gt;
-      &lt;li&gt;开发 : 容易发生依赖冲突。&lt;/li&gt;
-      &lt;li&gt;部署 : 哪怕一个小功能都要整个系统停机更新。&lt;/li&gt;
-      &lt;li&gt;扩展 : 只能针对整个系统。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;将复杂的单体应用拆分为小的可独立部署的微服务组件。并通过网络通信。
-    &lt;ul&gt;
-      &lt;li&gt;开发 : 可以自己选择合适的依赖。&lt;/li&gt;
-      &lt;li&gt;部署 : 粒度更细，只需要部署需要改变的服务。&lt;/li&gt;
-      &lt;li&gt;扩展 : 粒度更细，可以针对单个服务进行扩展。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;what-is-kubernetes&quot;&gt;What is Kubernetes&lt;/h3&gt;
-
-&lt;p&gt;Kubernetes是希腊语中的 “领航员” 或 “舵手” 的意思，我们一般简称它为K8S (因为K和S之间有8个单词)。&lt;/p&gt;
-
-&lt;p&gt;它抽象了数据中心的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;硬件基础设施&lt;/code&gt;，使得对外暴露的只是一个巨大的&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;资源池&lt;/code&gt;。它让我们在部署和运行组件时，不用关注底层的服务器。&lt;/p&gt;
-
-&lt;p&gt;使用K8S部署多组件应用时，它会为每个组件都选择一个合适的服务器，部署之后它能够保证每个组件可以轻易地发现其他组件，并彼此之间实现通信。&lt;/p&gt;
-
-&lt;p&gt;All in all, K8S帮助企业标准化了无论是云端部署还是内部部署的应用交付方式。&lt;/p&gt;
-
-&lt;h3 id=&quot;benefit-of-kubernetes&quot;&gt;Benefit of Kubernetes&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;让开发者可以脱离运维团队的帮助，&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;自主部署应用&lt;/code&gt;。&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;监控整个系统&lt;/code&gt;。让系统管理员的重心从监管应用转移到了监管Kubernetes。&lt;/li&gt;
-  &lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Fri, 14 Aug 2020 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2020/08/14/hello-kubernetes/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/08/14/hello-kubernetes/</guid>
-        
-        <category>K8S</category>
         
         
       </item>
