@@ -5,8 +5,8 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 22 Jun 2026 11:09:24 +0800</pubDate>
-    <lastBuildDate>Mon, 22 Jun 2026 11:09:24 +0800</lastBuildDate>
+    <pubDate>Mon, 22 Jun 2026 18:55:21 +0800</pubDate>
+    <lastBuildDate>Mon, 22 Jun 2026 18:55:21 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -116,7 +116,7 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;-ai编程&quot;&gt;🌟 AI编程&lt;/h2&gt;
+&lt;h2 id=&quot;-ai-agent&quot;&gt;🌟 AI agent&lt;/h2&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -138,6 +138,27 @@
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/openai.png&quot; alt=&quot;OpenAI&quot; /&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Anomaly Innovations&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;OpenCode&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/anomaly-48x48.png&quot; alt=&quot;Anomaly&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-ai-ide&quot;&gt;🌟 AI IDE&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;xAI&lt;/strong&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Cursor&lt;/td&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/xai.png&quot; alt=&quot;xAI&quot; /&gt;&lt;/td&gt;
@@ -148,8 +169,8 @@
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/byte-dance.png&quot; alt=&quot;ByteDance&quot; /&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Anomaly Innovations&lt;/strong&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;OpenCode (开源 AI 编程代理)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;???&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Antigravity&lt;/td&gt;
       &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
