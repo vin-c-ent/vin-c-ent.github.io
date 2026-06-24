@@ -5,8 +5,8 @@
     <description>关于程序与设计 | 王润森，Full Stack Developer | 这里是 @Vincent王润森 的个人博客，与你一起发现更大的世界。</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 23 Jun 2026 16:09:47 +0800</pubDate>
-    <lastBuildDate>Tue, 23 Jun 2026 16:09:47 +0800</lastBuildDate>
+    <pubDate>Wed, 24 Jun 2026 23:47:21 +0800</pubDate>
+    <lastBuildDate>Wed, 24 Jun 2026 23:47:21 +0800</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -173,6 +173,32 @@
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Google DeepMind&lt;/strong&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Antigravity&lt;/td&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/google.png&quot; alt=&quot;Google&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-claw&quot;&gt;🌟 CLAW&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;公司&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;核心AI产品&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;图标&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Personal (Peter Steinberger)&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;openclaw&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;strong&gt;Nous Research&lt;/strong&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;hermes&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;img src=&quot;/img/2026/2026-06-22-ai-landscape/nous_research.png&quot; alt=&quot;Nous&quot; /&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
